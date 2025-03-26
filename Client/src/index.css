@@ -1,1 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Henny+Penny&family=Winky+Sans:ital,wght@0,300..900;1,300..900&display=swap');
 @import "tailwindcss";
+
+@import "./components/ui/Button/Button.css";
+
+@theme {
+  /* GENERAL */
+  --font-henny: "Henny Penny", "sans";
+  --font-winky: "Winki Sans", "sans";
+
+  /* LIGHT MODE */
+  --color-background: hsl(0 0 95%);
+  --color-foreground: black;
+  --color-primary: hsl(265 100% 20%);
+
+  /* DARK MODE */
+  --color-dark-background: hsl(0 0 0.5%);
+  --color-dark-foreground: white;
+}
+
+@layer base {
+  html, body, #root {
+    @apply size-full
+  }
+  
+  body {
+    @apply bg-background text-foreground selection:bg-primary;
+
+    @variant dark {
+      @apply bg-dark-background text-dark-foreground;
+    }
+  }
+}
+
+@layer components {
+  .super-title {
+    @apply font-henny text-7xl p-5;
+  }
+}
