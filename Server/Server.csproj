@@ -18,8 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-		<Folder Include="wwwroot\" />
     <Folder Include="Models\Mappers\" />
+    <Folder Include="wwwroot\ProfilePictures\" />
   </ItemGroup>
 
 </Project>

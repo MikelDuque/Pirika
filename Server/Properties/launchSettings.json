@@ -18,7 +18,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "JWT_KEY": "kj453gjkuewh345rgfkuwshb455gfuswgufh567swbguf876gswedufgsuwygfus345wgfug",
         "DATABASE_CONNECTION": "",
-        "LOCAL_DATABASE": "Pirika.db"
+        "LOCAL_DATABASE": "PirikaDB.db"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7005;http://localhost:5241"

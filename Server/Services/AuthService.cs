@@ -59,7 +59,7 @@ public class AuthService
 				{ "id", user.Id },
 				{ ClaimTypes.Name, user.Username},
 				{ ClaimTypes.Email, user.Mail },
-				{ ClaimTypes.Role, user.Role },
+				{ ClaimTypes.Role, user.Role.ToString()},
 				{ "avatar", user.Avatar }
 			},
 

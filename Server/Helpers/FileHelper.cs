@@ -4,7 +4,11 @@ public class FileHelper
 {
 	public static async Task<string> SaveAvatar(IFormFile image, string username)
 	{
-		if (image == null) return "/ProfilePictures/Default-Avatar.png";
+		if (image == null)
+		{
+			int rNumber = Random.Shared.Next(1, 3);
+			return $"/ProfilePictures/DefaultAvatar{rNumber}.png";
+		}
 
 		string fileExtension = Path.GetExtension(image.FileName).ToLowerInvariant();
 		string fileName = username.ToLowerInvariant() + fileExtension;

@@ -1,0 +1,95 @@
+import { useForm } from "react-hook-form";
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input } from "../../components/ui/Form";
+import { loginSchema } from "../../utils/formValidator";
+import useFetch from "../../utils/endpoints/useFetchEvent";
+import { LOGIN_URL } from "../../utils/endpoints/endpoints";
+import { Crud } from "../../utils/enums";
+import { Checkbox } from "../ui/Form/Checkbox";
+import { Button } from "../ui/Button/Button";
+
+export default function Login() {
+  const {fetchingData} = useFetch();
+
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      identifier: undefined,
+      password: undefined,
+      rememberMe: false
+    }
+  });
+
+  async function onSubmit(values: z.infer<typeof loginSchema>) {
+    const loginRequest = {
+      identifier: values.identifier,
+      password: values.password
+    }
+
+    const newToken = await fetchingData({url:LOGIN_URL, type:Crud.POST, params:loginRequest});
+
+    values.rememberMe;
+    
+  };
+
+  console.log(form.formState.errors);
+  
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <FormField
+          control={form.control}
+          name="identifier"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>eMail or Username</FormLabel>
+              <FormControl>
+                <Input
+                  type="text"
+                  placeholder="Type your identifier..."
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input
+                  type="text"
+                  placeholder="Type your password..."
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="rememberMe"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Checkbox checked={field.value}/>
+              </FormControl>
+              <FormLabel>Remember me</FormLabel>
+            </FormItem>
+          )}
+        />
+        
+        <Button type="submit">Log in</Button>
+      </form>
+    </Form>
+  )
+}

@@ -6,7 +6,9 @@ export default function StandardLayout() {
   return (
     <>
       <Header/>
-      <main><Outlet/></main>
+      <main>
+        <Outlet/>
+      </main>
       <Footer/>
     </>
   )

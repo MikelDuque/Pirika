@@ -1,12 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Henny+Penny&family=Winky+Sans:ital,wght@0,300..900;1,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Henny+Penny&family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&family=Winky+Sans:ital,wght@0,300..900;1,300..900&display=swap');
 @import "tailwindcss";
 
-@import "./components/ui/Button/Button.css";
+/* @import "./components/ui/Button/Button.css"; */
 
 @theme {
   /* GENERAL */
   --font-henny: "Henny Penny", "sans";
-  --font-winky: "Winki Sans", "sans";
+  --font-winky: "Winky Sans", "sans";
+  --font-playfair: "Playfair", "serif";
 
   /* LIGHT MODE */
   --color-background: hsl(0 0 95%);
@@ -34,6 +35,12 @@
 
 @layer components {
   .super-title {
-    @apply font-henny text-7xl p-5;
+    @apply font-henny text-7xl pt-6 pb-3 tracking-wide;
+  }
+  .title {
+    @apply font-winky text-xl
+  }
+  .body {
+    @apply font-playfair
   }
 }
