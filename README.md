@@ -1,6 +1,6 @@
 # Pirika
 > Where Music Meets Magic ✨
-##### By Miguel Ángel Platero Duque
+###### By Miguel Ángel Platero Duque
 
 *Pirika* is a music streaming service that lets you listen to any song from our catalog, along or with friends, as you wish!
 
