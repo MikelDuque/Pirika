@@ -1,26 +1,28 @@
 import classes from "./Button.module.css"
-import React from "react";
+import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Slot } from "@radix-ui/react-slot";
 import {cn} from "../../../utils/utils";
 
-export const buttonVariants = cva(classes.button, {
+export const buttonVariants = cva([classes.button, "subtitle"], {
   variants: {
     variant: {
-      primary: classes.primary,
-      ghost: classes.ghost,
-      link: classes.link
+      primary: ["bg-primary", "hover:bg-primary/80"],
+      destructive: ["bg-red-700", "hover:bg-red-700/80"],
+      outline: ["border", "hover:bg-background/20"],
+      ghost: ["hover:font-semibold"],
+      link: ["underline", "hover:font-semibold"]
     },
     size: {
-      icon: [""],
-      small: [""],
-      standard: ["text-base"],
-      extended: [""]
+      icon: ["size-8"],
+      small: ["h-8", "px-3", "rounded-sm", "text-xs"],
+      medium: ["px-4", "py-2", "text-base"],
+      extended: ["w-full"]
     }
   },
   defaultVariants: {
     variant: "primary",
-    size: "standard"
+    size: "medium"
   }
 });
 

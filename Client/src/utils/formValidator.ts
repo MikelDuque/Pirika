@@ -13,6 +13,7 @@ export const loginSchema = z.object({
 });
 
 export const registerSchema = z.object({
+  rememberMe: z.boolean().optional(),
   displayName: z.string()
     .min(1, {message: emptyMessage})
     .max(24, {message: "El nombre es demasido largo"})
@@ -30,40 +31,25 @@ export const registerSchema = z.object({
     .max(64, {message: "La contraseña debe contener máximo 64 caracteres"})
     .regex(passwordValidation, {message: "La contraseña debe contener al menos una mayúscula, un número y un carácter especial"}),
   confirmPassword: z.string(),
-  avatar: z.object({
-    avatar: z
-    .custom<File>((file) => file instanceof File, {
-      message: "Debes subir una imagen válida"
-    })
-    .refine((file) => file.size < maxFileSize, {
-      message: "La imagen no debe superar los 10MB"
-    })
-    .refine((file) => !imageTypes.includes(file.type), {
-      message: "Los únicos formatos soportados son: .jpg, .jpeg, .png y .webp"
-    })
+  avatar: z.instanceof(File)
     .optional()
-  }),
-  rememberMe: z.boolean().optional()
-    // .optional()
-    // .superRefine((file, ctx) => {
-    //   if (!file || file.size <= 0) return;
+    .superRefine((file, ctx) => {
+      if (!file || file.size <= 0) return;
 
-    //   if (file.size > maxFileSize) {
-    //     ctx.addIssue({
-    //       message: "La imagen no puede ser superior a 10MB.",
-    //       code: z.ZodIssueCode.custom
-    //     })
-    //   }
+      if (file.size > maxFileSize) {
+        ctx.addIssue({
+          message: "La imagen no puede ser superior a 10MB.",
+          code: z.ZodIssueCode.custom
+        })
+      }
 
-    //   if (!imageTypes.includes(file.type)) {
-    //     ctx.addIssue({
-    //       message: "Los únicos formatos soportados son: .jpg, .jpeg, .png y .webp",
-    //       code: z.ZodIssueCode.custom
-    //     })
-    //   }
-    // })
-    //.refine((file) => !file || file?.size <= maxFileSize, `La imagen no puede ser superior a 10MB.`)
-    //.refine((file) => !file || imageTypes.includes(file?.type), "Los únicos formatos soportados son: .jpg, .jpeg, .png y .webp")
+      if (!imageTypes.includes(file.type)) {
+        ctx.addIssue({
+          message: "Los únicos formatos soportados son: .jpg, .jpeg, .png y .webp",
+          code: z.ZodIssueCode.custom
+        })
+      }
+    })
 })
 .refine((data) => data.password === data.confirmPassword, {
   message: "Las contraseñas introducidas no coinciden",

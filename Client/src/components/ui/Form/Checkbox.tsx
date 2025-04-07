@@ -10,16 +10,13 @@ export const Checkbox = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <CheckboxPrimitive.Root
     ref={ref}
-    className={cn(
-      classes.checkbox,
-      className
-    )}
+    className={cn([classes.checkbox, "peer", className])}
     {...props}
   >
     <CheckboxPrimitive.Indicator
       className={cn(classes.checkboxIndicator)}
     >
-      <Check/>
+      <Check className="size-full"/>
     </CheckboxPrimitive.Indicator>
   </CheckboxPrimitive.Root>
 ))

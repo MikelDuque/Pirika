@@ -14,7 +14,9 @@ export default function Intro() {
       <div className="h-full w-5/7 fixed right-0 p-5 flex flex-col items-center justify-center gap-2">
         <h1 className="super-title">Pirika</h1>
         <h2 className="font-winky text-xl">Where music meets magic</h2>
-        <Button onClick={() => {navigate(HomePath)}}>Hola</Button>
+        <Button onClick={() => {navigate(HomePath)}}>Continue</Button>
+        <Button variant="destructive" size="small" onClick={() => {navigate(HomePath)}}>Hola</Button>
+        <Button size="icon" icon="star"/>
       </div>
     </>
   )

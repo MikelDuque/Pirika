@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Henny+Penny&family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&family=Winky+Sans:ital,wght@0,300..900;1,300..900&display=swap');
+/* @import "./components/ui/Button/Button.module.css"; */
 @import "tailwindcss";
-
-/* @import "./components/ui/Button/Button.css"; */
 
 @theme {
   /* GENERAL */
@@ -23,12 +22,12 @@
   html, body, #root {
     @apply size-full
   }
-  
+
   body {
-    @apply bg-background text-foreground selection:bg-primary;
+    @apply bg-background text-foreground selection:bg-primary border-foreground;
 
     @variant dark {
-      @apply bg-dark-background text-dark-foreground;
+      @apply bg-dark-background text-dark-foreground border-dark-foreground;
     }
   }
 }
@@ -38,9 +37,15 @@
     @apply font-henny text-7xl pt-6 pb-3 tracking-wide;
   }
   .title {
+    @apply font-winky text-2xl
+  }
+  .subtitle {
     @apply font-winky text-xl
   }
+  .super-body {
+    @apply font-playfair text-lg font-bold
+  }
   .body {
-    @apply font-playfair
+    @apply font-playfair text-base
   }
 }

@@ -4,13 +4,12 @@ import { cn } from "../../../utils/utils";
 
 interface buttonWrapperProps extends ButtonProps {
   icon?: IconName,
-  invertPosition?: boolean,
-  childen?: React.ReactNode
+  invertPosition?: boolean
 }
 
-export default function ButtonWithIcons({icon, invertPosition, children, ...rest}: buttonWrapperProps) {
+export default function ButtonWithIcons({icon, invertPosition, children, ...props}: buttonWrapperProps) {
   return (
-    <Button {...rest} className={cn("flex gap-2", invertPosition && "flex-row-reverse")}>
+    <Button {...props} className={cn("flex gap-2", invertPosition && "flex-row-reverse")}>
       {icon && <DynamicIcon name={icon}/>}
       {children}
     </Button>

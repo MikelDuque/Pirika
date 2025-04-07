@@ -37,6 +37,7 @@ export default function Login() {
   
 
   return (
+    <>
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
@@ -81,7 +82,7 @@ export default function Login() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Checkbox checked={field.value}/>
+                <Checkbox checked={field.value} onCheckedChange={field.onChange}/>
               </FormControl>
               <FormLabel>Remember me</FormLabel>
             </FormItem>
@@ -91,5 +92,6 @@ export default function Login() {
         <Button type="submit">Log in</Button>
       </form>
     </Form>
+    </>
   )
 }

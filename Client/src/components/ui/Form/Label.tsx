@@ -4,11 +4,11 @@ import * as LabelPrimitive from "@radix-ui/react-label"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "../../../utils/utils"
 
-const labelVariants = cva(classes.label, {
+const labelVariants = cva([classes.label, "super-body"], {
   variants: {
     variant: {
-      default: classes.default,
-      error: classes.error
+      default: [],
+      error: "text-red-700"
     }
   },
   defaultVariants: {

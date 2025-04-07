@@ -1,26 +1,44 @@
 import { useForm } from "react-hook-form";
-import { z, ZodUndefined } from "zod"
+import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, Input, Checkbox } from "../../components/ui/Form";
 import { registerSchema } from "../../utils/formValidator";
 import { Button } from "../ui/Button";
+import useFetch from "../../utils/endpoints/useFetchEvent";
+import { REGISTER_URL } from "../../utils/endpoints/endpoints";
+import { Crud } from "../../utils/enums";
 
 export default function Register() {
+  const {fetchingData} = useFetch();
+
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      displayName: "",
-      username: "",
-      mail: "",
-      password: "",
-      confirmPassword: "",
+      displayName: undefined,
+      username: undefined,
+      mail: undefined,
+      password: undefined,
+      confirmPassword: undefined,
       avatar: undefined,
       rememberMe: false
     }
   });
 
-  function onSubmit(values: z.infer<typeof registerSchema>) {
-    console.log("valores", values);
+  async function onSubmit(values: z.infer<typeof registerSchema>) {
+    const registerRequest = {
+      displayName: values.displayName,
+      username: values.username,
+      mail: values.mail,
+      password: values.password,
+      avatar: values.avatar
+    }
+
+    const newToken = await fetchingData({url:REGISTER_URL, type:Crud.POST, params:registerRequest});
+    console.log("request", registerRequest);
+    
+    console.log("token?", newToken);
+    
+    values.rememberMe;
     
   };
 

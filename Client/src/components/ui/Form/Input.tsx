@@ -3,7 +3,7 @@ import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "../../../utils/utils"
 
-const inputVariants = cva(classes.input,{
+const inputVariants = cva([classes.input, "body"],{
   variants: {
     variant: {
       default: classes.default,

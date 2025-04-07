@@ -2,6 +2,23 @@
 
 @layer components {
   .button {
-    @apply disabled:opacity-50
+    @apply
+      rounded-md
+      inline-flex
+      items-center
+      justify-center
+      h-10
+      whitespace-nowrap
+      transition-colors
+      cursor-pointer
+      focus-visible:outline-none
+      focus-visible:ring-2
+      focus-visible:ring-white
+      focus-visible:ring-offset-4
+      disabled:pointer-events-none
+      disabled:opacity-50
+      [&_svg]:pointer-events-none
+      [&_svg]:size-4
+      [&_svg]:shrink-0
   }
 }
