@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { z } from "zod"
+import { unknown, z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, Input, Checkbox } from "../../components/ui/Form";
 import { registerSchema } from "../../utils/formValidator";
@@ -9,37 +9,31 @@ import { REGISTER_URL } from "../../utils/endpoints/endpoints";
 import { Crud } from "../../utils/enums";
 
 export default function Register() {
-  const {fetchingData} = useFetch();
+  const { fetchingData } = useFetch();
 
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      displayName: undefined,
-      username: undefined,
-      mail: undefined,
-      password: undefined,
-      confirmPassword: undefined,
-      avatar: undefined,
+      displayName: "",
+      username: "",
+      mail: "",
+      password: "",
+      confirmPassword: "",
       rememberMe: false
     }
   });
 
   async function onSubmit(values: z.infer<typeof registerSchema>) {
-    const registerRequest = {
-      displayName: values.displayName,
-      username: values.username,
-      mail: values.mail,
-      password: values.password,
-      avatar: values.avatar
-    }
+    const registerRequest = Object.entries(values)
+      .filter(([k, _]) => !["confirmPassword", "rememberMe"]
+      .includes(k)).reduce((formData,[k,v]) => {
+        formData.append(k,v as string | Blob);
+        return formData;
+      }, new FormData())
 
-    const newToken = await fetchingData({url:REGISTER_URL, type:Crud.POST, params:registerRequest});
-    console.log("request", registerRequest);
-    
-    console.log("token?", newToken);
-    
+    const newToken = await fetchingData({ url: REGISTER_URL, type: Crud.POST, params: registerRequest });
+
     values.rememberMe;
-    
   };
 
   return (
@@ -138,7 +132,7 @@ export default function Register() {
         <FormField
           name="avatar"
           control={form.control}
-          render={({field}) => (
+          render={({ field }) => (
             <FormItem>
               <FormLabel>Avatar</FormLabel>
               <FormDescription>Select your profile picture, if you want</FormDescription>
@@ -164,13 +158,13 @@ export default function Register() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Checkbox checked={field.value}/>
+                <Checkbox checked={field.value} />
               </FormControl>
               <FormLabel>Remember me</FormLabel>
             </FormItem>
           )}
         />
-        
+
         <Button type="submit">Register</Button>
       </form>
     </Form>

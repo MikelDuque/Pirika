@@ -13,11 +13,16 @@ export interface FetchProps {
   condition?: boolean;
 };
 
-export type DecodedToken = {
+export interface DecodedToken {
   id: number,
   unique_name: string,
   email: string,
   role: string,
   avatar: string,
   exp: number,
-} | null | undefined;
+};
+
+export interface AuthData {
+  token: string,
+  decodedToken: DecodedToken
+}

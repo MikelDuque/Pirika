@@ -2,7 +2,8 @@ import { Crud } from "../enums";
 import { FetchProps } from "../types";
 
 export default async function fetchEndpoint({url, type, token, params, needAuth} : FetchProps) {
-  console.log(`PETICION: URL: ${url}, tipo: ${type}, token: ${token}, params stringtify: ${params}, needAuth: ${needAuth}`);
+  console.log(`PETICION: URL: ${url}, tipo: ${type}, token: ${token}, needAuth: ${needAuth}`);
+  console.log("params stringtify", params);  
   
   const response = (token && needAuth) ?
     await defineFetch({url, type, token, params}).then((response) => {if(response.status !== 401){return response} throw "Unauthorized"}) :

@@ -1,10 +1,9 @@
-import { createContext, ReactNode, useContext } from "react";
-import { DecodedToken } from "../utils/types";
+import { createContext, ReactNode, useContext, useState } from "react";
+import { AuthData } from "../utils/types";
 
 /* ---- TIPADOS ---- */
 type AuthContextType = {
-  token: string | undefined;
-  // decodedToken: DecodedToken;
+  authData?: AuthData;
   logIn: () => void;
   logOut: () => void;
 }
@@ -15,8 +14,6 @@ type AuthProviderProps = {
 
 /* ----- DECLARACIÓN Context ----- */
 const AuthContext = createContext<AuthContextType>({
-  token:undefined,
-  // decodedToken:undefined,
   logIn(){},
   logOut(){}
 });
@@ -28,12 +25,16 @@ export const useAuth = (): AuthContextType => {
 };
 
 export function AuthProvider({ children }: AuthProviderProps) {
+  const [authData, setAuthData] = useState<AuthData>();
+
+  function logIn(token: string, remember: boolean) {
+    
+  }
 
   /* ----- FINAL DEL CONTEXTO ----- */
 
   const contextValue = {
-    token: "",
-    decodedToken: "",
+    authData,
     logIn() {},
     logOut() {}
   };

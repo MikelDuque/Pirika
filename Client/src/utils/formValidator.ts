@@ -9,11 +9,11 @@ const imageTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
 export const loginSchema = z.object({
   identifier: z.string(),
   password: z.string(),
-  rememberMe: z.boolean().optional()
+  rememberMe: z.boolean().default(false)
 });
 
 export const registerSchema = z.object({
-  rememberMe: z.boolean().optional(),
+  rememberMe: z.boolean().default(false),
   displayName: z.string()
     .min(1, {message: emptyMessage})
     .max(24, {message: "El nombre es demasido largo"})

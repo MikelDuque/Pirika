@@ -15,26 +15,15 @@ export default function Login() {
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      identifier: undefined,
-      password: undefined,
+      identifier: "",
+      password: "",
       rememberMe: false
     }
   });
 
   async function onSubmit(values: z.infer<typeof loginSchema>) {
-    const loginRequest = {
-      identifier: values.identifier,
-      password: values.password
-    }
-
-    const newToken = await fetchingData({url:LOGIN_URL, type:Crud.POST, params:loginRequest});
-
-    values.rememberMe;
-    
+    const newToken = await fetchingData({url:LOGIN_URL, type:Crud.POST, params:values});
   };
-
-  console.log(form.formState.errors);
-  
 
   return (
     <>
