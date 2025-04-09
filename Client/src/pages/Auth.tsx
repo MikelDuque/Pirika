@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Login, Register } from "../components/auth";
 import { Button } from "../components/ui/Button";
 import { useNavigate } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../components/ui/Card/Card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../components/ui/Card/Card";
 
 export default function Auth() {
   const navigate = useNavigate();

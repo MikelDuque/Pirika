@@ -1,44 +1,42 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import { AuthPath } from "../utils/paths";
+import { AuthPath, HomePath, Index } from "../utils/paths";
 
-// export function LoginPrivateRoute() {
-//   const {token} = useAuth();
-//   const location = useLocation();
+export function SkipRoutes() {
+  const {authData, skipIntro} = useAuth();
+  const location = useLocation();
 
-//   if (token) {
-//     const previousPath = location.pathname === "" ? "/" : location.pathname;
-    
-//     return <Navigate to="/" state={{page: previousPath}} replace/>
-//   }
+  if (authData) {
+    if(location.pathname === Index && skipIntro() === false) return <Outlet/>;
 
-//   return <Outlet/>;
-// }
+    const previousPath = location.pathname === "" ? {HomePath} : location.pathname;
+    return <Navigate to={HomePath} state={{page: previousPath}} replace/>
+  }
+  
+  return <Outlet/>;
+}
 
 export function LoggedPrivateRoute() {
-  const {token} = useAuth();
+  const {authData} = useAuth();
   const location = useLocation();
-  
-  if(!token) {
-    const previousPath = location.pathname === "" ? "/" : location.pathname;
 
-    return <Navigate to={AuthPath} state={{page: previousPath}} replace/>
-  }
+  if(authData) return <Outlet/>
 
-  return <Outlet/>
+  const previousPath = location.pathname === "" ? Index : location.pathname;
+  return <Navigate to={AuthPath} state={{page: previousPath}} replace/>
 }
 
 export function AdminPrivateRoute() {
-  const {token, decodedToken} = useAuth();
+  const {authData} = useAuth();
   const location = useLocation();
   
-  if(!token) {
-    const previousPath = location.pathname === "/login_register" ? "/" : location.pathname;
+  if(!authData) {
+    const previousPath = location.pathname === AuthPath ? Index : location.pathname;
 
-    return <Navigate to="/login_register" state={{page: previousPath}} replace/>
+    return <Navigate to={AuthPath} state={{page: previousPath}} replace/>
   }
   
-  if(decodedToken.role !== "admin") return(<Navigate to="/" replace/>)
+  if(authData.decodedToken.role !== "admin") return(<Navigate to={Index} replace/>)
 
   return <Outlet/>
 }

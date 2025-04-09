@@ -8,9 +8,11 @@ import { LOGIN_URL } from "../../utils/endpoints/endpoints";
 import { Crud } from "../../utils/enums";
 import { Checkbox } from "../ui/Form/Checkbox";
 import { Button } from "../ui/Button/Button";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function Login() {
   const {fetchingData} = useFetch();
+  const {logIn} = useAuth();
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -22,7 +24,9 @@ export default function Login() {
   });
 
   async function onSubmit(values: z.infer<typeof loginSchema>) {
-    const newToken = await fetchingData({url:LOGIN_URL, type:Crud.POST, params:values});
+    const data = await fetchingData({url:LOGIN_URL, type:Crud.POST, params:values});
+
+    logIn(data.accessToken, values.rememberMe);
   };
 
   return (
