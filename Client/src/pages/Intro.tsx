@@ -3,21 +3,13 @@ import vinyl from "../assets/vinyl.svg";
 import {Button} from "../components/ui/Button";
 import { HomePath } from "../utils/paths";
 import { Checkbox, Label } from "../components/ui/Form";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useAuth } from "../contexts/AuthContext";
 
 export default function Intro() {
   const navigate = useNavigate();
-  const {authData, skipIntro} = useAuth();
+  const {skipIntro} = useAuth();
   const skipRef = useRef<HTMLButtonElement>(null);
-
-  // useEffect(() => {
-  //   const skip = isChecked();
-
-  //   console.log("puedo?", skip && authData);
-    
-  //   if(skip && authData) navigate(HomePath);
-  // }, [authData]);
 
   function enter() {
     const isChecked = skipRef.current?.ariaChecked;

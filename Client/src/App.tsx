@@ -22,5 +22,5 @@ export default function App() {
     </Route>
   ]);
 
-  return <RouterProvider router={createBrowserRouter(routeDefinition)}></RouterProvider>
+  return <RouterProvider router={createBrowserRouter(routeDefinition)}/>
 }

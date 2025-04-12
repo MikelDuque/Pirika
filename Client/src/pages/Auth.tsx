@@ -15,19 +15,21 @@ export default function Auth() {
 
   return (
     <>
-      <Button variant="ghost" icon="chevron-left" onClick={() => {navigate(-1)}}>Go back</Button>
-      <Card>
-        <CardHeader>
-          <CardTitle>{title}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {changeAuth ? <Register/> : <Login/>}
-        </CardContent>
-        <CardFooter>
-          {footer}
-          <Button variant="link" onClick={changeView}>{changeAuth ? "Sign in!" : "Sign up!"}</Button>
-        </CardFooter>
-      </Card>
+      <Button variant="ghost" icon="chevron-left" className="fixed top-2 left-2" onClick={() => {navigate(-1)}}>Go back</Button>
+      <section className="size-full flex items-center justify-center">
+        <Card>
+          <CardHeader>
+            <CardTitle>{title}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {changeAuth ? <Register/> : <Login/>}
+          </CardContent>
+          <CardFooter>
+            {footer}
+            <Button variant="link" onClick={changeView}>{changeAuth ? "Sign in!" : "Sign up!"}</Button>
+          </CardFooter>
+        </Card>
+      </section>
     </>
   )
 };

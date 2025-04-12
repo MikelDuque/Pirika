@@ -23,11 +23,15 @@
     @apply size-full
   }
 
+  * {
+    @apply border-foreground dark:border-dark-foreground
+  }
+
   body {
-    @apply bg-background text-foreground selection:bg-primary border-foreground;
+    @apply bg-background text-foreground selection:bg-primary;
 
     @variant dark {
-      @apply bg-dark-background text-dark-foreground border-dark-foreground;
+      @apply bg-dark-background text-dark-foreground;
     }
   }
 }

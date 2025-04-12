@@ -3,7 +3,7 @@ import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "../../../utils/utils"
 
-const inputVariants = cva([classes.input, "body"],{
+const inputVariants = cva([classes.input], {
   variants: {
     variant: {
       default: classes.default,
@@ -17,7 +17,7 @@ const inputVariants = cva([classes.input, "body"],{
 
 export const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input"> & VariantProps<typeof inputVariants>>(
   ({type, className, ...props}, ref) => (
-    <input type={type} className={cn(inputVariants, className)} ref={ref} {...props}/>
+    <input type={type} className={cn(inputVariants({className}))} ref={ref} {...props}/>
 ));
 
 Input.displayName = "Input";
