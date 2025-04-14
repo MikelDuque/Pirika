@@ -36,6 +36,160 @@ public class Seeder
 			}
 		];
 
+		/* --- GENRES --- */
+		Genre[] genres =
+		[
+			new Genre
+			{
+				Name = "Pop"
+			},
+			new Genre
+			{
+				Name = "Rock"
+			},
+			new Genre
+			{
+				Name = "Electronic"
+			},
+			new Genre
+			{
+				Name = "Urban"
+			},
+			new Genre
+			{
+				Name = "Latin"
+			},
+			new Genre
+			{
+				Name = "Jazz & Blues"
+			},
+			new Genre
+			{
+				Name = "Folk"
+			},
+		];
+
+		/* --- SONGS --- */
+		Song[] songs =
+		[
+			new Song
+			{
+				Title = "Cuídate",
+				SongPath = "/Music/1/1.mp3",
+				Cover = "Covers/1/A_1.jpg",
+				ReleaseYear = 2008,
+				PublicationDate = DateTime.Now
+			},
+			new Song
+			{
+				Title = "20 de Enero",
+				SongPath = "/Music/1/2.mp3",
+				Cover = "Covers/1/A_1.jpg",
+				ReleaseYear = 2008,
+				PublicationDate = DateTime.Now
+			},
+			new Song
+			{
+				Title = "El 28",
+				SongPath = "/Music/1/3.mp3",
+				Cover = "Covers/1/A_1.jpg",
+				ReleaseYear = 2008,
+				PublicationDate = DateTime.Now
+			},
+			new Song
+			{
+				Title = "París",
+				SongPath = "/Music/1/4.mp3",
+				Cover = "Covers/1/A_1.jpg",
+				ReleaseYear = 2008,
+				PublicationDate = DateTime.Now
+			},
+			new Song
+			{
+				Title = "La Playa",
+				SongPath = "/Music/1/5.mp3",
+				Cover = "Covers/1/A_1.jpg",
+				ReleaseYear = 2008,
+				PublicationDate = DateTime.Now
+			},
+			new Song
+			{
+				Title = "Muñeca de Trapo",
+				SongPath = "/Music/1/6.mp3",
+				Cover = "Covers/1/A_1.jpg",
+				ReleaseYear = 2008,
+				PublicationDate = DateTime.Now
+			},
+			new Song
+			{
+				Title = "Rosas",
+				SongPath = "/Music/1/7.mp3",
+				Cover = "Covers/1/A_1.jpg",
+				ReleaseYear = 2008,
+				PublicationDate = DateTime.Now
+			},
+			new Song
+			{
+				Title = "Dulce Locura",
+				SongPath = "/Music/1/8.mp3",
+				Cover = "Covers/1/A_1.jpg",
+				ReleaseYear = 2008,
+				PublicationDate = DateTime.Now
+			},
+			new Song
+			{
+				Title = "Cuéntame al Oído",
+				SongPath = "/Music/1/9.mp3",
+				Cover = "Covers/1/A_1.jpg",
+				ReleaseYear = 2008,
+				PublicationDate = DateTime.Now
+			},
+			new Song
+			{
+				Title = "Vestido Azul",
+				SongPath = "/Music/1/10.mp3",
+				Cover = "Covers/1/A_1.jpg",
+				ReleaseYear = 2008,
+				PublicationDate = DateTime.Now
+			},
+			new Song
+			{
+				Title = "Pop",
+				SongPath = "/Music/1/11.mp3",
+				Cover = "Covers/1/A_1.jpg",
+				ReleaseYear = 2008,
+				PublicationDate = DateTime.Now
+			},
+			new Song
+			{
+				Title = "Geografía",
+				SongPath = "/Music/1/12.mp3",
+				Cover = "Covers/1/A_1.jpg",
+				ReleaseYear = 2008,
+				PublicationDate = DateTime.Now
+			},
+			new Song
+			{
+				Title = "Mariposa",
+				SongPath = "/Music/1/13.mp3",
+				Cover = "Covers/1/A_1.jpg",
+				ReleaseYear = 2008,
+				PublicationDate = DateTime.Now
+			}
+		];
+
+		/* --- ALBUMS --- */
+		Album[] albums =
+		[
+			new Album
+			{
+				Title = "Grandes Éxitos",
+				Cover = "/Covers/1/A_1.jpg",
+				ReleaseYear = 2008,
+				PublicationDate = DateTime.Now
+			}
+		];
+
 		/* --- INSERCCIÓN ENTIDADES --- */
 		_dataContext.Users.AddRange(users);
 	}

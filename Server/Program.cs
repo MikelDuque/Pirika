@@ -42,7 +42,7 @@ builder.Services.AddSwaggerGen(options =>
 	{
 		BearerFormat = "JWT",
 		Name = "Authorization",
-		Description = "Introduce el sistema de autenticación de token en la cabecera de las peticiones http",
+		Description = "Introduce el sistema de autenticaciï¿½n de token en la cabecera de las peticiones http",
 		In = ParameterLocation.Header,
 		Type = SecuritySchemeType.Http,
 		Scheme = JwtBearerDefaults.AuthenticationScheme
@@ -57,6 +57,9 @@ builder.Services.AddScoped<DataContext>();
 builder.Services.AddScoped<UnitOfWork>();
 /* REPOSITORIES */
 builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<SongRepository>();
+builder.Services.AddScoped<AlbumRepository>();
+builder.Services.AddScoped<GenreRepository>();
 /* MAPPERS */
 /* SERVICES */
 builder.Services.AddScoped<AuthService>();
