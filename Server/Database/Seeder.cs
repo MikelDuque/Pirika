@@ -192,5 +192,8 @@ public class Seeder
 
 		/* --- INSERCCIÓN ENTIDADES --- */
 		_dataContext.Users.AddRange(users);
+		_dataContext.Genres.AddRange(genres);
+		_dataContext.Songs.AddRange(songs);
+		_dataContext.Albums.AddRange(albums);
 	}
 }
