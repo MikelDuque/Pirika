@@ -78,6 +78,7 @@ public class Seeder
 				SongPath = "/Music/1/1.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseYear = 2008,
+				AuthorId = 1,
 				PublicationDate = DateTime.Now
 			},
 			new Song
@@ -86,6 +87,7 @@ public class Seeder
 				SongPath = "/Music/1/2.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseYear = 2008,
+				AuthorId = 1,
 				PublicationDate = DateTime.Now
 			},
 			new Song
@@ -94,6 +96,7 @@ public class Seeder
 				SongPath = "/Music/1/3.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseYear = 2008,
+				AuthorId = 1,
 				PublicationDate = DateTime.Now
 			},
 			new Song
@@ -102,6 +105,7 @@ public class Seeder
 				SongPath = "/Music/1/4.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseYear = 2008,
+				AuthorId = 1,
 				PublicationDate = DateTime.Now
 			},
 			new Song
@@ -110,6 +114,7 @@ public class Seeder
 				SongPath = "/Music/1/5.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseYear = 2008,
+				AuthorId = 1,
 				PublicationDate = DateTime.Now
 			},
 			new Song
@@ -118,6 +123,7 @@ public class Seeder
 				SongPath = "/Music/1/6.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseYear = 2008,
+				AuthorId = 1,
 				PublicationDate = DateTime.Now
 			},
 			new Song
@@ -126,6 +132,7 @@ public class Seeder
 				SongPath = "/Music/1/7.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseYear = 2008,
+				AuthorId = 1,
 				PublicationDate = DateTime.Now
 			},
 			new Song
@@ -134,6 +141,7 @@ public class Seeder
 				SongPath = "/Music/1/8.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseYear = 2008,
+				AuthorId = 1,
 				PublicationDate = DateTime.Now
 			},
 			new Song
@@ -142,6 +150,7 @@ public class Seeder
 				SongPath = "/Music/1/9.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseYear = 2008,
+				AuthorId = 1,
 				PublicationDate = DateTime.Now
 			},
 			new Song
@@ -150,6 +159,7 @@ public class Seeder
 				SongPath = "/Music/1/10.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseYear = 2008,
+				AuthorId = 1,
 				PublicationDate = DateTime.Now
 			},
 			new Song
@@ -158,6 +168,7 @@ public class Seeder
 				SongPath = "/Music/1/11.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseYear = 2008,
+				AuthorId = 1,
 				PublicationDate = DateTime.Now
 			},
 			new Song
@@ -166,6 +177,7 @@ public class Seeder
 				SongPath = "/Music/1/12.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseYear = 2008,
+				AuthorId = 1,
 				PublicationDate = DateTime.Now
 			},
 			new Song
@@ -174,6 +186,7 @@ public class Seeder
 				SongPath = "/Music/1/13.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseYear = 2008,
+				AuthorId = 1,
 				PublicationDate = DateTime.Now
 			}
 		];
@@ -186,6 +199,7 @@ public class Seeder
 				Title = "Grandes Éxitos",
 				Cover = "/Covers/1/A_1.jpg",
 				ReleaseYear = 2008,
+				AuthorId = 1,
 				PublicationDate = DateTime.Now
 			}
 		];
@@ -193,6 +207,8 @@ public class Seeder
 		/* --- INSERCCIÓN ENTIDADES --- */
 		_dataContext.Users.AddRange(users);
 		_dataContext.Genres.AddRange(genres);
+		_dataContext.SaveChanges();
+
 		_dataContext.Songs.AddRange(songs);
 		_dataContext.Albums.AddRange(albums);
 	}
