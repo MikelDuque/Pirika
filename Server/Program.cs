@@ -63,6 +63,8 @@ builder.Services.AddScoped<GenreRepository>();
 /* MAPPERS */
 /* SERVICES */
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<SongService>();
+builder.Services.AddScoped<AlbumService>();
 
 var app = builder.Build();
 

@@ -20,4 +20,5 @@ public class Song
 	public ICollection<Album> Albums { get; set; } = [];
 	public ICollection<Genre> Genres { get; set; } = [];
 	public ICollection<User> Collaborators { get; set; }
+	public ICollection<Queue> Queue { get; set; }
 }

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Server.Models.Enums;
 
 namespace Server.Database.Entities;
@@ -13,7 +12,7 @@ public class User
 	public required string Mail { get; set; }
 	public required string Password { get; set; }
 	public string Avatar {  get; set; }
-	public Role	Role { get; set; }
+	public RoleEnum	Role { get; set; }
 	public bool IsBanned { get; set; }
 
 	/* 1-M Relationships */
@@ -21,6 +20,7 @@ public class User
 	public ICollection<Song> Songs { get; }
 
 	/* M-N Relationships */
-	public ICollection<Song> CollabSongs { get; }
 	public ICollection<Album> CollabAlbums { get; }
+	public ICollection<Song> CollabSongs { get; }
+	public ICollection<Queue> Queue { get; set; } = [];
 }

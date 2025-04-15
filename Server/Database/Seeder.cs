@@ -31,7 +31,7 @@ public class Seeder
 				Password = HashHelper.Hash("12345"),
 				DisplayName = "Mikel",
 				Avatar = "/ProfilePictures/DefaultAvatar2.png",
-				Role = Role.Admin,
+				Role = RoleEnum.Admin,
 				IsBanned = false
 			}
 		];

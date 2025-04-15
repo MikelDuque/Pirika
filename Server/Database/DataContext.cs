@@ -19,9 +19,9 @@ public class DataContext : DbContext
 		string connectionString = Environment.GetEnvironmentVariable("DATABASE_CONNECTION");
 
 		#if DEBUG
-				optionsBuilder.UseSqlite($"DataSource={baseDir}{localPath}");
+			optionsBuilder.UseSqlite($"DataSource={baseDir}{localPath}");
 		#else
-				optionsBuilder.UseMySql(connectionString,ServerVersion.AutoDetect(connectionString));
+			optionsBuilder.UseMySql(connectionString,ServerVersion.AutoDetect(connectionString));
 		#endif
 	}
 
