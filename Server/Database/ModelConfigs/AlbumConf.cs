@@ -15,5 +15,9 @@ public class AlbumConf : IEntityTypeConfiguration<Album>
 		/* M-N Relationship (Collaborators) */
 		builder.HasMany(album => album.Collaborators)
       .WithMany(user => user.CollabAlbums);
+		
+		/* M-N Relationship (Genres) */
+		builder.HasMany(album => album.Genres)
+      .WithMany(genre => genre.Albums);
   }
 }

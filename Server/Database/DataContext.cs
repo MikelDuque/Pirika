@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Server.Database.Entities;
 
-
 namespace Server.Database;
 
 public class DataContext : DbContext
@@ -12,6 +11,9 @@ public class DataContext : DbContext
 	public DbSet<Album> Albums { get; set; }
 	public DbSet<Genre> Genres { get; set; }
 
+	//Relationships
+	public DbSet<Queue> Queues { get; set; }
+
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{
 		string baseDir = AppDomain.CurrentDomain.BaseDirectory;
@@ -21,7 +23,7 @@ public class DataContext : DbContext
 		#if DEBUG
 			optionsBuilder.UseSqlite($"DataSource={baseDir}{localPath}");
 		#else
-			optionsBuilder.UseMySql(connectionString,ServerVersion.AutoDetect(connectionString));
+			optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 		#endif
 	}
 

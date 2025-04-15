@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Server.Database.Entities.Relationships;
 
 namespace Server.Database.Entities;
 
@@ -17,6 +18,7 @@ public class Album
 
 	/* M-N Relationships */
 	public ICollection<Song> Songs { get; set; } = [];
-	public ICollection<Genre> Genres { get; set; } = [];
+	// public ICollection<Genre> Genres { get; set; } = [];
+		public ICollection<AlbumGenre> Genres { get; set; } = [];
 	public ICollection<User> Collaborators { get; set; }
 }
