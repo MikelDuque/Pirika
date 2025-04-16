@@ -1,14 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Server.Models.Enums;
 
 namespace Server.Database.Entities;
 
-public class Album
+public class Collection
 {
 	public long Id { get; set; }
 	public required string Title { get; set; }
 	public string Cover { get; set; }
-	public int ReleaseYear { get; set; }
+	public required DateOnly ReleaseDate { get; set; }
 	public required DateTime PublicationDate { get; set; }
+	public required CollectionType Type { get; set; }
 
 	/* 1-M Relationships */
 	[ForeignKey("Author")]

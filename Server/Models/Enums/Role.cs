@@ -1,6 +1,6 @@
 ﻿namespace Server.Models.Enums;
 
-public enum RoleEnum
+public enum Role
 {
 	None,
 	Admin

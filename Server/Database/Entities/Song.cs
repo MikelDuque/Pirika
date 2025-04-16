@@ -8,7 +8,7 @@ public class Song
 	public required string Title { get; set; }
 	public required string SongPath { get; set; }
 	public string Cover { get; set; }
-	public int ReleaseYear { get; set; }
+	public required DateOnly ReleaseDate { get; set; }
 	public required DateTime PublicationDate { get; set; }
 
 	/* 1-M Relationships */
@@ -17,7 +17,7 @@ public class Song
 	public User Author { get; set; }
 
 	/* M-N Relationships */
-	public ICollection<Album> Albums { get; set; } = [];
+	public ICollection<Collection> Collections { get; set; } = [];
 	public ICollection<Genre> Genres { get; set; } = [];
 	public ICollection<User> Collaborators { get; set; }
 	public ICollection<Queue> Queue { get; set; }

@@ -2,9 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Server.Database.Entities;
 
-public class AlbumConf : IEntityTypeConfiguration<Album>
+public class AlbumConf : IEntityTypeConfiguration<Collection>
 {
-  public void Configure(EntityTypeBuilder<Album> builder)
+  public void Configure(EntityTypeBuilder<Collection> builder)
   {
     /* 1-M Relationship (Author) */
 		builder.HasOne(album => album.Author)
