@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Server.Database.Entities.Relationships;
 
 namespace Server.Database.Entities;
 
@@ -10,6 +11,7 @@ public class Song
 	public string Cover { get; set; }
 	public required DateOnly ReleaseDate { get; set; }
 	public required DateTime PublicationDate { get; set; }
+	public required bool isSingle { get; set; } = true;
 
 	/* 1-M Relationships */
 	[ForeignKey("Author")]
@@ -18,7 +20,8 @@ public class Song
 
 	/* M-N Relationships */
 	public ICollection<Collection> Collections { get; set; } = [];
-	public ICollection<Genre> Genres { get; set; } = [];
+	// public ICollection<Genre> Genres { get; set; } = [];
+	public ICollection<SongGenre> Genres { get; set; } = [];
 	public ICollection<User> Collaborators { get; set; }
 	public ICollection<Queue> Queue { get; set; }
 }

@@ -6,4 +6,9 @@ namespace Server.Database.Repositories;
 public class SongRepository : Repository<Song>
 {
   public SongRepository(DataContext dataContext) : base(dataContext) { }
+
+  public IEnumerable<Song> GetSingleSongs()
+  {
+    return GetQueryable().Where(song => song.isSingle == true).ToList();
+  }
 }
