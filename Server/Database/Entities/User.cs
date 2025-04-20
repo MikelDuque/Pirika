@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Server.Database.Entities.Relationships;
 using Server.Models.Enums;
 
 namespace Server.Database.Entities;
@@ -16,11 +17,12 @@ public class User
 	public bool IsBanned { get; set; }
 
 	/* 1-M Relationships */
-	public ICollection<Collection> Albums { get; }
-	public ICollection<Song> Songs { get; }
+	public IEnumerable<Collection> Collections { get; }
+	public IEnumerable<Song> Songs { get; }
 
 	/* M-N Relationships */
-	public ICollection<Collection> CollabAlbums { get; }
-	public ICollection<Song> CollabSongs { get; }
-	public ICollection<Queue> Queue { get; set; } = [];
+	public IEnumerable<Collection> CollabCollections { get; }
+	public IEnumerable<Song> CollabSongs { get; }
+		public IEnumerable<Collaboration> Collaborations { get; set; }
+		public IEnumerable<Queue> Queue { get; set; } = [];
 }

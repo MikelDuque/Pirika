@@ -7,11 +7,10 @@ public class Song
 {
 	public long Id { get; set; }
 	public required string Title { get; set; }
-	public required string SongPath { get; set; }
+	public required string Path { get; set; }
 	public string Cover { get; set; }
 	public required DateOnly ReleaseDate { get; set; }
 	public required DateTime PublicationDate { get; set; }
-	public required bool isSingle { get; set; } = true;
 
 	/* 1-M Relationships */
 	[ForeignKey("Author")]
@@ -19,9 +18,11 @@ public class Song
 	public User Author { get; set; }
 
 	/* M-N Relationships */
-	public ICollection<Collection> Collections { get; set; } = [];
-	// public ICollection<Genre> Genres { get; set; } = [];
-	public ICollection<SongGenre> Genres { get; set; } = [];
-	public ICollection<User> Collaborators { get; set; }
-	public ICollection<Queue> Queue { get; set; }
+	public IEnumerable<Collection> Collections { get; set; } = new List<Collection>();
+		public IEnumerable<CollectionSong> CollectionSongs { get; set; } = new List<CollectionSong>();
+	public IEnumerable<Genre> Genres { get; } = new List<Genre>();
+		public IEnumerable<SongGenre> SongGenres { get; set; } = new List<SongGenre>();
+	public IEnumerable<User> Collaborators { get; set; }
+		public IEnumerable<Collaboration> Collaborations { get; set; }
+	public IEnumerable<Queue> Queue { get; set; }
 }

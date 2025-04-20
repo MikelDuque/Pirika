@@ -3,10 +3,10 @@ import { FetchProps } from "../types";
 import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 
-export function useFetch({url, type, token, params, needAuth, condition}: FetchProps) {
+export function useFetch<T = unknown>({url, type, token, params, needAuth, condition}: FetchProps) {
   const {logOut} = useAuth();
 
-  const [fetchData, setFetchData] = useState<unknown>(undefined);
+  const [fetchData, setFetchData] = useState<T | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [fetchError, setFetchError] = useState<Record<string, unknown> | unknown>(null);
 

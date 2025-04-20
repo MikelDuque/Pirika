@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Server.Database.Entities;
+using Server.Database.Entities.Relationships;
 
 namespace Server.Database;
 
@@ -8,11 +9,15 @@ public class DataContext : DbContext
 	/* ENTITIES */
 	public DbSet<User> Users { get; set; }
 	public DbSet<Song> Songs { get; set; }
-	public DbSet<Collection> Albums { get; set; }
+	public DbSet<Collection> Collections { get; set; }
 	public DbSet<Genre> Genres { get; set; }
 
 	//Relationships
+	public DbSet<SongGenre> SongGenres { get; set; }
+	public DbSet<CollectionGenre> CollectionGenres { get; set; }
+	public DbSet<CollectionSong> CollectionSongs { get; set; }
 	public DbSet<Queue> Queues { get; set; }
+	public DbSet<Collaboration> Collaborations { get; set; }
 
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{
@@ -31,7 +36,7 @@ public class DataContext : DbContext
 	{
 		base.OnModelCreating(modelBuilder);
 
-		modelBuilder.ApplyConfiguration(new AlbumConf());
+		modelBuilder.ApplyConfiguration(new CollectionConf());
 		modelBuilder.ApplyConfiguration(new SongConf());
 		/* 
 		Puedo cambiarlo por esto en caso de especificar más configuraciones de OnModelcreating:

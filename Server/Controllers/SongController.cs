@@ -17,14 +17,27 @@ public class SongController : Controller
 		_songService = songService;
 	}
 
-	[HttpPost("Publish")]
+	[HttpGet("Get_Songs")]
+	public ActionResult GetAllSongs()
+	{
+		try
+		{
+			return Ok(_songService.GetAllSongs());
+		}
+		catch (Exception error)
+		{
+			return BadRequest(new { Message = error.ToString() });
+		}
+	}
+
+	[HttpPost("Publish")]	//No se si al final la emplearé, lo dudo.
 	public ActionResult Publish([FromForm] NewSong newSong)
 	{
 		if (newSong == null) return BadRequest(new { Message = "Album data is missing" });
 
 		try
 		{
-			return Ok(_songService.Publish(newSong));
+			return Ok();	//De momento no tiene logica, se hace todo a través de las colecciones
 		}
 		catch (Exception error)
 		{

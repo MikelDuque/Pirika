@@ -10,17 +10,21 @@ public class UnitOfWork
 	private UserRepository _userRepository = null!;
 	public UserRepository UserRepository => _userRepository ??= new UserRepository(_dataContext);
 
+	/* GENRE */
+	private GenreRepository _genreRepository = null!;
+	public GenreRepository GenreRepository => _genreRepository ??= new GenreRepository(_dataContext);
+
 	/* SONG */
 	private SongRepository _songRepository = null!;
 	public SongRepository SongRepository => _songRepository ??= new SongRepository(_dataContext);
 
-	/* ALBUM */
-	private AlbumRepository _albumRepository = null!;
-	public AlbumRepository AlbumRepository => _albumRepository ??= new AlbumRepository(_dataContext);
+	/* COLLECTION */
+	private CollectionRepository _collectionRepository = null!;
+	public CollectionRepository CollectionRepository => _collectionRepository ??= new CollectionRepository(_dataContext);
 
-	/* GENRE */
-	private GenreRepository _genreRepository = null!;
-	public GenreRepository GenreRepository => _genreRepository ??= new GenreRepository(_dataContext);
+	/* COLLECTIONSONG */
+	private CollectionSongRepository _collectionSongRepository = null!;
+	public CollectionSongRepository CollectionSongRepository => _collectionSongRepository ??= new CollectionSongRepository(_dataContext);
 
 	/* UNIT OF WORK */
 	public UnitOfWork(DataContext dataContext)

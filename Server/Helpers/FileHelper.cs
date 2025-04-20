@@ -19,30 +19,19 @@ public class FileHelper
 		return await SaveFile(image, username, "ProfilePictures");
 	}
 
-	public static async Task<IEnumerable<string>> SaveSong(IFormFile song, IFormFile cover, int songId, int authorId)
+	public static async Task<string> SaveCover(IFormFile cover, long collectionId, long authorId)
 	{
-		string songPath = $"Music/{authorId}";
 		string coverPath = $"Covers/{authorId}";
 
-		return
-		[
-			await SaveFile(cover, $"S_{songId}", coverPath),
-			await SaveFile(song, songId.ToString(), songPath)
-		];
+		return await SaveFile(cover, collectionId.ToString(), coverPath);
 	}
 
-	// public async IEnumerable<string> SaveAlbum(NewAlbum album, int albumId)
-	// {
-	// 	string coverPath = $"Covers/{album.AuthorId}";
+	public static async Task<string> SaveSong(IFormFile cover, long songId, long collectionId, long authorId)
+	{
+		string songPath = $"Music/{authorId}/{collectionId}";
 
-	// 	IEnumerable<string> paths = [await SaveFile(album.Cover, $"A_{albumId}", coverPath)];
-		
-	// 	foreach (IFormFile song in album.Songs)
-	// 	{
-	// 		string songPath = $"Music/{album.AuthorId}";
-	// 		await SaveFile(song, songId.ToString(), songPath)
-	// 	}
-	// }
+		return await SaveFile(cover, songId.ToString(), songPath);
+	}
 
 	private static async Task<string> SaveFile(IFormFile file, string name, string path )
 	{

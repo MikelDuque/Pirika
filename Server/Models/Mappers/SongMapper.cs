@@ -1,4 +1,5 @@
 using Server.Database.Entities;
+using Server.Helpers;
 using Server.Models.DTOs.Song;
 
 namespace Server.Models.Mappers;
@@ -6,9 +7,12 @@ namespace Server.Models.Mappers;
 public class SongMapper
 {
   private readonly ArtistMapper _artistMapper;
-  public SongMapper(ArtistMapper artistMapper)
+	private readonly GenreMapper _genreMapper;
+
+  public SongMapper(ArtistMapper artistMapper, GenreMapper genreMapper)
   {
     _artistMapper = artistMapper;
+		_genreMapper = genreMapper;
   }
 
   //To Entity
@@ -17,9 +21,9 @@ public class SongMapper
 		return new Song
 		{
 			Title = song.Title,
-      SongPath = "",  //Llamar a los helpers
+      Path = "",
       Cover = "",
-      ReleaseYear = song.ReleaseYear,
+      ReleaseDate = song.ReleaseDate,
       AuthorId = song.AuthorId,
       PublicationDate = DateTime.Now
 		};
@@ -36,11 +40,14 @@ public class SongMapper
 		return new SongDto
 		{
 			Id = song.Id,
-      Title = song.Title,
-      Cover = song.Cover,
-      ReleaseYear = song.ReleaseYear,
-      PublicationDate = song.PublicationDate,
-      Author = _artistMapper.ToDto(song.Author)
+			Title = song.Title,
+			Cover = song.Cover,
+			Path = song.Path,
+			ReleaseDate = song.ReleaseDate,
+			PublicationDate = song.PublicationDate,
+			Author = _artistMapper.ToDto(song.Author),
+			Collaborators = song.Collaborators != null ? _artistMapper.ToDto(song.Collaborators) : [],
+			Genres = _genreMapper.ToEnum(song.Genres)
 		};
 	}
 

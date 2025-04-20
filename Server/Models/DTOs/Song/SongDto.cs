@@ -8,10 +8,11 @@ public class SongDto
   public long Id { get; set; }
 	public required string Title { get; set; }
 	public string Cover { get; set; }
-	public int ReleaseYear { get; set; }
+	public DateOnly ReleaseDate { get; set; }
+	public string Path { get; set; }
 	public required DateTime PublicationDate { get; set; }
   
   public required Artist Author { get; set; }
-  public ICollection<Artist> Collaborators { get; set; }
-  public ICollection<GenreEnum> Genres { get; set; }
+  public IEnumerable<Artist> Collaborators { get; set; }
+  public IEnumerable<GenreEnum> Genres { get; set; }
 }

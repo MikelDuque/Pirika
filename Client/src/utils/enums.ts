@@ -5,3 +5,10 @@ export enum Crud {
   DELETE = "DELETE",
   PATCH = "PATCH"
 }
+
+export enum CollectionType {
+  Single,
+	EP,
+	Album,
+	Playlist
+}

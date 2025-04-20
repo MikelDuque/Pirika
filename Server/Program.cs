@@ -11,6 +11,7 @@ using Server.Database;
 using Server.Database.Repositories;
 using Server.Websocket;
 using Server.Services;
+using Server.Models.Mappers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,13 +59,19 @@ builder.Services.AddScoped<UnitOfWork>();
 /* REPOSITORIES */
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<SongRepository>();
-builder.Services.AddScoped<AlbumRepository>();
+builder.Services.AddScoped<CollectionRepository>();
+builder.Services.AddScoped<CollectionSongRepository>();
 builder.Services.AddScoped<GenreRepository>();
 /* MAPPERS */
+builder.Services.AddScoped<GenreMapper>();
+builder.Services.AddScoped<ArtistMapper>();
+builder.Services.AddScoped<CollaborationMapper>();
+builder.Services.AddScoped<CollectionMapper>();
+builder.Services.AddScoped<SongMapper>();
 /* SERVICES */
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<SongService>();
-builder.Services.AddScoped<AlbumService>();
+builder.Services.AddScoped<CollectionService>();
 
 var app = builder.Build();
 

@@ -19,8 +19,9 @@ public class Collection
 	public User Author { get; set; }
 
 	/* M-N Relationships */
-	public ICollection<Song> Songs { get; set; } = [];
-	// public ICollection<Genre> Genres { get; set; } = [];
-		public ICollection<AlbumGenre> Genres { get; set; } = [];
-	public ICollection<User> Collaborators { get; set; }
+	public IEnumerable<Song> Songs { get; set; } = new List<Song>();
+		public IEnumerable<CollectionSong> CollectionSongs { get; set; } = new List<CollectionSong>();
+	public IEnumerable<Genre> Genres { get; set; } = new List<Genre>();
+		public IEnumerable<CollectionGenre> CollectionGenres { get; set; } = new List<CollectionGenre>();
+	public IEnumerable<User> Collaborators { get; set; }
 }

@@ -1,4 +1,5 @@
 ﻿using Server.Database.Entities;
+using Server.Database.Entities.Relationships;
 using Server.Helpers;
 using Server.Models.Enums;
 
@@ -75,7 +76,7 @@ public class Seeder
 			new Song
 			{
 				Title = "Cuídate",
-				SongPath = "/Music/1/1.mp3",
+				Path = "/Music/1/1.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 1,
@@ -84,7 +85,7 @@ public class Seeder
 			new Song
 			{
 				Title = "20 de Enero",
-				SongPath = "/Music/1/2.mp3",
+				Path = "/Music/1/2.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 1,
@@ -93,7 +94,7 @@ public class Seeder
 			new Song
 			{
 				Title = "El 28",
-				SongPath = "/Music/1/3.mp3",
+				Path = "/Music/1/3.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 1,
@@ -102,7 +103,7 @@ public class Seeder
 			new Song
 			{
 				Title = "París",
-				SongPath = "/Music/1/4.mp3",
+				Path = "/Music/1/4.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 1,
@@ -111,7 +112,7 @@ public class Seeder
 			new Song
 			{
 				Title = "La Playa",
-				SongPath = "/Music/1/5.mp3",
+				Path = "/Music/1/5.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 1,
@@ -120,7 +121,7 @@ public class Seeder
 			new Song
 			{
 				Title = "Muñeca de Trapo",
-				SongPath = "/Music/1/6.mp3",
+				Path = "/Music/1/6.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 1,
@@ -129,7 +130,7 @@ public class Seeder
 			new Song
 			{
 				Title = "Rosas",
-				SongPath = "/Music/1/7.mp3",
+				Path = "/Music/1/7.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 1,
@@ -138,7 +139,7 @@ public class Seeder
 			new Song
 			{
 				Title = "Dulce Locura",
-				SongPath = "/Music/1/8.mp3",
+				Path = "/Music/1/8.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 1,
@@ -147,7 +148,7 @@ public class Seeder
 			new Song
 			{
 				Title = "Cuéntame al Oído",
-				SongPath = "/Music/1/9.mp3",
+				Path = "/Music/1/9.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 1,
@@ -156,7 +157,7 @@ public class Seeder
 			new Song
 			{
 				Title = "Vestido Azul",
-				SongPath = "/Music/1/10.mp3",
+				Path = "/Music/1/10.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 1,
@@ -165,7 +166,7 @@ public class Seeder
 			new Song
 			{
 				Title = "Pop",
-				SongPath = "/Music/1/11.mp3",
+				Path = "/Music/1/11.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 1,
@@ -174,7 +175,7 @@ public class Seeder
 			new Song
 			{
 				Title = "Geografía",
-				SongPath = "/Music/1/12.mp3",
+				Path = "/Music/1/12.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 1,
@@ -183,7 +184,7 @@ public class Seeder
 			new Song
 			{
 				Title = "Mariposa",
-				SongPath = "/Music/1/13.mp3",
+				Path = "/Music/1/13.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 1,
@@ -201,8 +202,27 @@ public class Seeder
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 1,
 				PublicationDate = DateTime.Now,
-				Type = CollectionType.Album
+				Type = CollectionType.Album,
+				Songs = songs
 			}
+		];
+
+		/* --- ALBUM-SONG RELATIONSHIP --- */
+		CollectionSong[] relationships =
+		[
+			new CollectionSong { SongId = 1, CollectionId = 1 },
+			new CollectionSong { SongId = 2, CollectionId = 1 },
+			new CollectionSong { SongId = 3, CollectionId = 1 },
+			new CollectionSong { SongId = 4, CollectionId = 1 },
+			new CollectionSong { SongId = 5, CollectionId = 1 },
+			new CollectionSong { SongId = 6, CollectionId = 1 },
+			new CollectionSong { SongId = 7, CollectionId = 1 },
+			new CollectionSong { SongId = 8, CollectionId = 1 },
+			new CollectionSong { SongId = 9, CollectionId = 1 },
+			new CollectionSong { SongId = 10, CollectionId = 1 },
+			new CollectionSong { SongId = 11, CollectionId = 1 },
+			new CollectionSong { SongId = 12, CollectionId = 1 },
+			new CollectionSong { SongId = 13, CollectionId = 1 }
 		];
 
 		/* --- INSERCCIÓN ENTIDADES --- */
@@ -210,7 +230,11 @@ public class Seeder
 		_dataContext.Genres.AddRange(genres);
 		_dataContext.SaveChanges();
 
-		_dataContext.Songs.AddRange(songs);
-		_dataContext.Albums.AddRange(albums);
+		//_dataContext.Songs.AddRange(songs);
+		_dataContext.Collections.AddRange(albums);
+		_dataContext.SaveChanges();
+
+		//_dataContext.CollectionSongs.AddRange(relationships);
+
 	}
 }

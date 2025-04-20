@@ -1,4 +1,17 @@
-import { Crud } from "./enums";
+import { CollectionType, Crud } from "./enums";
+
+export interface TaskResult<T> {
+  asyncState: any;
+  creationOptions: number;
+  exception: any;
+  id: number;
+  isCanceled: boolean;
+  isCompleted: boolean;
+  isCompletedSuccessfully: boolean;
+  isFaulted: boolean;
+  result: T;
+  status: number;
+}
 
 export interface ChildrenProp {
   children: React.ReactNode
@@ -25,4 +38,28 @@ export interface DecodedToken {
 export interface AuthData {
   token: string,
   decodedToken: DecodedToken
+}
+
+export interface Artist {
+  id: number,
+  name: string
+}
+
+export interface Song {
+  id: number,
+	title: string,
+	cover: string,
+  path: string,
+	releaseDate: string,
+	publicationDate: string
+}
+
+export interface Collection {
+  id: number,
+  title: string,
+  cover: string,
+  releaseDate: string,
+  publicationDate: string,
+  type: CollectionType,
+  songs: Song[]
 }

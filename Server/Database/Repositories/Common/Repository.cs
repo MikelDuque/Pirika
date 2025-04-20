@@ -10,7 +10,7 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
 	{
 		_dbContext = dbContext;
 	}
-	public async Task<ICollection<TEntity>> GetAllAsync()
+	public async Task<IEnumerable<TEntity>> GetAllAsync()
 	{
 		return await _dbContext.Set<TEntity>().ToArrayAsync();
 	}

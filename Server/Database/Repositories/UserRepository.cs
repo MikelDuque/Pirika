@@ -14,4 +14,13 @@ public class UserRepository : Repository<User>
 		.Where(user => identifier.Contains('@') ? user.Mail == identifier.ToLowerInvariant() : user.Username == identifier)
 		.SingleOrDefaultAsync();
 	}
+
+	public async Task<IEnumerable<Song>> SongsPublished(IEnumerable<Song> songs, long userId)
+	{
+		return await GetQueryable()
+			.Where(user => user.Id == userId)
+			.SelectMany(user => user.Songs)
+			.Where(song => songs.Any(newSong => newSong.Id == song.Id || newSong.Title == song.Title))
+			.ToListAsync();
+	}
 }
