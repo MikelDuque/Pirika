@@ -2,6 +2,7 @@ using Server.Database.Entities;
 using Server.Helpers;
 using Server.Models.DTOs;
 using Server.Models.DTOs.Collection;
+using Server.Models.Enums;
 
 namespace Server.Models.Mappers;
 
@@ -27,7 +28,7 @@ public class CollectionMapper
       ReleaseDate = collection.ReleaseDate,
       PublicationDate = DateTime.Now,
 			AuthorId = collection.AuthorId,
-			Type = collection.Type,
+			Type = (CollectionType)collection.Type,
 			Songs = _songMapper.ToEntity(collection.Songs)
 		};
 	}

@@ -5,10 +5,13 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "JWT_KEY": "kj453gjkuewh345rgfkuwshb455gfuswgufh567swbguf876gswedufgsuwygfus345wgfug",
+        "DATABASE_CONNECTION": "",
+        "LOCAL_DATABASE": "PirikaDB.db"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5241"
+      "applicationUrl": "http://localhost:5241;https://localhost:7005"
     },
     "https": {
       "commandName": "Project",

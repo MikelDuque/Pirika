@@ -48,7 +48,7 @@ public class SongService
 			if (thisSong != null) publishedSongs.Append(thisSong);
 		}
 
-		await _unitOfWork.SaveAsync();
+		// await _unitOfWork.SaveAsync();
 		return publishedSongs;
 	}
 

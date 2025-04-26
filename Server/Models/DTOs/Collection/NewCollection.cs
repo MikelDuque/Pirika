@@ -7,7 +7,7 @@ public class NewCollection
 {
 	public required string Title { get; set; }
 	public DateOnly ReleaseDate { get; set; }
-	public CollectionType Type { get; set; }
+	public int Type { get; set; }
 	public IFormFile Cover { get; set; }
 
 	public long AuthorId { get; set; }

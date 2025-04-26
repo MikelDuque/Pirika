@@ -42,14 +42,22 @@ public class CollectionService
 
 		Collection thisCollection = _collectionMapper.ToEntity(newCollection);
 		Collection publishedCollection = await _unitOfWork.CollectionRepository.InsertAsync(thisCollection);
-
+		await _unitOfWork.SaveAsync();
 		publishedCollection.Cover = await FileHelper.SaveCover(newCollection.Cover, publishedCollection.Id, newCollection.AuthorId);
 
 		IEnumerable<Song> publishedSongs = await _songService.PublishSongs(newCollection.Songs, publishedCollection);
-
+		publishedCollection.Songs = publishedSongs;
 		await _unitOfWork.CollectionSongRepository.InsertAsync(publishedSongs, publishedCollection.Id);
 
 		return await _unitOfWork.SaveAsync();
+
+		/*
+		1º Insert collection + songs
+		1.5º Save async
+		2º Cover + file songs
+		3º update con eso
+		4º Save Async
+		*/
 	}
 
 	/* DELETE */
