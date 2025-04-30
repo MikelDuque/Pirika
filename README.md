@@ -8,6 +8,10 @@ We believe in the idea that music is magical, and that songs can transport you t
 
 ---
 
+CHECKPOINTS
+30/04 => [link](https://drive.google.com/file/d/16SaESZih73EWXbNsH6w9-J5whzQyNaXj/view?usp=sharing)
+---
+
 Here you can know more about this final project:
 
 [Notion Page](https://www.notion.so/Pirika-1b425bae199580678bbff2d61a7f42d8?pvs=4)
