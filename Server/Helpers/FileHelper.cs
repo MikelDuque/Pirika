@@ -26,11 +26,11 @@ public class FileHelper
 		return await SaveFile(cover, collectionId.ToString(), coverPath);
 	}
 
-	public static async Task<string> SaveSong(IFormFile cover, long songId, long collectionId, long authorId)
+	public static async Task<string> SaveSong(IFormFile song, long songId, long collectionId, long authorId)
 	{
 		string songPath = $"Music/{authorId}/{collectionId}";
 
-		return await SaveFile(cover, songId.ToString(), songPath);
+		return await SaveFile(song, songId.ToString(), songPath);
 	}
 
 	private static async Task<string> SaveFile(IFormFile file, string name, string path )

@@ -6,7 +6,7 @@ import { useAuth } from "../../contexts/AuthContext";
 export function useFetch<T = unknown>({url, type, token, params, needAuth, condition}: FetchProps) {
   const {logOut} = useAuth();
 
-  const [fetchData, setFetchData] = useState<T | undefined>(undefined);
+  const [fetchData, setFetchData] = useState<T | unknown>(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [fetchError, setFetchError] = useState<Record<string, unknown> | unknown>(null);
 
@@ -14,7 +14,7 @@ export function useFetch<T = unknown>({url, type, token, params, needAuth, condi
     try {
       setIsLoading(true);
 
-      const data = await fetchEndpoint({url, type, token, params, needAuth});    
+      const data = await fetchEndpoint({url, type, token, params, needAuth}) as T;    
       setFetchData(data);
       setFetchError(null);
 

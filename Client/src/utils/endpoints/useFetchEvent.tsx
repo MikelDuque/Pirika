@@ -6,15 +6,15 @@ import { useAuth } from "../../contexts/AuthContext";
 export default function useFetch() {
   const {logOut} = useAuth();
 
-  const [fetchData, setFetchData] = useState<Promise<unknown> | undefined>(undefined);
+  const [fetchData, setFetchData] = useState<unknown | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [fetchError, setFetchError] = useState<Record<string, unknown> | unknown>(null);
 
-  async function fetchingData ({url, type, token, params, needAuth}: FetchProps) {
+  async function fetchingData<T = unknown>({url, type, token, params, needAuth}: FetchProps) {
     try {
       setIsLoading(true);
 
-      const data = await fetchEndpoint({url, type, token, params, needAuth});    
+      const data = await fetchEndpoint({url, type, token, params, needAuth}) as T;    
       setFetchData(data);
       setFetchError(null);
 

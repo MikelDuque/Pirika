@@ -11,6 +11,8 @@ const API_AUTH_URL = `${API_BASE_URL}/api/Auth`;
 
 /* --- COLLECTION CONTROLLER --- */
 const API_COLLECTION_URL = `${API_BASE_URL}/api/Collection`;
+  export function GET_SONG(id: number) {return `${API_COLLECTION_URL}/Get_Song/${id}`};
+  export function GET_COLLECTION(id: number) {return `${API_COLLECTION_URL}/Get_Collection/${id}`};
 
   
 /* --- SONG CONTROLLER --- */

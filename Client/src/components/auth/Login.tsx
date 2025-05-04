@@ -32,7 +32,7 @@ export default function Login() {
   return (
     <>
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-3">
         <FormField
           control={form.control}
           name="identifier"
@@ -59,7 +59,7 @@ export default function Login() {
               <FormLabel>Password</FormLabel>
               <FormControl>
                 <Input
-                  type="text"
+                  type="password"
                   placeholder="Type your password..."
                   {...field}
                 />
@@ -73,7 +73,7 @@ export default function Login() {
           control={form.control}
           name="rememberMe"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="flex-row">
               <FormControl>
                 <Checkbox checked={field.value} onCheckedChange={field.onChange}/>
               </FormControl>

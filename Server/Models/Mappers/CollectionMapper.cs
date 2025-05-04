@@ -48,7 +48,7 @@ public class CollectionMapper
       Cover = collection.Cover,
       ReleaseDate = collection.ReleaseDate,
       PublicationDate = collection.PublicationDate,
-      Author = _artistMapper.ToDto(collection.Author),
+      //Author = _artistMapper.ToDto(collection.Author),
 			Type = collection.Type,
 			Collaborators = collection.Collaborators != null ? _artistMapper.ToDto(collection.Collaborators) : [],
 			Songs = _songMapper.ToDto(collection.Songs),

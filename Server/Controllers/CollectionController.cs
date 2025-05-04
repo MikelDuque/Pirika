@@ -10,7 +10,7 @@ namespace Server.Controllers;
 [Authorize]
 public class CollectionController : Controller
 {
-  private readonly CollectionService _collectionService;
+	private readonly CollectionService _collectionService;
 
 	public CollectionController(CollectionService collectionService)
 	{
@@ -23,6 +23,32 @@ public class CollectionController : Controller
 		try
 		{
 			return Ok(_collectionService.GetAllCollections());
+		}
+		catch (Exception error)
+		{
+			return BadRequest(new { Message = error.ToString() });
+		}
+	}
+
+	[HttpGet("Get_Collection/{id}")]
+	public ActionResult GetCollection(long id)
+	{
+		try
+		{
+			return Ok(_collectionService.GetCollection(id));
+		}
+		catch (Exception error)
+		{
+			return BadRequest(new { Message = error.ToString() });
+		}
+	}
+
+	[HttpPost("Search")]
+	public ActionResult SearchMusic([FromBody] Filter filter)
+	{
+		try
+		{
+			return Ok(_collectionService.SearchMusic());
 		}
 		catch (Exception error)
 		{

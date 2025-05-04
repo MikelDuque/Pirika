@@ -11,13 +11,11 @@ public class CollectionService
 {
   private readonly UnitOfWork _unitOfWork;
 	private readonly CollectionMapper _collectionMapper;
-	private readonly SongService _songService;
 
 	public CollectionService(UnitOfWork unitOfWork, CollectionMapper collectionMapper, SongService songService)
 	{
 		_unitOfWork = unitOfWork;
 		_collectionMapper = collectionMapper;
-		_songService = songService;
 	}
 
 	/* GET */
@@ -34,22 +32,36 @@ public class CollectionService
 		return _collectionMapper.ToDto(collection);
 	}
 
+	public async Task SearchMusic()
+	{
+
+	}
+
 	/* INSERT */
 
-	public async Task<bool> Publish(NewCollection newCollection)
+	public async Task<CollectionDto> Publish(NewCollection newCollection)
 	{
 		//Controlar tipo de audio e imagen que se recibe
 
 		Collection thisCollection = _collectionMapper.ToEntity(newCollection);
 		Collection publishedCollection = await _unitOfWork.CollectionRepository.InsertAsync(thisCollection);
 		await _unitOfWork.SaveAsync();
+
 		publishedCollection.Cover = await FileHelper.SaveCover(newCollection.Cover, publishedCollection.Id, newCollection.AuthorId);
+		List<Song> publishedSongs = publishedCollection.Songs.ToList();
 
-		IEnumerable<Song> publishedSongs = await _songService.PublishSongs(newCollection.Songs, publishedCollection);
-		publishedCollection.Songs = publishedSongs;
-		await _unitOfWork.CollectionSongRepository.InsertAsync(publishedSongs, publishedCollection.Id);
+		for (int i = 0; i < newCollection.Songs.Count(); i++)
+		{
+			IFormFile songFile = newCollection.Songs.FirstOrDefault(song => song.Id == i).Song;
 
-		return await _unitOfWork.SaveAsync();
+			publishedSongs[i].Cover = publishedCollection.Cover;
+			publishedSongs[i].Path = await FileHelper.SaveSong(songFile, publishedSongs[i].Id, publishedCollection.Id, publishedCollection.AuthorId);
+		}
+
+		Collection updatedCollection = await _unitOfWork.CollectionRepository.UpdateAsync(publishedCollection);
+		await _unitOfWork.SaveAsync();
+
+		return _collectionMapper.ToDto(updatedCollection);
 
 		/*
 		1º Insert collection + songs

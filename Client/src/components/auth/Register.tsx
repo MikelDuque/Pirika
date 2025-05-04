@@ -40,7 +40,7 @@ export default function Register() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-3">
         <FormField
           control={form.control}
           name="displayName"
@@ -137,7 +137,6 @@ export default function Register() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Avatar</FormLabel>
-              <FormDescription>Select your profile picture, if you want</FormDescription>
               <FormControl>
                 <Input
                   type="file"
@@ -149,6 +148,7 @@ export default function Register() {
                   }}
                 />
               </FormControl>
+              <FormDescription>Select your profile picture, if you want</FormDescription>
               <FormMessage>{form.formState.errors.avatar?.message}</FormMessage>
             </FormItem>
           )}
@@ -158,7 +158,7 @@ export default function Register() {
           control={form.control}
           name="rememberMe"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="flex-row">
               <FormControl>
                 <Checkbox checked={field.value} />
               </FormControl>

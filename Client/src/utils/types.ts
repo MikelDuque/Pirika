@@ -63,3 +63,12 @@ export interface Collection {
   type: CollectionType,
   songs: Song[]
 }
+
+export interface Player {
+  isPlaying: boolean,
+  duration: number,
+  currentTime: number,
+  volume: number,
+  isMuted: boolean,
+  repeat: boolean
+}

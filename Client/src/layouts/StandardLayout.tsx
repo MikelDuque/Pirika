@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Player from "../components/Player";
 
 export default function StandardLayout() {
   return (
@@ -10,6 +11,8 @@ export default function StandardLayout() {
         <Outlet/>
       </main>
       <Footer/>
+
+      <Player/>
     </>
   )
 }

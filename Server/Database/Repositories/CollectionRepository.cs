@@ -17,4 +17,15 @@ public class CollectionRepository : Repository<Collection>
 				.ThenInclude(song => song.Author).Include(song => song.Collaborators)
 			.ToListAsync();
 	}
+
+	public async Task<Collection> GetByIdAsync(long id)
+	{
+		return await GetQueryable()
+			.Where(collection => collection.Id == id)
+			.Include(collection => collection.Author)
+			.Include(collection => collection.Collaborators)
+			.Include(collection => collection.Songs)
+				.ThenInclude(song => song.Author).Include(song => song.Collaborators)
+			.FirstOrDefaultAsync();
+	}
 }

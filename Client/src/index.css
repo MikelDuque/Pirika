@@ -12,10 +12,12 @@
   --color-background: hsl(0 0 95%);
   --color-foreground: black;
   --color-primary: hsl(265 100% 20%);
+  --color-card: hsl(0 0 85%);
 
   /* DARK MODE */
   --color-dark-background: hsl(0 0 0.5%);
   --color-dark-foreground: white;
+  --color-dark-card: hsl(0 0 10%);
 }
 
 @layer base {
