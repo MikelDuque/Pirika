@@ -4,7 +4,7 @@ import { useAudio } from "../contexts/AudioContext";
 import { useEffect, useState } from "react";
 
 export default function Player() {
-  const {getPlayer, playerState, repeatSong} = useAudio();
+  const {getPlayer, playerState, repeatSong, changeSong} = useAudio();
   const [currentTime, setCurrentTime] = useState(0);
 
   useEffect(() => {
@@ -37,6 +37,7 @@ export default function Player() {
             icon="skip-back"
             size="icon"
             variant="ghost"
+            onClick={() => changeSong(playerState ? playerState?.currentSong -1 : 0)}
           />
           <Button
             icon={playerState?.isPlaying ? "pause" : "play"}
@@ -48,6 +49,7 @@ export default function Player() {
             icon="skip-forward"
             size="icon"
             variant="ghost"
+            onClick={() => changeSong(playerState ? playerState?.currentSong +1 : 0)}
           />
         </div>
         <div className="w-full flex gap-2 items-center justify-end place-self-end">

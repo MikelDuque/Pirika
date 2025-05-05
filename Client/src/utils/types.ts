@@ -65,6 +65,7 @@ export interface Collection {
 }
 
 export interface Player {
+  currentSong: number,
   isPlaying: boolean,
   duration: number,
   currentTime: number,

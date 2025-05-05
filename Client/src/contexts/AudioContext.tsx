@@ -13,7 +13,8 @@ type AudioContextType = {
   getPlayer: () => Howl,
   playerState?: Player,
   addToQueue: (id: number) => void,
-  repeatSong: () => void
+  repeatSong: () => void,
+  changeSong: (songId: number) => void
 }
 
 type AudioProviderProps = {
@@ -26,7 +27,8 @@ const AudioContext = createContext<AudioContextType>({
   getPlayer() {return new Howl({src: [GET_FILE("")]})},
   playerState: undefined,
   addToQueue() {},
-  repeatSong() {}
+  repeatSong() {},
+  changeSong() {}
 });
 
 export const useAudio = (): AudioContextType => {
@@ -48,6 +50,7 @@ export function AudioProvider({ children }: AudioProviderProps) {
   });
   const [queue, setQueue] = useState<Song[]>([]);
   const [playerState, setPlayerState] = useState<Player>({
+    currentSong: 0,
     isPlaying: false,
     currentTime: 0,
     duration: 0,
@@ -66,8 +69,9 @@ export function AudioProvider({ children }: AudioProviderProps) {
     if (!queue.length) return;
 
     player.current = new Howl({
-      src: [GET_FILE(queue[0].path)],
+      src: [GET_FILE(queue[playerState.currentSong].path)],
       html5: true,
+      autoplay: playerState.isPlaying,
       loop: playerState.repeat,
       volume: playerState.volume,
       onplay() {setPlayerState(prevState => ({
@@ -94,14 +98,17 @@ export function AudioProvider({ children }: AudioProviderProps) {
           isMuted: true
         }))
       },
-      onend() {setPlayerState(prevState => ({
-        ...prevState,
-        isPlaying: false
-      }))}
+      onend() {
+        !playerState.repeat &&
+        setPlayerState(prevState => ({
+          ...prevState,
+          currentSong: prevState.currentSong +1
+        }))
+      }
     });
 
     return () => {if (player.current) player.current.unload()};
-  }, [queue]);
+  }, [queue, playerState.currentSong]);
 
   // useEffect(() => {
   //   let interval: NodeJS.Timeout;
@@ -119,13 +126,25 @@ export function AudioProvider({ children }: AudioProviderProps) {
   // }, [playerState.isPlaying]);
 
   function getPlayer() {return player.current};
+
+  function changeSong(songId: number) {
+    const currentSong = songId > queue.length ? queue.length -1 : Math.max(0, songId);
+
+    player.current.rate
+    
+    setPlayerState(prevState => ({
+      ...prevState,
+      currentSong
+    }))
+  }
+
   function repeatSong() {
     setPlayerState(prevState => ({
       ...prevState,
       repeat: !prevState.repeat
     }))
 
-    player.current.loop(!playerState.repeat)
+    player.current.loop(playerState.repeat)
   }
 
   function refreshFromStorage() {
@@ -168,7 +187,8 @@ export function AudioProvider({ children }: AudioProviderProps) {
     addToQueue,
     playerState,
     getPlayer,
-    repeatSong
+    repeatSong,
+    changeSong
   };
 
   return (<AudioContext.Provider value={contextValue}>{children}</AudioContext.Provider>);
