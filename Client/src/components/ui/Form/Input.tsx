@@ -7,7 +7,8 @@ const inputVariants = cva([classes.input], {
   variants: {
     variant: {
       default: classes.default,
-      error: classes.error
+      error: classes.error,
+      ghost: classes.ghost
     }
   },
   defaultVariants: {

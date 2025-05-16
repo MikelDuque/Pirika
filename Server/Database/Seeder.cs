@@ -31,7 +31,7 @@ public class Seeder
 				Mail = "mikel@catsanddots.es",
 				Password = HashHelper.Hash("12345"),
 				DisplayName = "Mikel",
-				Avatar = "/ProfilePictures/DefaultAvatar2.png",
+				Avatar = "/ProfilePictures/defaultAvatar2.jpg",
 				Role = Role.Admin,
 				IsBanned = false
 			}

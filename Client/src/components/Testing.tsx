@@ -129,6 +129,8 @@ function printCollections(list: Collection[]) {
   return (
     list.length > 0 ?
       list.map(collection => (
+        console.log("cover file", GET_FILE(collection.cover)),
+        console.log("cover", collection.cover),
         <li key={collection.id}>
           <img src={GET_FILE(collection.cover)} alt="cover" className="max-w-20 aspect-square"/>
           <p>Title: {collection.title}</p>

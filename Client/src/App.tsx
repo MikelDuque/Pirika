@@ -1,7 +1,7 @@
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
-import {RootLayout, StandardLayout, HeadlessLayout} from './layouts'
-import {Intro, Home, Auth, NotFound} from "./pages";
-import { AuthPath, HomePath, Index } from './utils/paths';
+import { RootLayout, StandardLayout, HeadlessLayout } from './layouts'
+import { Intro, Home, Auth, NotFound, Search } from "./pages";
+import { AuthPath, HomePath, Index, SearchPath } from './utils/paths';
 import { LoggedPrivateRoute, SkipRoutes } from './layouts/RestrictedRoutes';
 
 export default function App() {
@@ -17,6 +17,7 @@ export default function App() {
       <Route element={<LoggedPrivateRoute/>}>
         <Route element={<StandardLayout/>}>
           <Route path={HomePath} element={<Home/>}/>
+          <Route path={SearchPath} element={<Search/>}/>
         </Route>
       </Route>
     </Route>

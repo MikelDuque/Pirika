@@ -1,0 +1,31 @@
+import { useNavigate } from "react-router-dom";
+import { Sidebar, SidebarContent, SidebarHeader, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem } from "./ui/Sidebar";
+import { LibraryPath } from "../utils/paths";
+import { Library } from "lucide-react";
+
+export default function() {
+  const navigate = useNavigate();
+
+  return (
+    <Sidebar>
+      <SidebarHeader>
+        <SidebarMenuButton onClick={() => navigate(LibraryPath)}>
+          <Library/> Library
+        </SidebarMenuButton>
+      </SidebarHeader>
+      <SidebarContent>
+        <SidebarMenuItem>
+          <SidebarMenuButton/>
+          <SidebarMenuSub>
+            <SidebarMenuSubItem>
+            <SidebarMenuSubButton/>
+            </SidebarMenuSubItem>
+            <SidebarMenuSubItem>
+            <SidebarMenuSubButton/>
+            </SidebarMenuSubItem>
+          </SidebarMenuSub>
+        </SidebarMenuItem>
+      </SidebarContent>
+    </Sidebar>
+  )
+}

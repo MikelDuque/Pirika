@@ -24,7 +24,7 @@ export default function Player() {
   }
   
   return (
-    <div className="w-full h-25 fixed bottom-0 bg-gray-200/20 flex flex-col gap-2 items-center justify-center backdrop-blur-sm shadow">
+    <div className="w-full h-25 bg-gray-200/20 flex flex-col gap-2 items-center justify-center backdrop-blur-sm shadow">
       <div className="w-1/3 grid grid-cols-3">
         <Button
           icon={playerState?.repeat ? "refresh-cw" : "refresh-cw-off"}
