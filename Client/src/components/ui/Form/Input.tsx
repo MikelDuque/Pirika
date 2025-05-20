@@ -8,7 +8,7 @@ const inputVariants = cva([classes.input], {
     variant: {
       default: classes.default,
       error: classes.error,
-      ghost: classes.ghost
+      ghost: [classes.ghost, "border-transparent"]
     }
   },
   defaultVariants: {
@@ -18,7 +18,7 @@ const inputVariants = cva([classes.input], {
 
 export const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input"> & VariantProps<typeof inputVariants>>(
   ({type, className, ...props}, ref) => (
-    <input type={type} className={cn(inputVariants({className}))} ref={ref} {...props}/>
+    <input type={type} className={cn(inputVariants({variant: props.variant}), className)} ref={ref} {...props}/>
 ));
 
 Input.displayName = "Input";

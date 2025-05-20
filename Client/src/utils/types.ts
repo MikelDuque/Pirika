@@ -1,4 +1,4 @@
-import { CollectionType, Crud } from "./enums";
+import { CollectionType, Crud, ElementType } from "./enums";
 
 export interface TaskResult<T> {
   asyncState: any;
@@ -42,7 +42,8 @@ export interface AuthData {
 
 export interface Artist {
   id: number,
-  name: string
+  name: string,
+  avatar: string
 }
 
 export interface Song {
@@ -62,6 +63,20 @@ export interface Collection {
   publicationDate: string,
   type: CollectionType,
   songs: Song[]
+}
+
+export interface Filter {
+  genres: unknown[], //Esto será un ENUM
+  search: string,
+	types: ElementType[],
+	itemsPerPage: number,
+	currentPage: number
+}
+
+export interface FilterResult {
+  songs: Song[],
+	collections: Collection[],
+	artists: Artist[]
 }
 
 export interface Player {

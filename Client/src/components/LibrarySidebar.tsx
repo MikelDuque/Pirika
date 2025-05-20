@@ -3,29 +3,31 @@ import { Sidebar, SidebarContent, SidebarHeader, SidebarMenuButton, SidebarMenuI
 import { LibraryPath } from "../utils/paths";
 import { Library } from "lucide-react";
 
-export default function() {
+export default function LibrarySidebar({className}: {className?: string}) {
   const navigate = useNavigate();
 
   return (
-    <Sidebar>
-      <SidebarHeader>
-        <SidebarMenuButton onClick={() => navigate(LibraryPath)}>
-          <Library/> Library
-        </SidebarMenuButton>
-      </SidebarHeader>
-      <SidebarContent>
-        <SidebarMenuItem>
-          <SidebarMenuButton/>
-          <SidebarMenuSub>
-            <SidebarMenuSubItem>
-            <SidebarMenuSubButton/>
-            </SidebarMenuSubItem>
-            <SidebarMenuSubItem>
-            <SidebarMenuSubButton/>
-            </SidebarMenuSubItem>
-          </SidebarMenuSub>
-        </SidebarMenuItem>
-      </SidebarContent>
-    </Sidebar>
+    <aside className={className}>
+      <Sidebar collapsible="icon">
+        <SidebarHeader>
+          <SidebarMenuButton onClick={() => navigate(LibraryPath)}>
+            <Library/> Library
+          </SidebarMenuButton>
+        </SidebarHeader>
+        <SidebarContent>
+          <SidebarMenuItem>
+            <SidebarMenuButton/>
+            <SidebarMenuSub>
+              <SidebarMenuSubItem>
+              <SidebarMenuSubButton/>
+              </SidebarMenuSubItem>
+              <SidebarMenuSubItem>
+              <SidebarMenuSubButton/>
+              </SidebarMenuSubItem>
+            </SidebarMenuSub>
+          </SidebarMenuItem>
+        </SidebarContent>
+      </Sidebar>
+    </aside>
   )
 }

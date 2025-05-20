@@ -11,7 +11,8 @@ public class ArtistMapper
     return new Artist
     {
       Id = artist.Id,
-      Name = artist.DisplayName
+      Name = artist.DisplayName,
+      Avatar = artist.Avatar
     };
   }
 

@@ -5,14 +5,18 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/Avatar";
 import { Tabs, TabsList, TabsTrigger } from "./ui/Tabs";
 import { HomePath, SearchPath } from "../utils/paths";
 import { DynamicIcon } from "lucide-react/dynamic";
-import { ComponentProps, ReactNode, useState } from "react";
+import { ComponentProps} from "react";
 import camelCase from "lodash/camelCase";
 import { Input } from "./ui/Form";
+import { useAudio } from "../contexts/AudioContext";
+import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "./ui/Navigation";
+import { cn } from "../utils/utils";
 
-export default function Header() {
+export default function Header({className}: {className?: string}) {
   const {authData} = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const {searchValue, changeSearchValue} = useAudio();
   
   function getInitial() {
     const name = authData?.decodedToken.unique_name || "?";
@@ -40,22 +44,43 @@ export default function Header() {
     return [tabPath, location.pathname].every(item => item === SearchPath)
   };
 
+  function setSearchValue(e: React.ChangeEvent<HTMLInputElement>) {
+    e.preventDefault();
+    changeSearchValue(e.target.value)
+  }
+
   return (
-    <header className="w-full flex gap-2 p-2">
-      <Tabs value={location.pathname} className="grow">
+    <header className={cn(className, "w-full flex gap-2 bg-background dark:bg-dark-background")}>
+      <NavigationMenu>
+        <NavigationMenuList>
+          {tabs.map(tab => (
+            <NavigationMenuItem>
+              <NavigationMenuLink className={cn(tab.path === location.pathname && navigationMenuTriggerStyle(), "flex gap-2")} onClick={() => navigate(tab.path)}>
+                <DynamicIcon name={getIcon(tab.name)}/>
+                {actualSearchTab(tab.path) ?
+                  <Input value={searchValue?.search} placeholder={tab.name} onChange={setSearchValue} variant="ghost" autoFocus/>
+                  :
+                  tab.name
+                }
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+          ))}
+        </NavigationMenuList>
+      </NavigationMenu>
+      {/* <Tabs value={location.pathname} className="grow">
         <TabsList className="p-0">
           {tabs.map(tab => (
             <TabsTrigger value={tab.path} onClick={() => navigate(tab.path)} className="flex gap-2">
               <DynamicIcon name={getIcon(tab.name)}/>
               {actualSearchTab(tab.path) ?
-                <Input placeholder={tab.name} className="h-2"/>
+                <Input defaultValue="" placeholder={tab.name} className="h-2" onChange={setSearchValue}/>
                 :
                 tab.name
               }
             </TabsTrigger>
           ))}
         </TabsList>
-      </Tabs>
+      </Tabs> */}
       <Avatar>
         <AvatarImage src={GET_FILE(authData?.decodedToken.avatar || "")}/>
         <AvatarFallback>{getInitial()}</AvatarFallback>

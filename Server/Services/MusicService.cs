@@ -3,19 +3,25 @@ using Server.Database.Entities;
 using Server.Helpers;
 using Server.Models.DTOs;
 using Server.Models.DTOs.Collection;
+using Server.Models.DTOs.Filter;
+using Server.Models.Enums;
 using Server.Models.Mappers;
 
 namespace Server.Services;
 
-public class CollectionService
+public class MusicService
 {
   private readonly UnitOfWork _unitOfWork;
 	private readonly CollectionMapper _collectionMapper;
+	private readonly SongMapper _songMapper;
+	private readonly ArtistMapper _artistMapper;
 
-	public CollectionService(UnitOfWork unitOfWork, CollectionMapper collectionMapper, SongService songService)
+	public MusicService(UnitOfWork unitOfWork, CollectionMapper collectionMapper, SongMapper songMapper, ArtistMapper artistMapper)
 	{
 		_unitOfWork = unitOfWork;
 		_collectionMapper = collectionMapper;
+		_songMapper = songMapper;
+		_artistMapper = artistMapper;
 	}
 
 	/* GET */
@@ -32,9 +38,32 @@ public class CollectionService
 		return _collectionMapper.ToDto(collection);
 	}
 
-	public async Task SearchMusic()
+	public async Task<FilterResult> SearchMusic(Filter filter)
 	{
+		FilterResult filterResult = new();
 
+		if(filter.Types.Contains((byte) ElementType.Songs))
+		{
+			IEnumerable<Song> filteredSongs = await _unitOfWork.SongRepository.GetFilteredSongs(filter);
+
+			filterResult.Songs = _songMapper.ToDto(filteredSongs);
+		}
+
+		if (filter.Types.Contains((byte) ElementType.Collections))
+		{
+			IEnumerable<Collection> filteredCollection = await _unitOfWork.CollectionRepository.GetFilteredSongs(filter);
+
+			filterResult.Collections = _collectionMapper.ToDto(filteredCollection);
+		}
+
+		if (filter.Types.Contains((byte) ElementType.Artists))
+		{
+			IEnumerable<User> filteredUsers = await _unitOfWork.UserRepository.GetFilteredSongs(filter);
+
+			filterResult.Artists = _artistMapper.ToDto(filteredUsers);
+		}
+
+		return filterResult;
 	}
 
 	/* INSERT */

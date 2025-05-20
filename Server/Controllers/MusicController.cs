@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Server.Models.DTOs;
+using Server.Models.DTOs.Filter;
 using Server.Services;
 
 namespace Server.Controllers;
@@ -8,13 +9,13 @@ namespace Server.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class CollectionController : Controller
+public class MusicController : Controller
 {
-	private readonly CollectionService _collectionService;
+	private readonly MusicService _musicService;
 
-	public CollectionController(CollectionService collectionService)
+	public MusicController(MusicService musicService)
 	{
-		_collectionService = collectionService;
+		_musicService = musicService;
 	}
 
 	[HttpGet("Get_Collections")]
@@ -22,7 +23,7 @@ public class CollectionController : Controller
 	{
 		try
 		{
-			return Ok(_collectionService.GetAllCollections());
+			return Ok(_musicService.GetAllCollections());
 		}
 		catch (Exception error)
 		{
@@ -35,7 +36,7 @@ public class CollectionController : Controller
 	{
 		try
 		{
-			return Ok(_collectionService.GetCollection(id));
+			return Ok(_musicService.GetCollection(id));
 		}
 		catch (Exception error)
 		{
@@ -48,7 +49,7 @@ public class CollectionController : Controller
 	{
 		try
 		{
-			return Ok(_collectionService.SearchMusic());
+			return Ok(_musicService.SearchMusic(filter));
 		}
 		catch (Exception error)
 		{
@@ -63,7 +64,7 @@ public class CollectionController : Controller
 
     try
     {
-      return Ok(_collectionService.Publish(newAlbum));
+      return Ok(_musicService.Publish(newAlbum));
     }
     catch (Exception error)
     {

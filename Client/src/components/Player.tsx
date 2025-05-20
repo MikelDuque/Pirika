@@ -2,8 +2,9 @@ import { Slider } from "./ui/Form";
 import { Button } from "./ui/Button";
 import { useAudio } from "../contexts/AudioContext";
 import { useEffect, useState } from "react";
+import { cn } from "../utils/utils";
 
-export default function Player() {
+export default function Player({className}: {className?: string}) {
   const {getPlayer, playerState, repeatSong, changeSong} = useAudio();
   const [currentTime, setCurrentTime] = useState(0);
 
@@ -24,7 +25,7 @@ export default function Player() {
   }
   
   return (
-    <div className="w-full h-25 bg-gray-200/20 flex flex-col gap-2 items-center justify-center backdrop-blur-sm shadow">
+    <footer className={cn(className, "w-full h-25 bg-gray-200/20 flex flex-col gap-2 items-center justify-center backdrop-blur-sm shadow")}>
       <div className="w-1/3 grid grid-cols-3">
         <Button
           icon={playerState?.repeat ? "refresh-cw" : "refresh-cw-off"}
@@ -78,6 +79,6 @@ export default function Player() {
         />
         <span>{formatTime(playerState?.duration || 0)}</span>
       </div>
-    </div>
+    </footer>
   )
 }

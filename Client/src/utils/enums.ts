@@ -12,3 +12,10 @@ export enum CollectionType {
 	Album,
 	Playlist
 }
+
+export enum ElementType
+{
+	Song,
+	Collection,
+	Artist
+}

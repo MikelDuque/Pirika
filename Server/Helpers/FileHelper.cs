@@ -13,7 +13,7 @@ public class FileHelper
 		if (image == null)
 		{
 			int rNumber = Random.Shared.Next(1, 3);
-			return $"/ProfilePictures/DefaultAvatar{rNumber}.png";
+			return $"ProfilePictures/DefaultAvatar{rNumber}.png";
 		}
 
 		return await SaveFile(image, username, "ProfilePictures");
@@ -45,6 +45,6 @@ public class FileHelper
 			await file.CopyToAsync(stream);
 		}
 
-		return $"/{path}/{fileName}";
+		return $"{path}/{fileName}";
 	}
 }

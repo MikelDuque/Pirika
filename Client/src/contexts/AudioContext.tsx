@@ -1,20 +1,24 @@
 import { createContext, ReactNode, useContext, useEffect, useRef, useState } from "react";
-import { Collection, Player, Song, TaskResult } from "../utils/types";
+import { Collection, Filter, FilterResult, Player, Song, TaskResult } from "../utils/types";
 import { GET_COLLECTION, GET_FILE, GET_SONG } from "../utils/endpoints/endpoints";
 import useFetch from "../utils/endpoints/useFetchEvent";
 import {useFetch as fetchPrueba} from "../utils/endpoints/useFetch";
-import { Crud } from "../utils/enums";
+import { Crud, ElementType } from "../utils/enums";
 import { useAuth } from "./AuthContext";
 import { Howl } from 'howler';
 
 /* ---- TIPADOS ---- */
 type AudioContextType = {
-  queue: Song[],
-  getPlayer: () => Howl,
   playerState?: Player,
+  queue: Song[],
+  searchValue?: Filter,
+  searchResult?: FilterResult,
+  getPlayer: () => Howl,
   addToQueue: (id: number) => void,
   repeatSong: () => void,
-  changeSong: (songId: number) => void
+  changeSong: (songId: number) => void,
+  changeSearchValue: (value: string) => void,
+  changeSearchResult: (newValue: FilterResult) => void
 }
 
 type AudioProviderProps = {
@@ -23,12 +27,16 @@ type AudioProviderProps = {
 
 /* ----- DECLARACIÓN Context ----- */
 const AudioContext = createContext<AudioContextType>({
-  queue: [],
-  getPlayer() {return new Howl({src: [GET_FILE("")]})},
   playerState: undefined,
+  queue: [],
+  searchValue: undefined,
+  searchResult: undefined,
+  getPlayer() {return new Howl({src: [GET_FILE("")]})},
   addToQueue() {},
   repeatSong() {},
-  changeSong() {}
+  changeSong() {},
+  changeSearchValue() {},
+  changeSearchResult() {}
 });
 
 export const useAudio = (): AudioContextType => {
@@ -58,6 +66,14 @@ export function AudioProvider({ children }: AudioProviderProps) {
     isMuted: false,
     repeat: false
   });
+  const [searchValue, setSearchValue] = useState<Filter>({
+    genres: [],
+    search: "",
+    types: [ElementType.Artist, ElementType.Song, ElementType.Collection],
+    itemsPerPage: -1,
+    currentPage: 0
+  });
+  const [searchResult, setSearchResult] = useState<FilterResult>();
 
   const player = useRef<Howl>(new Howl({src: [""]}));
 
@@ -171,6 +187,9 @@ export function AudioProvider({ children }: AudioProviderProps) {
     };
   };
 
+  function changeSearchValue(value?: string) {setSearchValue(prevState => ({...prevState, search: value ?? ""}))};
+  function changeSearchResult(newValue: FilterResult) {newValue && setSearchResult({...newValue})};
+
   //PRUEBAS
   useEffect(() => {
     if(fetchData) {
@@ -183,12 +202,16 @@ export function AudioProvider({ children }: AudioProviderProps) {
   /* ----- FINAL DEL CONTEXTO ----- */
 
   const contextValue = {
-    queue,
-    addToQueue,
     playerState,
+    queue,
+    searchValue,
+    searchResult,
+    addToQueue,
     getPlayer,
     repeatSong,
-    changeSong
+    changeSong,
+    changeSearchValue,
+    changeSearchResult
   };
 
   return (<AudioContext.Provider value={contextValue}>{children}</AudioContext.Provider>);

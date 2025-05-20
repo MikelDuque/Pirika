@@ -71,7 +71,7 @@ builder.Services.AddScoped<SongMapper>();
 /* SERVICES */
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<SongService>();
-builder.Services.AddScoped<CollectionService>();
+builder.Services.AddScoped<MusicService>();
 
 var app = builder.Build();
 
