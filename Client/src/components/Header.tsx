@@ -55,7 +55,7 @@ export default function Header({className}: {className?: string}) {
         <NavigationMenuList>
           {tabs.map(tab => (
             <NavigationMenuItem>
-              <NavigationMenuLink className={cn(tab.path === location.pathname && navigationMenuTriggerStyle(), "flex gap-2")} onClick={() => navigate(tab.path)}>
+              <NavigationMenuLink className={cn(tab.path === location.pathname && navigationMenuTriggerStyle(), "flex gap-2 cursor-pointer")} onClick={() => navigate(tab.path)}>
                 <DynamicIcon name={getIcon(tab.name)}/>
                 {actualSearchTab(tab.path) ?
                   <Input value={searchValue?.search} placeholder={tab.name} onChange={setSearchValue} variant="ghost" autoFocus/>

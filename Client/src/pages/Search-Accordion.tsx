@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../components/Accordion";
 import GenericCard from "../components/GenericCard";
 import { useAudio } from "../contexts/AudioContext"
 import { useAuth } from "../contexts/AuthContext";
@@ -6,14 +6,12 @@ import { SEARCH_URL } from "../utils/endpoints/endpoints";
 import { useFetch } from "../utils/endpoints/useFetch";
 import { Crud, ElementType } from "../utils/enums";
 import { Artist, Collection, FilterResult, Song, TaskResult } from "../utils/types";
-import { ThisCollectionPath, ThisProfilePath } from "../utils/paths";
 
 type ThisElementType = Artist | Song | Collection;
 
 export default function Search() {
-  const navigate = useNavigate();
   const {authData} = useAuth();
-  const {getPlayer, searchValue, addToQueue} = useAudio();
+  const {searchValue} = useAudio();
   const {fetchData} = useFetch<TaskResult<FilterResult>>({
     url: SEARCH_URL,
     type: Crud.POST,
@@ -29,7 +27,7 @@ export default function Search() {
       return 'name' in element ? (element as Artist).name : (element as Song | Collection).title;
     }
 
-    function getImg(element: ThisElementType) {
+    function getImg(element: Artist | Song | Collection) {
       return 'name' in element ? (element as Artist).avatar : (element as Song | Collection).cover;
     }
 
@@ -39,38 +37,35 @@ export default function Search() {
       return ElementType.Song;
     }
 
-    function onCardClick(element: ThisElementType) {
-      switch(getType(element)) {
-        case ElementType.Artist:
-          return navigate(ThisProfilePath(element.id))
-        case ElementType.Collection:
-          return navigate(ThisCollectionPath(element.id))
-        case ElementType.Song:
-          return addToQueue(element.id), getPlayer().play(element.id);
-      }
-    }
-
     return (!!elements?.length &&
-      elements && elements.length > 0 && elements.map(element => (
-        <li>
-          <GenericCard
-            title={getTitle(element) ?? ""}
-            img={getImg(element) ?? ""}
-            type={getType(element)}
-            className="w-full cursor-pointer"
-            onClick={() => onCardClick(element)}
-          />
-        </li>
-      ))
+      <AccordionItem value={ElementType[getType(elements[0])]}>
+        <AccordionTrigger>{ElementType[getType(elements[0])]}s</AccordionTrigger>
+        <AccordionContent className="max-h-[30%] overflow-y-scroll">
+          <ul className="h-full grid grid-cols-4 gap-2 ">
+            {elements && elements.length > 0 && elements.map(element => (
+              <li>
+                <GenericCard title={getTitle(element) ?? ""} img={getImg(element) ?? ""} type={getType(element)}/>
+              </li>
+            ))}
+          </ul>
+        </AccordionContent>
+      </AccordionItem>
+      // <ul className="overflow-y-auto">
+      //   {elements && elements.length > 0 && elements.map(element => (
+      //     <li>
+      //       <GenericCard title={getTitle(element) ?? ""} img={getImg(element) ?? ""} type={getType(element)}/>
+      //     </li>
+      //   ))}
+      // </ul>
     )
   }
 
   return (
-    <ul className="h-full grid grid-cols-5 gap-3 overflow-auto">
+    <Accordion type="multiple" className="h-full">
       {printResult(filterResult?.artists)}
       {printResult(filterResult?.songs)}
       {printResult(filterResult?.collections)}
-    </ul>
+    </Accordion>
     // <div>
     //   {printResult(filterResult?.artists)}
     //   {printResult(filterResult?.songs)}
