@@ -25,12 +25,16 @@ export default function Search() {
   const filterResult = fetchData?.result;
 
   function printResult(elements?: ThisElementType[]) {
-    function getTitle(element: Artist | Song | Collection) {
-      return 'name' in element ? (element as Artist).name : (element as Song | Collection).title;
+    function getTitle(element: ThisElementType) {
+      return 'name' in element ? element.name : element.title;
+    }
+
+    function getArtist(element: ThisElementType) {
+      return 'author' in element ? element.author : undefined;
     }
 
     function getImg(element: ThisElementType) {
-      return 'name' in element ? (element as Artist).avatar : (element as Song | Collection).cover;
+      return 'name' in element ? element.avatar : element.cover;
     }
 
     function getType(element: ThisElementType) {
@@ -42,11 +46,13 @@ export default function Search() {
     function onCardClick(element: ThisElementType) {
       switch(getType(element)) {
         case ElementType.Artist:
+          console.log("prof path", ThisProfilePath(element.id));
+          
           return navigate(ThisProfilePath(element.id))
         case ElementType.Collection:
           return navigate(ThisCollectionPath(element.id))
         case ElementType.Song:
-          return addToQueue(element.id), getPlayer().play(element.id);
+          return addToQueue(element as Song), getPlayer().play();;
       }
     }
 
@@ -55,6 +61,7 @@ export default function Search() {
         <li>
           <GenericCard
             title={getTitle(element) ?? ""}
+            author={getArtist(element)}
             img={getImg(element) ?? ""}
             type={getType(element)}
             className="w-full cursor-pointer"
@@ -66,7 +73,7 @@ export default function Search() {
   }
 
   return (
-    <ul className="h-full grid grid-cols-5 gap-3 overflow-auto">
+    <ul className="h-full grid grid-cols-7 gap-3 overflow-auto">
       {printResult(filterResult?.artists)}
       {printResult(filterResult?.songs)}
       {printResult(filterResult?.collections)}

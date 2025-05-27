@@ -2,14 +2,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { GET_FILE } from "../utils/endpoints/endpoints";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/Avatar";
-import { Tabs, TabsList, TabsTrigger } from "./ui/Tabs";
 import { HomePath, SearchPath } from "../utils/paths";
 import { DynamicIcon } from "lucide-react/dynamic";
 import { ComponentProps} from "react";
 import camelCase from "lodash/camelCase";
 import { Input } from "./ui/Form";
 import { useAudio } from "../contexts/AudioContext";
-import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "./ui/Navigation";
+import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from "./ui/Navigation";
 import { cn } from "../utils/utils";
 
 export default function Header({className}: {className?: string}) {

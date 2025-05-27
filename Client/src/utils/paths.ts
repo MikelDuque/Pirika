@@ -11,7 +11,7 @@ export const SearchPath = printPath("Search");
 export const LibraryPath = printPath("Library");
 
 export const ProfilePath = printPath("User");
-export function ThisProfilePath(id: string | number) {return printPath(`${ProfilePath}${id}`)};
+export function ThisProfilePath(id: string | number) {return `${ProfilePath}${id}`};
 
 export const CollectionPath = printPath("Collection")
-export function ThisCollectionPath(id: string | number) {return printPath(`${CollectionPath}${id}`)}
+export function ThisCollectionPath(id: string | number) {return `${CollectionPath}${id}`}

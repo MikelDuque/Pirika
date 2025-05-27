@@ -29,7 +29,7 @@ public class CollectionRepository : Repository<Collection>
 		return _textHelper.SearchFilter<Collection>(collectionList, filter.Search, collection => collection.Title);
 	}
 
-	public async Task<Collection> GetByIdAsync(long id)
+	public async Task<Collection> GetIncludesByIdAsync(long id)
 	{
 		return await GetQueryable()
 			.Where(collection => collection.Id == id)

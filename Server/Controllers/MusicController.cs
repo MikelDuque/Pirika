@@ -44,6 +44,19 @@ public class MusicController : Controller
 		}
 	}
 
+	[HttpGet("Get_Song/{id}")]
+	public ActionResult GetSong(long id)
+	{
+		try
+		{
+			return Ok(_musicService.GetSong(id));
+		}
+		catch (Exception error)
+		{
+			return BadRequest(new { Message = error.ToString() });
+		}
+	}
+
 	[HttpPost("Search")]
 	public ActionResult SearchMusic([FromBody] Filter filter)
 	{

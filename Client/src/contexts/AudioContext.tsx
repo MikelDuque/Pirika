@@ -14,7 +14,7 @@ type AudioContextType = {
   searchValue?: Filter,
   searchResult?: FilterResult,
   getPlayer: () => Howl,
-  addToQueue: (id: number) => void,
+  addToQueue: (element: Song | Collection) => void,
   repeatSong: () => void,
   changeSong: (songId: number) => void,
   changeSearchValue: (value: string) => void,
@@ -49,13 +49,6 @@ export const useAudio = (): AudioContextType => {
 export function AudioProvider({ children }: AudioProviderProps) {
   const {authData} = useAuth();
   const {fetchingData} = useFetch();
-  const {fetchData} = fetchPrueba<TaskResult<Collection>>({
-    url: GET_COLLECTION(1),
-    type: Crud.GET,
-    token: authData?.token,
-    needAuth: true,
-    condition: !!authData?.token
-  });
   const [queue, setQueue] = useState<Song[]>([]);
   const [playerState, setPlayerState] = useState<Player>({
     currentSong: 0,
@@ -77,12 +70,21 @@ export function AudioProvider({ children }: AudioProviderProps) {
 
   const player = useRef<Howl>(new Howl({src: [""]}));
 
+  console.log("queue", queue);
+  
+
   useEffect(() => {
     if(!queue.length) refreshFromStorage();
   }, []);
 
   useEffect(() => {
     if (!queue.length) return;
+
+    console.log("current song index", playerState.currentSong);
+    
+    console.log("current", queue[playerState.currentSong]);
+    console.log("path", queue[playerState.currentSong].path);
+    
 
     player.current = new Howl({
       src: [GET_FILE(queue[playerState.currentSong].path)],
@@ -115,6 +117,8 @@ export function AudioProvider({ children }: AudioProviderProps) {
         }))
       },
       onend() {
+        console.log("prev state", playerState.currentSong);
+        
         !playerState.repeat &&
         setPlayerState(prevState => ({
           ...prevState,
@@ -124,7 +128,7 @@ export function AudioProvider({ children }: AudioProviderProps) {
     });
 
     return () => {if (player.current) player.current.unload()};
-  }, [queue, playerState.currentSong]);
+  }, [queue]);
 
   // useEffect(() => {
   //   let interval: NodeJS.Timeout;
@@ -169,35 +173,40 @@ export function AudioProvider({ children }: AudioProviderProps) {
     if(storageQueue) setQueue(JSON.parse(storageQueue));
   };
 
-  async function addToQueue(id: number, isCollection?: false) {
-    const musicData = await fetchingData<Collection | Song>({
-      url: isCollection ? GET_COLLECTION(id) : GET_SONG(id),
-      type: Crud.GET,
-      token: authData?.token,
-      needAuth: true
-    });
+  // async function addToQueue(id: number, isCollection?: false) {
+  //   const musicData = await fetchingData<Collection | Song>({
+  //     url: isCollection ? GET_COLLECTION(id) : GET_SONG(id),
+  //     type: Crud.GET,
+  //     token: authData?.token,
+  //     needAuth: true
+  //   });
 
-    if(musicData) {
-      if('songs' in musicData) setQueue(prevState => (
-        [...prevState, ...musicData.songs]
+  //   console.log("musicData", musicData);
+    
+
+  //   if(musicData) {
+  //     if('songs' in musicData) setQueue(prevState => (
+  //       [...prevState, ...musicData.songs]
+  //     ))
+  //     else setQueue(prevState => (
+  //       [...prevState, musicData]
+  //     ))
+  //   };
+  // };
+
+  async function addToQueue(element: Song | Collection) {
+    if(element) {
+      if('songs' in element) setQueue(prevState => (
+        [...prevState, ...element.songs]
       ))
       else setQueue(prevState => (
-        [...prevState, musicData]
+        [...prevState, {...element}]
       ))
     };
   };
 
   function changeSearchValue(value?: string) {setSearchValue(prevState => ({...prevState, search: value ?? ""}))};
   function changeSearchResult(newValue: FilterResult) {newValue && setSearchResult({...newValue})};
-
-  //PRUEBAS
-  useEffect(() => {
-    if(fetchData) {
-      const collection = fetchData.result as Collection;
-      
-      setQueue(collection.songs || []);
-    }
-  }, [fetchData]);
 
   /* ----- FINAL DEL CONTEXTO ----- */
 

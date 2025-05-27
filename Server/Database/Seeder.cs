@@ -28,11 +28,20 @@ public class Seeder
 			new User
 			{
 				Username = "Mikel",
-				Mail = "mikel@catsanddots.es",
+				Mail = "mikel@gmail.es",
 				Password = HashHelper.Hash("12345"),
 				DisplayName = "Mikel",
 				Avatar = "/ProfilePictures/defaultAvatar2.jpg",
 				Role = Role.Admin,
+				IsBanned = false
+			},
+			new User {
+				Username = "LODVG",
+				Mail = "lodvg@gmail.es",
+				Password = HashHelper.Hash("12345"),
+				DisplayName = "La Oreja de Van Gogh",
+				Avatar = "ProfilePictures/2.webp",
+				Role = Role.None,
 				IsBanned = false
 			}
 		];
@@ -79,7 +88,7 @@ public class Seeder
 				Path = "/Music/1/1.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
-				AuthorId = 1,
+				AuthorId = 2,
 				PublicationDate = DateTime.Now
 			},
 			new Song
@@ -88,7 +97,7 @@ public class Seeder
 				Path = "/Music/1/2.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
-				AuthorId = 1,
+				AuthorId = 2,
 				PublicationDate = DateTime.Now
 			},
 			new Song
@@ -97,7 +106,7 @@ public class Seeder
 				Path = "/Music/1/3.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
-				AuthorId = 1,
+				AuthorId = 2,
 				PublicationDate = DateTime.Now
 			},
 			new Song
@@ -106,7 +115,7 @@ public class Seeder
 				Path = "/Music/1/4.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
-				AuthorId = 1,
+				AuthorId = 2,
 				PublicationDate = DateTime.Now
 			},
 			new Song
@@ -115,7 +124,7 @@ public class Seeder
 				Path = "/Music/1/5.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
-				AuthorId = 1,
+				AuthorId = 2,
 				PublicationDate = DateTime.Now
 			},
 			new Song
@@ -124,7 +133,7 @@ public class Seeder
 				Path = "/Music/1/6.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
-				AuthorId = 1,
+				AuthorId = 2,
 				PublicationDate = DateTime.Now
 			},
 			new Song
@@ -133,7 +142,7 @@ public class Seeder
 				Path = "/Music/1/7.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
-				AuthorId = 1,
+				AuthorId = 2,
 				PublicationDate = DateTime.Now
 			},
 			new Song
@@ -142,7 +151,7 @@ public class Seeder
 				Path = "/Music/1/8.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
-				AuthorId = 1,
+				AuthorId = 2,
 				PublicationDate = DateTime.Now
 			},
 			new Song
@@ -151,7 +160,7 @@ public class Seeder
 				Path = "/Music/1/9.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
-				AuthorId = 1,
+				AuthorId = 2,
 				PublicationDate = DateTime.Now
 			},
 			new Song
@@ -160,7 +169,7 @@ public class Seeder
 				Path = "/Music/1/10.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
-				AuthorId = 1,
+				AuthorId = 2,
 				PublicationDate = DateTime.Now
 			},
 			new Song
@@ -169,7 +178,7 @@ public class Seeder
 				Path = "/Music/1/11.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
-				AuthorId = 1,
+				AuthorId = 2,
 				PublicationDate = DateTime.Now
 			},
 			new Song
@@ -178,7 +187,7 @@ public class Seeder
 				Path = "/Music/1/12.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
-				AuthorId = 1,
+				AuthorId = 2,
 				PublicationDate = DateTime.Now
 			},
 			new Song
@@ -187,7 +196,7 @@ public class Seeder
 				Path = "/Music/1/13.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
-				AuthorId = 1,
+				AuthorId = 2,
 				PublicationDate = DateTime.Now
 			}
 		];
@@ -200,7 +209,7 @@ public class Seeder
 				Title = "Grandes Éxitos",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
-				AuthorId = 1,
+				AuthorId = 2,
 				PublicationDate = DateTime.Now,
 				Type = CollectionType.Album,
 				Songs = songs

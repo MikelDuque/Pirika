@@ -4,6 +4,7 @@ using Server.Helpers;
 using Server.Models.DTOs;
 using Server.Models.DTOs.Collection;
 using Server.Models.DTOs.Filter;
+using Server.Models.DTOs.Song;
 using Server.Models.Enums;
 using Server.Models.Mappers;
 
@@ -33,9 +34,16 @@ public class MusicService
 
 	public async Task<CollectionDto> GetCollection(long collectionId)
 	{
-		Collection collection = await _unitOfWork.CollectionRepository.GetByIdAsync(collectionId);
+		Collection collection = await _unitOfWork.CollectionRepository.GetIncludesByIdAsync(collectionId);
 
 		return _collectionMapper.ToDto(collection);
+	}
+
+	public async Task<SongDto> GetSong(long songId)
+	{
+		Song song = await _unitOfWork.SongRepository.GetIncludesByIdAsync(songId);
+
+		return _songMapper.ToDto(song);
 	}
 
 	public async Task<FilterResult> SearchMusic(Filter filter)

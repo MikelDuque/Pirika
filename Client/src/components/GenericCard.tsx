@@ -1,27 +1,38 @@
+import { PlayCircle } from "lucide-react";
 import { GET_FILE } from "../utils/endpoints/endpoints";
 import { ElementType } from "../utils/enums";
 import { cn } from "../utils/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/Avatar";
 import { Card, CardHeader, CardDescription, CardFooter, CardTitle } from "./ui/Card/Card";
+import { Artist } from "../utils/types";
+import { ThisProfilePath } from "../utils/paths";
+import { useNavigate } from "react-router-dom";
 
 interface GenericCard extends React.HTMLAttributes<HTMLDivElement> {
   img: string,
   title: string,
+  author?: Artist,
   type: ElementType,
 }
 
-export default function GenericCard({img, title, type, ...props}: GenericCard) {
+export default function GenericCard({img, title, author, type, ...props}: GenericCard) {
+  const navigate = useNavigate();
+
   return (
     <Card {...props}>
-      <CardHeader className="flex items-center justify-center">
-        <Avatar className={cn(type !== ElementType.Artist && "rounded-md", "size-25")}>
+      <CardHeader className="relative flex items-center justify-center group">
+        <Avatar className={cn("size-full", type !== ElementType.Artist && "rounded-md", type === ElementType.Collection && "shadow-[5px_-5px_0px_0px_#969696]")}>
           <AvatarImage src={GET_FILE(img)}/>
           <AvatarFallback>{title[0]}</AvatarFallback>
         </Avatar>
+        <PlayCircle size={35} color="#ffffff" className={cn("absolute right-2 bottom-3 hidden", type === ElementType.Song && "group-hover:block")}/>
       </CardHeader>
       <CardFooter className="flex flex-col gap-1 text-left">
         <CardTitle className="w-full text-center truncate">{title}</CardTitle>
-        <CardDescription>{ElementType[type]}</CardDescription>
+        {author &&
+        <CardDescription onClick={() => navigate(ThisProfilePath(author.id))} className="w-full truncate hover:underline">
+          {author.name}
+        </CardDescription>}
       </CardFooter>
     </Card>
   )

@@ -52,7 +52,8 @@ export interface Song {
 	cover: string,
   path: string,
 	releaseDate: string,
-	publicationDate: string
+	publicationDate: string,
+  author: Artist
 }
 
 export interface Collection {
@@ -62,6 +63,7 @@ export interface Collection {
   releaseDate: string,
   publicationDate: string,
   type: CollectionType,
+  author: Artist,
   songs: Song[]
 }
 
