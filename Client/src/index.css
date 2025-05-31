@@ -1,1 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Henny+Penny&family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&family=Winky+Sans:ital,wght@0,300..900;1,300..900&display=swap');
+/* @import "./components/ui/Button/Button.module.css"; */
 @import "tailwindcss";
+
+@theme {
+  /* GENERAL */
+  --font-henny: "Henny Penny", "sans";
+  --font-winky: "Winky Sans", "sans";
+  --font-playfair: "Playfair", "serif";
+
+  /* LIGHT MODE */
+  --color-background: hsl(0 0 95%);
+  --color-foreground: black;
+  --color-primary: hsl(265 100% 20%);
+  --color-card: hsl(0 0 85%);
+
+  /* DARK MODE */
+  --color-dark-background: hsl(0 0 0.5%);
+  --color-dark-foreground: white;
+  --color-dark-card: hsl(0 0 10%);
+}
+
+@layer base {
+  html, body, #root {
+    @apply size-full
+  }
+
+  * {
+    @apply border-foreground dark:border-dark-foreground
+  }
+
+  body {
+    @apply bg-background text-foreground selection:bg-primary;
+
+    @variant dark {
+      @apply bg-dark-background text-dark-foreground;
+    }
+  }
+}
+
+@layer components {
+  .super-title {
+    @apply font-henny text-7xl pt-6 pb-3 tracking-wide;
+  }
+  .title {
+    @apply font-winky text-2xl
+  }
+  .subtitle {
+    @apply font-winky text-xl
+  }
+  .super-body {
+    @apply font-playfair text-lg font-bold
+  }
+  .body {
+    @apply font-playfair text-base
+  }
+}

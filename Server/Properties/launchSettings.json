@@ -1,0 +1,47 @@
+{
+  "profiles": {
+    "http": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "JWT_KEY": "kj453gjkuewh345rgfkuwshb455gfuswgufh567swbguf876gswedufgsuwygfus345wgfug",
+        "DATABASE_CONNECTION": "",
+        "LOCAL_DATABASE": "PirikaDB.db"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:5241;https://localhost:7005"
+    },
+    "https": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "JWT_KEY": "kj453gjkuewh345rgfkuwshb455gfuswgufh567swbguf876gswedufgsuwygfus345wgfug",
+        "DATABASE_CONNECTION": "Server=db20771.databaseasp.net; Database=db20771; Uid=db20771; Pwd=3f-L?Ro4J5@d;",
+        "LOCAL_DATABASE": "PirikaDB.db"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7005;http://localhost:5241"
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  },
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:31000",
+      "sslPort": 44317
+    }
+  }
+}

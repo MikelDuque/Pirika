@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+@layer components {
+  .input {
+    @apply
+      h-8
+      w-full
+      flex
+      px-3
+      py-2
+      rounded-md
+      border
+      bg-transparent
+
+      
+      file:border-0
+      file:bg-transparent
+      file:text-sm
+      file:font-medium
+
+      placeholder:text-white/50
+
+      focus-visible:outline-none
+      focus-visible:ring-1
+      focus-visible:ring-white
+
+      disabled:cursor-not-allowed
+      disabled:opacity-50
+
+      md:text-sm
+  }
+
+  .checkbox {
+    @apply
+      size-4
+      shrink-0
+      rounded-sm
+      border
+      ring-offset-transparent
+
+      focus-visible:outline-none
+      focus-visible:ring-2
+      focus-visible:ring-white
+      focus-visible:ring-offset-2
+
+      disabled:cursor-not-allowed
+      disabled:opacity-50
+      
+      data-[state=checked]:bg-white
+      data-[state=checked]:text-black
+  }
+
+  .checkboxIndicator {
+    @apply
+      flex
+      items-center
+      justify-center
+      text-current
+  }
+
+  .label {
+    @apply
+      leading-none
+      peer-disabled:cursor-not-allowed
+      peer-disabled:opacity-70
+  }
+}
