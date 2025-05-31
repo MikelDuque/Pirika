@@ -1,9 +1,10 @@
 import { useNavigate, useRouteError } from "react-router-dom"
 import { Button } from "../components/ui/Button";
+import { RouteError } from "../utils/types";
 
 export default function NotFound() {
   const navigate = useNavigate();
-  const error = useRouteError();
+  const error = useRouteError() as RouteError;
   const errorMessage = error?.error?.message || error?.statusText || "Unknown error";
 
   return (

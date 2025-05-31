@@ -24,9 +24,12 @@ export default function Login() {
   });
 
   async function onSubmit(values: z.infer<typeof loginSchema>) {
-    const data = await fetchingData({url:LOGIN_URL, type:Crud.POST, params:values});
+    type dataReceived = {
+      accessToken: string
+    }
+    const data = await fetchingData<dataReceived>({url:LOGIN_URL, type:Crud.POST, params:values});
 
-    logIn(data.accessToken, values.rememberMe);
+    logIn(data?.accessToken || "", values.rememberMe);
   };
 
   return (

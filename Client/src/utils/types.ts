@@ -1,5 +1,14 @@
 import { CollectionType, Crud, ElementType } from "./enums";
 
+export interface RouteError {
+  status?: number;
+  statusText?: string;
+  message?: string;
+  error?: {
+    message?: string;
+  };
+}
+
 export interface TaskResult<T> {
   asyncState: any;
   creationOptions: number;

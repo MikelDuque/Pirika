@@ -26,6 +26,10 @@ export default function Register() {
   });
 
   async function onSubmit(values: z.infer<typeof registerSchema>) {
+    type dataReceived = {
+      accessToken: string
+    }
+
     const registerRequest = Object.entries(values)
       .filter(([k, _]) => !["confirmPassword", "rememberMe"]
       .includes(k)).reduce((formData,[k,v]) => {
@@ -33,9 +37,9 @@ export default function Register() {
         return formData;
       }, new FormData())
 
-    const data = await fetchingData({ url: REGISTER_URL, type: Crud.POST, params: registerRequest });
+    const data = await fetchingData<dataReceived>({ url: REGISTER_URL, type: Crud.POST, params: registerRequest });
 
-    logIn(data.accessToken, values.rememberMe);
+    logIn(data?.accessToken || "", values.rememberMe);
   };
 
   return (
