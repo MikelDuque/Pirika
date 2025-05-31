@@ -1,10 +1,7 @@
 import { createContext, ReactNode, useContext, useEffect, useRef, useState } from "react";
-import { Collection, Filter, FilterResult, Player, Song, TaskResult } from "../utils/types";
-import { GET_COLLECTION, GET_FILE, GET_SONG } from "../utils/endpoints/endpoints";
-import useFetch from "../utils/endpoints/useFetchEvent";
-import {useFetch as fetchPrueba} from "../utils/endpoints/useFetch";
-import { Crud, ElementType } from "../utils/enums";
-import { useAuth } from "./AuthContext";
+import { Collection, Filter, FilterResult, Player, Song } from "../utils/types";
+import { GET_FILE } from "../utils/endpoints/endpoints";
+import { ElementType } from "../utils/enums";
 import { Howl } from 'howler';
 
 /* ---- TIPADOS ---- */
@@ -47,8 +44,8 @@ export const useAudio = (): AudioContextType => {
 
 /* ----- CUERPO Context ----- */
 export function AudioProvider({ children }: AudioProviderProps) {
-  const {authData} = useAuth();
-  const {fetchingData} = useFetch();
+  // const {authData} = useAuth();
+  // const {fetchingData} = useFetch();
   const [queue, setQueue] = useState<Song[]>([]);
   const [playerState, setPlayerState] = useState<Player>({
     currentSong: 0,
