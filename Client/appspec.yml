@@ -2,11 +2,8 @@ Version: 0.0
 os: linux
 
 files:
-  - source: frontend/dist
+  - source: Client/dist
     destination: /var/www/pirika
-    file_exists_behavior: OVERWRITE
-  - source: backend/publish
-    destination: /opt/backend
     file_exists_behavior: OVERWRITE
 
 hooks:

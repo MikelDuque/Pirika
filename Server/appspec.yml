@@ -1,0 +1,22 @@
+Version: 0.0
+os: linux
+
+files:
+  - source: Server/publish
+    destination: /opt/pirika/publish
+    file_exists_behavior: OVERWRITE
+
+hooks:
+  ApplicationStop:
+  - location: scripts/appStop.sh
+    timeout: 300
+    runas: LabRole
+  BeforeInstall:
+  - location: scripts/beforeInstall.sh
+    timeout: 300
+    runas: LabRole
+  ApplicationStart:
+  - location: scripts/appStart.sh
+    timeout: 300
+    runas: LabRole
+  

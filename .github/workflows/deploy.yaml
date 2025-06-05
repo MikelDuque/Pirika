@@ -1,6 +1,8 @@
 name: Deploy application
 
 on:
+  push:
+    branches: [ "main" ]
   workflow_run:
     workflows:
     - Test Application
@@ -8,8 +10,8 @@ on:
     - completed
 
 env:
-  CD_APP_NAME: "GithubActions"
-  CD_GROUP_NAME: "CD-GitActions"
+  CD_APP_NAME: "Pirika"
+  CD_GROUP_NAME: "Pirika_Deploy"
 
 jobs:
   deploy:
@@ -17,6 +19,13 @@ jobs:
     runs-on: ubuntu-22.04
     permissions:
       contents: read
+    strategy:
+      matrix:
+        include:
+        - PATH: Server
+          EC2_TAG_VALUE: ${{ vars.EC2_SERVER_TAG_VALUE }}
+        - PATH: Client
+          EC2_TAG_VALUE: ${{ vars.EC2_CLIENT_TAG_VALUE }}
 
     steps:
     - uses: actions/checkout@v4
@@ -30,25 +39,28 @@ jobs:
         aws-region: ${{ vars.AWS_REGION }}
     
     - name: Create CodeDeploy App
-      run: |
-        aws deploy create-application \
-        --application-name ${{ env.CD_APP_NAME }} \
+      run:
+        aws deploy create-application
+        --application-name ${{ env.CD_APP_NAME }}
         --compute-platform "Server" || echo "La aplicación ya existe"
+      working-directory: ./Server
 
     - name: Create Deployment Group
-      run: |
-        aws deploy create-deployment-group \
-        --application-name ${{ env.CD_APP_NAME }} \
-        --deployment-group-name ${{ env.CD_GROUP_NAME }} \
-        --service-role-arn ${{ vars.IAM_ROLE }} \
-        --deployment-style deploymentType="IN_PLACE",deploymentOption="WITHOUT_TRAFFIC_CONTROL" \
-        --ec2-tag-filters Key=${{ vars.EC2_TAG_KEY }},Value=${{ vars.EC2_TAG_VALUE }},Type="KEY_AND_VALUE" || echo "El grupo ya existe"
+      run:
+        aws deploy create-deployment-group
+        --application-name ${{ env.CD_APP_NAME }}
+        --deployment-group-name ${{ env.CD_GROUP_NAME }}
+        --service-role-arn ${{ vars.IAM_ROLE }}
+        --deployment-style deploymentType="IN_PLACE",deploymentOption="WITHOUT_TRAFFIC_CONTROL"
+        --ec2-tag-filters Key=${{ vars.EC2_TAG_KEY }},Value=${{ matrix.EC2_TAG_VALUE }},Type="KEY_AND_VALUE" || echo "El grupo ya existe"
         #--deployment-config-name no hace falta ponerlo cuando se quiere emplear el "one-at-a-time", como es el caso
+      working-directory: ./${{matrix.PATH}}
 
     - name: Create Deployment
-      run: |
-        aws deploy create-deployment \
-        --application-name ${{ env.CD_APP_NAME }} \
-        --deployment-group-name ${{ env.CD_GROUP_NAME }} \
+      run:
+        aws deploy create-deployment
+        --application-name ${{ env.CD_APP_NAME }}
+        --deployment-group-name ${{ env.CD_GROUP_NAME }}
         --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
         #--revision revisionType="GitHub",s3Location=,gitHubLocation={repository=${{ env.GITHUB_REPOSITORY }},commitId=${{ env.GITHUB_SHA }}},string=,appSpecContent=
+      working-directory: ./${{matrix.PATH}}
