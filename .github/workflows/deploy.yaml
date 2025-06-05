@@ -40,7 +40,7 @@ jobs:
         --deployment-group-name ${{ env.CD_GROUP_NAME }} \
         --service-role-arn ${{ env.IAM_ROLE }} \
         --deployment-style deploymentType="IN_PLACE",deploymentOption="WITHOUT_TRAFFIC_CONTROL" \
-        --ec2-tag-filters Key=${{ EC2_TAG_KEY }},Value=${{ EC2_TAG_VALUE }},Type="KEY_AND_VALUE" || echo "El grupo ya existe"
+        --ec2-tag-filters Key=${{ env.EC2_TAG_KEY }},Value=${{ env.EC2_TAG_VALUE }},Type="KEY_AND_VALUE" || echo "El grupo ya existe"
         #--deployment-config-name no hace falta ponerlo cuando se quiere emplear el "one-at-a-time", como es el caso
 
     - name: Create Deployment
