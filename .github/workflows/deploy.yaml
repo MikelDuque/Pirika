@@ -27,7 +27,7 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-        aws-region: ${{ env.AWS_REGION }}
+        aws-region: ${{ vars.AWS_REGION }}
     
     - name: Create CodeDeploy App
       run: aws deploy create-application \
@@ -38,9 +38,9 @@ jobs:
       run: aws deploy create-deployment-group \
         --application-name ${{ env.CD_APP_NAME }} \
         --deployment-group-name ${{ env.CD_GROUP_NAME }} \
-        --service-role-arn ${{ env.IAM_ROLE }} \
+        --service-role-arn ${{ vars.IAM_ROLE }} \
         --deployment-style deploymentType="IN_PLACE",deploymentOption="WITHOUT_TRAFFIC_CONTROL" \
-        --ec2-tag-filters Key=${{ env.EC2_TAG_KEY }},Value=${{ env.EC2_TAG_VALUE }},Type="KEY_AND_VALUE" || echo "El grupo ya existe"
+        --ec2-tag-filters Key=${{ vars.EC2_TAG_KEY }},Value=${{ vars.EC2_TAG_VALUE }},Type="KEY_AND_VALUE" || echo "El grupo ya existe"
         #--deployment-config-name no hace falta ponerlo cuando se quiere emplear el "one-at-a-time", como es el caso
 
     - name: Create Deployment
