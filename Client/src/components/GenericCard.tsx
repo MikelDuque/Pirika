@@ -7,15 +7,16 @@ import { Card, CardHeader, CardDescription, CardFooter, CardTitle } from "./ui/C
 import { Artist } from "../utils/types";
 import { ThisProfilePath } from "../utils/paths";
 import { useNavigate } from "react-router-dom";
+import { HTMLAttributes } from "react";
 
-interface GenericCard extends React.HTMLAttributes<HTMLDivElement> {
+interface GenericCardProps extends HTMLAttributes<HTMLDivElement> {
   img: string,
   title: string,
   author?: Artist,
   type: ElementType,
 }
 
-export default function GenericCard({img, title, author, type, ...props}: GenericCard) {
+export default function GenericCard({img, title, author, type, ...props}: GenericCardProps) {
   const navigate = useNavigate();
 
   return (

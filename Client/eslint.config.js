@@ -6,18 +6,25 @@ import { defineConfig } from "eslint/config";
 
 
 export default defineConfig([
+  tseslint.configs.recommended,
   {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
-    plugins: { js },
-    extends: ["js/recommended"]
+    plugins: { js},
+    extends: ["js/recommended"],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+        "NodeJS": true,
+        "BodyInit": true
+      }
+    },
+    rules: {
+      "no-unused-vars": "warn",
+      "@typescript-eslint/no-explicit-any": "warn",
+      "@typescript-eslint/no-unused-vars": "warn"
+    }
   },
-  {
-    files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
-    languageOptions: { globals: globals.browser }
-  },
-  tseslint.configs.recommended,
-  pluginReact.configs.flat.recommended,
-  tseslint.configs.recommended,
   {
     ...pluginReact.configs.flat.recommended,
     settings: {
@@ -25,5 +32,9 @@ export default defineConfig([
         version: "detect",
       },
     },
+    rules: {
+      "react/react-in-jsx-scope": "off",
+      "react/jsx-key": "warn",
+    }
   },
 ]);

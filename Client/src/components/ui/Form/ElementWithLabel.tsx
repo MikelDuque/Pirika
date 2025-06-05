@@ -1,11 +1,8 @@
+import { ComponentProps } from "react";
 import { Input } from "./Input";
 import { Label } from "./Label";
 
-interface InputWrapperProps extends React.ComponentProps<typeof Input> {
-
-}
-
-export default function InputWLabel({children, ...props}: InputWrapperProps) {
+export default function InputWLabel({children, ...props}: ComponentProps<typeof Input>) {
   return (
     <div className="flex gap-1">
       <Label>{children}</Label>

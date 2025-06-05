@@ -44,7 +44,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   };
 
   function logIn(token: string, remember: boolean) {
-    remember ? localStorage.setItem("token", token) : sessionStorage.setItem("token", token);
+    const storage = remember ? localStorage : sessionStorage;
+    storage.setItem("token", token);
 
     setAuthData({
       token: token,

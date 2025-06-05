@@ -4,7 +4,7 @@ import { GET_FILE } from "../utils/endpoints/endpoints";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/Avatar";
 import { HomePath, SearchPath, ThisProfilePath } from "../utils/paths";
 import { DynamicIcon } from "lucide-react/dynamic";
-import { ComponentProps} from "react";
+import { ChangeEvent, ComponentProps} from "react";
 import camelCase from "lodash/camelCase";
 import { Input } from "./ui/Form";
 import { useAudio } from "../contexts/AudioContext";
@@ -43,7 +43,7 @@ export default function Header({className}: {className?: string}) {
     return [tabPath, location.pathname].every(item => item === SearchPath)
   };
 
-  function setSearchValue(e: React.ChangeEvent<HTMLInputElement>) {
+  function setSearchValue(e: ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     changeSearchValue(e.target.value)
   }

@@ -101,23 +101,15 @@ export function AudioProvider({ children }: AudioProviderProps) {
         ...prevState,
         duration: player.current.duration()
       }))},
-      onvolume() {player.current.volume() > 0 ?
+      onvolume() {
         setPlayerState(prevState => ({
           ...prevState,
-          volume: player.current.volume(),
+          ...(player.current.volume() > 0 && {volume: player.current.volume()}),
           isMuted: false
-        }))
-        :
-        setPlayerState(prevState => ({
-          ...prevState,
-          isMuted: true
         }))
       },
       onend() {
-        console.log("prev state", playerState.currentSong);
-        
-        !playerState.repeat &&
-        setPlayerState(prevState => ({
+        if(!playerState.repeat) setPlayerState(prevState => ({
           ...prevState,
           currentSong: prevState.currentSong +1
         }))
@@ -147,7 +139,7 @@ export function AudioProvider({ children }: AudioProviderProps) {
   function changeSong(songId: number) {
     const currentSong = songId > queue.length ? queue.length -1 : Math.max(0, songId);
 
-    player.current.rate
+    // player.current.rate
     
     setPlayerState(prevState => ({
       ...prevState,
@@ -203,7 +195,7 @@ export function AudioProvider({ children }: AudioProviderProps) {
   };
 
   function changeSearchValue(value?: string) {setSearchValue(prevState => ({...prevState, search: value ?? ""}))};
-  function changeSearchResult(newValue: FilterResult) {newValue && setSearchResult({...newValue})};
+  function changeSearchResult(newValue: FilterResult) {if(newValue) setSearchResult({...newValue})};
 
   /* ----- FINAL DEL CONTEXTO ----- */
 

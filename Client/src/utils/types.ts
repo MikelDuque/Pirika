@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { CollectionType, Crud, ElementType } from "./enums";
 
 export interface RouteError {
@@ -23,7 +24,7 @@ export interface TaskResult<T> {
 }
 
 export interface ChildrenProp {
-  children: React.ReactNode
+  children: ReactNode
 }
 
 export interface FetchProps {
