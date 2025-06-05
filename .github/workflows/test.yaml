@@ -1,0 +1,41 @@
+name: Test application
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+
+    steps:
+    - uses: actions/checkout@v4
+
+    #TEST .NET
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8'
+    - name: Restore dependencies
+      run: dotnet restore ./Server/Server.csproj
+    - name: Build backend
+      run: dotnet build ./Server/Server.csproj --no-restore --configuration Release
+    # - name: Run backend tests
+    #   run: dotnet test ./Server/Server.Tests.csproj --no-build --verbosity normal
+
+    #TEST REACT
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    - name: Install frontend dependencies
+      working-directory: ./Client
+      run: npm install
+    - name: Run frontend tests
+      working-directory: ./Client
+      run: npm run test -- --watchAll=false
