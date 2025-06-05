@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "preview": "vite preview",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
     "test": "vitest run",
-    "check": "npm run lint && npm run test"
+    "check": "tsc --noEmit",
+    "every-test": "npm run lint && npm run check && npm run test"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.3",
