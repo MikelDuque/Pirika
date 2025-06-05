@@ -30,12 +30,14 @@ jobs:
         aws-region: ${{ vars.AWS_REGION }}
     
     - name: Create CodeDeploy App
-      run: aws deploy create-application \
+      run: |
+        aws deploy create-application \
         --application-name ${{ env.CD_APP_NAME }} \
         --compute-platform "Server" || echo "La aplicación ya existe"
 
     - name: Create Deployment Group
-      run: aws deploy create-deployment-group \
+      run: |
+        aws deploy create-deployment-group \
         --application-name ${{ env.CD_APP_NAME }} \
         --deployment-group-name ${{ env.CD_GROUP_NAME }} \
         --service-role-arn ${{ vars.IAM_ROLE }} \
@@ -44,7 +46,8 @@ jobs:
         #--deployment-config-name no hace falta ponerlo cuando se quiere emplear el "one-at-a-time", como es el caso
 
     - name: Create Deployment
-      run: aws deploy create-deployment \
+      run: |
+        aws deploy create-deployment \
         --application-name ${{ env.CD_APP_NAME }} \
         --deployment-group-name ${{ env.CD_GROUP_NAME }} \
         --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
