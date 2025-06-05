@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Server.Database;
 using Server.Database.Entities;
 using Server.Helpers;
@@ -46,25 +47,47 @@ public class MusicService
 		return _songMapper.ToDto(song);
 	}
 
+	public async Task SearchMusic2(Filter filter)
+	{
+		// IQueryable<object> songs = _unitOfWork.SongRepository.GetQueryable().Where(song => song.Title.Contains('a'));
+		// IQueryable<object> users = _unitOfWork.UserRepository.GetQueryable().Where(user => user.DisplayName.Contains('a'));
+
+		// var a = await songs.Concat(users).ToListAsync();
+		try
+		{
+			IQueryable<object> songs = _unitOfWork.SongRepository.GetQueryable();
+			IQueryable<object> users = _unitOfWork.UserRepository.GetQueryable();
+
+			var a = await songs.Union(users).ToListAsync();
+		}
+		catch (Exception e)
+		{
+
+			throw;
+		}
+		
+
+	}
+
 	public async Task<FilterResult> SearchMusic(Filter filter)
 	{
 		FilterResult filterResult = new();
 
-		if(filter.Types.Contains((byte) ElementType.Songs))
+		if (filter.Types.Contains((byte)ElementType.Songs))
 		{
 			IEnumerable<Song> filteredSongs = await _unitOfWork.SongRepository.GetFilteredSongs(filter);
 
 			filterResult.Songs = _songMapper.ToDto(filteredSongs);
 		}
 
-		if (filter.Types.Contains((byte) ElementType.Collections))
+		if (filter.Types.Contains((byte)ElementType.Collections))
 		{
 			IEnumerable<Collection> filteredCollection = await _unitOfWork.CollectionRepository.GetFilteredSongs(filter);
 
 			filterResult.Collections = _collectionMapper.ToDto(filteredCollection);
 		}
 
-		if (filter.Types.Contains((byte) ElementType.Artists))
+		if (filter.Types.Contains((byte)ElementType.Artists))
 		{
 			IEnumerable<User> filteredUsers = await _unitOfWork.UserRepository.GetFilteredSongs(filter);
 

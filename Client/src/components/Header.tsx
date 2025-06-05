@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { GET_FILE } from "../utils/endpoints/endpoints";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/Avatar";
-import { HomePath, SearchPath } from "../utils/paths";
+import { HomePath, SearchPath, ThisProfilePath } from "../utils/paths";
 import { DynamicIcon } from "lucide-react/dynamic";
 import { ComponentProps} from "react";
 import camelCase from "lodash/camelCase";
@@ -80,7 +80,7 @@ export default function Header({className}: {className?: string}) {
           ))}
         </TabsList>
       </Tabs> */}
-      <Avatar>
+      <Avatar onClick={() => navigate(ThisProfilePath(authData?.decodedToken.id || 0))}>
         <AvatarImage src={GET_FILE(authData?.decodedToken.avatar || "")}/>
         <AvatarFallback>{getInitial()}</AvatarFallback>
       </Avatar>

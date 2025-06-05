@@ -19,7 +19,7 @@ export default function GenericCard({img, title, author, type, ...props}: Generi
   const navigate = useNavigate();
 
   return (
-    <Card {...props}>
+    <Card {...props} className="size-full">
       <CardHeader className="relative flex items-center justify-center group">
         <Avatar className={cn("size-full", type !== ElementType.Artist && "rounded-md", type === ElementType.Collection && "shadow-[5px_-5px_0px_0px_#969696]")}>
           <AvatarImage src={GET_FILE(img)}/>
