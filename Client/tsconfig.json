@@ -6,7 +6,9 @@
   ],
   "compilerOptions": {
     "baseUrl": "src",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
   }
 
 }
