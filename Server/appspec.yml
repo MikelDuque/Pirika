@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 
 files:
-  - source: Server/publish
+  - source: Server
     destination: /opt/pirika/publish
     file_exists_behavior: OVERWRITE
 
