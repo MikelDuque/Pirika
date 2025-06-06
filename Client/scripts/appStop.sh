@@ -1,2 +1,2 @@
 #!/bin/bash
-systemctl stop pirika
+systemctl stop nginx
