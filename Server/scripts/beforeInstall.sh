@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+exec > >(tee -a /var/log/codedeploy/before_install.log) 2>&1
+
 #ACTUALIZACION PROYECTO
 rm -rf /opt/pirika/publish
 mkdir -p /opt/pirika/publish
