@@ -42,7 +42,7 @@ jobs:
         aws deploy create-application
         --application-name ${{ env.CD_APP_NAME }}
         --compute-platform "Server" || echo "La aplicación ya existe"
-      working-directory: ./Server
+      working-directory: ./${{matrix.PATH}}
 
     - name: Create Deployment Group
       run:
