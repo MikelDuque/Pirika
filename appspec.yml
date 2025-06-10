@@ -11,17 +11,13 @@ files:
 
 hooks:
   ApplicationStop:
-  - location: Server/scripts/appStop.sh
-    timeout: 300
-  - location: Client/scripts/appStop.sh
+  - location: scripts/appStop.sh
     timeout: 300
   BeforeInstall:
-  - location: Server/scripts/beforeInstall.sh
+  - location: scripts/beforeInstall/serverInstall.sh
     timeout: 300
-  - location: Client/scripts/beforeInstall.sh
+  - location: scripts/beforeInstall/clientInstall.sh
     timeout: 300
   ApplicationStart:
-  - location: Server/scripts/appStart.sh
-    timeout: 300
-  - location: Client/scripts/appStart.sh
+  - location: scripts/appStart.sh
     timeout: 300
