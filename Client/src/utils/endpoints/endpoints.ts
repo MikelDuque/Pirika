@@ -1,7 +1,7 @@
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 /* --- FILES --- */
-export function GET_FILE(url: string) {return `${API_BASE_URL}/${url}`};
+export function GET_FILE(url: string) {return `${API_BASE_URL}/files/${url}`};
 
 /* --- AUTHORIZATION CONTROLLER --- */
 const API_AUTH_URL = `${API_BASE_URL}/api/Auth`;
