@@ -42,7 +42,6 @@ jobs:
         aws deploy create-application
         --application-name ${{ env.CD_APP_NAME }}
         --compute-platform "Server" || echo "La aplicación ya existe"
-      # working-directory: ./${{matrix.PATH}}
 
     - name: Create Deployment Group
       run:
@@ -52,8 +51,7 @@ jobs:
         --service-role-arn ${{ vars.IAM_ROLE }}
         --deployment-style deploymentType="IN_PLACE",deploymentOption="WITHOUT_TRAFFIC_CONTROL"
         --ec2-tag-filters Key=${{ vars.EC2_TAG_KEY }},Value=${{ matrix.EC2_TAG_VALUE }},Type="KEY_AND_VALUE" || echo "El grupo ya existe"
-        #--deployment-config-name no hace falta ponerlo cuando se quiere emplear el "one-at-a-time", como es el caso
-      # working-directory: ./${{matrix.PATH}}
+        --deployment-config-name CodeDeployDefault.AllAtOnce
 
     - name: Create Deployment
       run:
@@ -61,5 +59,3 @@ jobs:
         --application-name ${{ env.CD_APP_NAME }}
         --deployment-group-name ${{ matrix.CD_GROUP_NAME }}
         --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
-        #--revision revisionType="GitHub",s3Location=,gitHubLocation={repository=${{ env.GITHUB_REPOSITORY }},commitId=${{ env.GITHUB_SHA }}},string=,appSpecContent=
-      # working-directory: ./${{matrix.PATH}}

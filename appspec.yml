@@ -2,12 +2,9 @@ version: 0.0
 os: linux
 
 files:
-  - source: Build/
+  - source: Client/dist/*
     destination: /var/www/pirika
-    file_exists_behavior: RETAIN
-  - source: Build/
-    destination: /var/www/pirika
-    file_exists_behavior: RETAIN
+    file_exists_behavior: OVERWRITE
 
 hooks:
   ApplicationStop:
