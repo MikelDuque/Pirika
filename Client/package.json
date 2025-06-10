@@ -7,7 +7,6 @@
     "dev": "vite",
     "preview": "vite preview",
     "build": "tsc -b && vite build",
-    "cdBuild": "tsc -b && vite build --outDir ../Build",
     "lint": "eslint .",
     "test": "vitest run",
     "check": "tsc --noEmit",

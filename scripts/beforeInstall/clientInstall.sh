@@ -7,6 +7,6 @@ if [ "$DEPLOYMENT_GROUP_NAME" == "Pirika_Client_Deploy" ]; then
   mkdir -p /var/www/pirika
   cd /opt/codedeploy-agent/deployment-root/$DEPLOYMENT_GROUP_ID/$DEPLOYMENT_ID/deployment-archive/Client
   npm install
-  npm run cdBuild
+  npm run build
 
 fi
