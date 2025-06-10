@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 
 files:
-  - source: Client/dist/*
+  - source: Client/dist/
     destination: /var/www/pirika
     file_exists_behavior: OVERWRITE
 
