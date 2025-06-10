@@ -1,5 +1,5 @@
 #!/bin/bash
-pwd > /var/log/hola.txt
+pwd > /tmp/hola.log
 
 #ACTUALIZACION PROYECTO
 rm -rf /opt/pirika/publish
