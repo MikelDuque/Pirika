@@ -2,10 +2,10 @@ version: 0.0
 os: linux
 
 files:
-  - source: Build/*
-    destination: /opt/pirika/publish
+  - source: Build/
+    destination: /var/www/pirika
     file_exists_behavior: RETAIN
-  - source: Build/*
+  - source: Build/
     destination: /var/www/pirika
     file_exists_behavior: RETAIN
 
