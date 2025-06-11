@@ -1,8 +1,5 @@
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-console.log("base url", API_BASE_URL);
-
-
 /* --- FILES --- */
 export function GET_FILE(url: string) {
   const fileRoute = `${API_BASE_URL.length > 0 ? "" : "/files"}/`

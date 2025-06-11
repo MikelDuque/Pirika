@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input } from "../../components/ui/Form";
 import { loginSchema } from "../../utils/formValidators/authValidator";
 import useFetch from "../../utils/endpoints/useFetchEvent";
-import { LOGIN_URL } from "../../utils/endpoints/endpoints";
+import { API_BASE_URL, LOGIN_URL } from "../../utils/endpoints/endpoints";
 import { Crud } from "../../utils/enums";
 import { Checkbox } from "../ui/Form/Checkbox";
 import { Button } from "../ui/Button/Button";
@@ -13,6 +13,8 @@ import { useAuth } from "../../contexts/AuthContext";
 export default function Login() {
   const {fetchingData} = useFetch();
   const {logIn} = useAuth();
+
+  console.log("base url", API_BASE_URL);
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
