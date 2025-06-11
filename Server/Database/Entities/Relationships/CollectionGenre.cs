@@ -9,6 +9,6 @@ public class CollectionGenre
 	public required long CollectionId { get; set; }
 
 	[ForeignKey(nameof(Genre))]
-	public required long GenreId { get; set; }
+	public required byte GenreId { get; set; }
 	public Genre Genre { get; set; }
 }

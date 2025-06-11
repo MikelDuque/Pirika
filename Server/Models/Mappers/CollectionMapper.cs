@@ -49,7 +49,7 @@ public class CollectionMapper
       PublicationDate = collection.PublicationDate,
       Author = _artistMapper.ToDto(collection.Author),
 			Type = collection.Type,
-			Collaborators = collection.Collaborators != null ? _artistMapper.ToDto(collection.Collaborators) : [],
+			Collaborators = collection.Collaborations != null ? _artistMapper.ToDto(collection.Collaborations.Where(c => c.MusicId == collection.Id).Select(c => c.User)) : [],
 			Songs = _songMapper.ToDto(collection.Songs),
 			Genres = _genreMapper.ToEnum(collection.Genres)
 		};

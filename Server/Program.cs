@@ -52,25 +52,27 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 /* WEBSOCKET */
+builder.Services.AddTransient<MyWebSocketMiddleware>();
 builder.Services.AddSingleton<WebSocketNetwork>();
 /* DATABASE */
 builder.Services.AddScoped<DataContext>();
 builder.Services.AddScoped<UnitOfWork>();
 /* REPOSITORIES */
+builder.Services.AddScoped<GenreRepository>();
 builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<MusicRepository>();
 builder.Services.AddScoped<SongRepository>();
 builder.Services.AddScoped<CollectionRepository>();
-builder.Services.AddScoped<CollectionSongRepository>();
-builder.Services.AddScoped<GenreRepository>();
+//builder.Services.AddScoped<CollectionSongRepository>();
 /* MAPPERS */
 builder.Services.AddScoped<GenreMapper>();
 builder.Services.AddScoped<ArtistMapper>();
 builder.Services.AddScoped<CollaborationMapper>();
 builder.Services.AddScoped<CollectionMapper>();
 builder.Services.AddScoped<SongMapper>();
+builder.Services.AddScoped<FilterItemMapper>();
 /* SERVICES */
 builder.Services.AddScoped<AuthService>();
-builder.Services.AddScoped<SongService>();
 builder.Services.AddScoped<MusicService>();
 
 var app = builder.Build();
@@ -83,7 +85,7 @@ app.UseStaticFiles(new StaticFileOptions
 });
 
 app.UseWebSockets();
-app.UseWebSocketMiddleware();
+app.UseMiddleware<MyWebSocketMiddleware>();
 
 app.UseHttpsRedirection();
 

@@ -46,7 +46,7 @@ public class SongMapper
 			ReleaseDate = song.ReleaseDate,
 			PublicationDate = song.PublicationDate,
 			Author = _artistMapper.ToDto(song.Author),
-			Collaborators = song.Collaborators != null ? _artistMapper.ToDto(song.Collaborators) : [],
+			Collaborators = song.Collaborations != null ? _artistMapper.ToDto(song.Collaborations.Where(c => c.MusicId == song.Id).Select(c => c.User)) : [],
 			Genres = _genreMapper.ToEnum(song.Genres)
 		};
 	}

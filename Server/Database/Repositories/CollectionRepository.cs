@@ -14,19 +14,17 @@ public class CollectionRepository : Repository<Collection>
 	{
 		return await GetQueryable()
 			.Include(collection => collection.Author)
-			.Include(collection => collection.Collaborators)
+			.Include(collection => collection.Collaborations)
 			.Include(collection => collection.Songs)
-				.ThenInclude(song => song.Author).Include(song => song.Collaborators)
+				.ThenInclude(song => song.Author).Include(song => song.Collaborations)
 			.ToListAsync();
 	}
 
 	public async Task<IEnumerable<Collection>> GetFilteredSongs(Filter filter)
 	{
-		TextHelper _textHelper = new();
-
 		IEnumerable<Collection> collectionList = await GetAllAsync();
 
-		return _textHelper.SearchFilter<Collection>(collectionList, filter.Search, collection => collection.Title);
+		return TextHelper.SearchFilter<Collection>(collectionList, filter.Search, collection => collection.Title);
 	}
 
 	public async Task<Collection> GetIncludesByIdAsync(long id)
@@ -34,9 +32,9 @@ public class CollectionRepository : Repository<Collection>
 		return await GetQueryable()
 			.Where(collection => collection.Id == id)
 			.Include(collection => collection.Author)
-			.Include(collection => collection.Collaborators)
+			.Include(collection => collection.Collaborations)
 			.Include(collection => collection.Songs)
-				.ThenInclude(song => song.Author).Include(song => song.Collaborators)
+				.ThenInclude(song => song.Author).Include(song => song.Collaborations)
 			.FirstOrDefaultAsync();
 	}
 }

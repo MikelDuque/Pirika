@@ -19,11 +19,9 @@ public class UserRepository : Repository<User>
 
 	public async Task<IEnumerable<User>> GetFilteredSongs(Filter filter)
 	{
-		TextHelper _textHelper = new();
-
 		IEnumerable<User> userList = await GetAllAsync();
 
-		return _textHelper.SearchFilter<User>(userList, filter.Search, user => user.DisplayName);
+		return TextHelper.SearchFilter<User>(userList, filter.Search, user => user.DisplayName);
 	}
 
 	public async Task<IEnumerable<User>> SongsPublished(IEnumerable<Song> songs, long userId)
@@ -32,7 +30,7 @@ public class UserRepository : Repository<User>
 		List<string> songTitles = songs.Select(s => s.Title).ToList();
 
 		return await GetQueryable()
-			.Where(user => user.Id == userId && user.Songs.Any(song =>
+			.Where(user => user.Id == userId && user.OwnMusic.Any(song =>
 						songIds.Contains(song.Id) || songTitles.Contains(song.Title)))
 			.ToListAsync();
 	}
