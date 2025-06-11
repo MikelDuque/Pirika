@@ -5,7 +5,7 @@ import { useFetch } from "../utils/endpoints/useFetch"
 import { CollectionType, Crud } from "../utils/enums";
 import { Collection, Song, TaskResult } from "../utils/types";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, Input } from "./ui/Form";
-import { collectionSchema } from "../utils/formValidators/authValidator";
+import { collectionSchema } from "../utils/formValidators/musicValidator";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Calendar } from "./ui/Calendar";
