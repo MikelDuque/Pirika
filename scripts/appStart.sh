@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "$DEPLOYMENT_GROUP_NAME" == "Pirika_Server_Deploy" ]; then
-  systemctl stop pirika
+  systemctl restart pirika
 
 elif [ "$DEPLOYMENT_GROUP_NAME" == "Pirika_Client_Deploy" ]; then
   nginx -t
@@ -14,7 +14,3 @@ elif [ "$DEPLOYMENT_GROUP_NAME" == "Pirika_Client_Deploy" ]; then
   systemctl restart nginx
 
 fi
-
-
-
-
