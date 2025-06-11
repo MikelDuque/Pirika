@@ -6,13 +6,17 @@ public class UnitOfWork
 {
 	private readonly DataContext _dataContext;
 
+	/* GENRE */
+	private GenreRepository _genreRepository = null!;
+	public GenreRepository GenreRepository => _genreRepository ??= new GenreRepository(_dataContext);
+
 	/* USER */
 	private UserRepository _userRepository = null!;
 	public UserRepository UserRepository => _userRepository ??= new UserRepository(_dataContext);
 
-	/* GENRE */
-	private GenreRepository _genreRepository = null!;
-	public GenreRepository GenreRepository => _genreRepository ??= new GenreRepository(_dataContext);
+	/* MUSIC */
+	private MusicRepository _musicRepository = null!;
+	public MusicRepository MusicRepository => _musicRepository ??= new MusicRepository(_dataContext);
 
 	/* SONG */
 	private SongRepository _songRepository = null!;
@@ -22,9 +26,9 @@ public class UnitOfWork
 	private CollectionRepository _collectionRepository = null!;
 	public CollectionRepository CollectionRepository => _collectionRepository ??= new CollectionRepository(_dataContext);
 
-	/* COLLECTIONSONG */
-	private CollectionSongRepository _collectionSongRepository = null!;
-	public CollectionSongRepository CollectionSongRepository => _collectionSongRepository ??= new CollectionSongRepository(_dataContext);
+	/* USERFOLLOWS */
+	//private FollowsRepository _userFollowsRepository = null!;
+	//public FollowsRepository CollectionSongRepository => _userFollowsRepository ??= new UserFollowsRepository(_dataContext);
 
 	/* UNIT OF WORK */
 	public UnitOfWork(DataContext dataContext)

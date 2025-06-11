@@ -31,7 +31,7 @@ public class Seeder
 				Mail = "mikel@gmail.es",
 				Password = HashHelper.Hash("12345"),
 				DisplayName = "Mikel",
-				Avatar = "/ProfilePictures/defaultAvatar2.jpg",
+				Avatar = "ProfilePictures/defaultAvatar2.jpg",
 				Role = Role.Admin,
 				IsBanned = false
 			},
@@ -85,7 +85,7 @@ public class Seeder
 			new Song
 			{
 				Title = "Cuídate",
-				Path = "/Music/1/1.mp3",
+				Path = "Music/1/1.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 2,
@@ -94,7 +94,7 @@ public class Seeder
 			new Song
 			{
 				Title = "20 de Enero",
-				Path = "/Music/1/2.mp3",
+				Path = "Music/1/2.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 2,
@@ -103,7 +103,7 @@ public class Seeder
 			new Song
 			{
 				Title = "El 28",
-				Path = "/Music/1/3.mp3",
+				Path = "Music/1/3.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 2,
@@ -112,7 +112,7 @@ public class Seeder
 			new Song
 			{
 				Title = "París",
-				Path = "/Music/1/4.mp3",
+				Path = "Music/1/4.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 2,
@@ -121,7 +121,7 @@ public class Seeder
 			new Song
 			{
 				Title = "La Playa",
-				Path = "/Music/1/5.mp3",
+				Path = "Music/1/5.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 2,
@@ -130,7 +130,7 @@ public class Seeder
 			new Song
 			{
 				Title = "Muñeca de Trapo",
-				Path = "/Music/1/6.mp3",
+				Path = "Music/1/6.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 2,
@@ -139,7 +139,7 @@ public class Seeder
 			new Song
 			{
 				Title = "Rosas",
-				Path = "/Music/1/7.mp3",
+				Path = "Music/1/7.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 2,
@@ -148,7 +148,7 @@ public class Seeder
 			new Song
 			{
 				Title = "Dulce Locura",
-				Path = "/Music/1/8.mp3",
+				Path = "Music/1/8.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 2,
@@ -157,7 +157,7 @@ public class Seeder
 			new Song
 			{
 				Title = "Cuéntame al Oído",
-				Path = "/Music/1/9.mp3",
+				Path = "Music/1/9.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 2,
@@ -166,7 +166,7 @@ public class Seeder
 			new Song
 			{
 				Title = "Vestido Azul",
-				Path = "/Music/1/10.mp3",
+				Path = "Music/1/10.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 2,
@@ -175,7 +175,7 @@ public class Seeder
 			new Song
 			{
 				Title = "Pop",
-				Path = "/Music/1/11.mp3",
+				Path = "Music/1/11.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 2,
@@ -184,7 +184,7 @@ public class Seeder
 			new Song
 			{
 				Title = "Geografía",
-				Path = "/Music/1/12.mp3",
+				Path = "Music/1/12.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 2,
@@ -193,7 +193,7 @@ public class Seeder
 			new Song
 			{
 				Title = "Mariposa",
-				Path = "/Music/1/13.mp3",
+				Path = "Music/1/13.mp3",
 				Cover = "Covers/1/A_1.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 2,
@@ -216,34 +216,25 @@ public class Seeder
 			}
 		];
 
-		/* --- ALBUM-SONG RELATIONSHIP --- */
-		CollectionSong[] relationships =
+		/* --- FOLLOW RELATIONSHIPS --- */
+		Follow[] follows =
 		[
-			new CollectionSong { SongId = 1, CollectionId = 1 },
-			new CollectionSong { SongId = 2, CollectionId = 1 },
-			new CollectionSong { SongId = 3, CollectionId = 1 },
-			new CollectionSong { SongId = 4, CollectionId = 1 },
-			new CollectionSong { SongId = 5, CollectionId = 1 },
-			new CollectionSong { SongId = 6, CollectionId = 1 },
-			new CollectionSong { SongId = 7, CollectionId = 1 },
-			new CollectionSong { SongId = 8, CollectionId = 1 },
-			new CollectionSong { SongId = 9, CollectionId = 1 },
-			new CollectionSong { SongId = 10, CollectionId = 1 },
-			new CollectionSong { SongId = 11, CollectionId = 1 },
-			new CollectionSong { SongId = 12, CollectionId = 1 },
-			new CollectionSong { SongId = 13, CollectionId = 1 }
+			new Follow
+			{
+				FollowerId = 1,
+				FollowingId = 2,
+				FriendshipStart = null
+			}
 		];
 
+
 		/* --- INSERCCIÓN ENTIDADES --- */
+		_dataContext.Genres.AttachRange(genres);
 		_dataContext.Users.AddRange(users);
-		_dataContext.Genres.AddRange(genres);
 		_dataContext.SaveChanges();
 
-		//_dataContext.Songs.AddRange(songs);
 		_dataContext.Collections.AddRange(albums);
+		_dataContext.Follows.AddRange(follows);
 		_dataContext.SaveChanges();
-
-		//_dataContext.CollectionSongs.AddRange(relationships);
-
 	}
 }

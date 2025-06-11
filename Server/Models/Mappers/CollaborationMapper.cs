@@ -5,12 +5,12 @@ namespace Server.Models.Mappers;
 public class CollaborationMapper
 {
 	//GenreEnum To Genre Entity
-	public Collaboration ToEntity(long userId, long songId)
+	public Collaboration ToEntity(long userId, long musicId)
 	{
 		return new Collaboration
 		{
 			UserId = userId,
-			SongId = songId,
+			MusicId = musicId,
 		};
 	}
 

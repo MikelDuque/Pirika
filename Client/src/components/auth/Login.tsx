@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input } from "../../components/ui/Form";
-import { loginSchema } from "../../utils/formValidator";
+import { loginSchema } from "../../utils/formValidators/authValidator";
 import useFetch from "../../utils/endpoints/useFetchEvent";
 import { LOGIN_URL } from "../../utils/endpoints/endpoints";
 import { Crud } from "../../utils/enums";

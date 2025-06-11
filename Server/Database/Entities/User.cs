@@ -17,12 +17,10 @@ public class User
 	public bool IsBanned { get; set; }
 
 	/* 1-M Relationships */
-	public IEnumerable<Collection> Collections { get; }
-	public IEnumerable<Song> Songs { get; }
+	public IEnumerable<User> Followers { get; }
+	public IEnumerable<User> Following { get; }
 
-	/* M-N Relationships */
-	public IEnumerable<Collection> CollabCollections { get; }
-	public IEnumerable<Song> CollabSongs { get; }
-		public IEnumerable<Collaboration> Collaborations { get; set; }
-		public IEnumerable<Queue> Queue { get; set; } = [];
+	public IEnumerable<Music> OwnMusic { get; }
+
+	public ICollection<Collaboration> Collaborations { get; set; }
 }

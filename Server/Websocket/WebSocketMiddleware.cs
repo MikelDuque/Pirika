@@ -1,41 +1,19 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿namespace Server.Websocket;
 
-namespace Server.Websocket
+public class MyWebSocketMiddleware: IMiddleware
 {
-	public class WebSocketMiddleware
+	public async Task InvokeAsync(HttpContext httpContext, RequestDelegate next)
 	{
-		private readonly RequestDelegate _next;
-
-		public WebSocketMiddleware(RequestDelegate next)
+		if (httpContext.WebSockets.IsWebSocketRequest)
 		{
-			_next = next;
-		}
+			string token = httpContext.Request.Query["accessToken"];
 
-		public Task Invoke(HttpContext httpContext)
-		{
-			if (httpContext.WebSockets.IsWebSocketRequest)
+			if (!string.IsNullOrEmpty(token) && !httpContext.Request.Headers.ContainsKey("Authorization"))
 			{
-				string token = httpContext.Request.Query["accessToken"];
-
-				if (!string.IsNullOrEmpty(token))
-				{
-					httpContext.Request.Headers.Authorization = "Bearer " + token;
-				}
-				else
-				{
-					Task.FromResult(AuthenticateResult.Fail("Invalid Credentials"));
-				}
+				httpContext.Request.Headers["Authorization"] = "Bearer " + token;
 			}
-
-			return _next(httpContext);
 		}
-	}
 
-	public static class WebSocketMiddlewareExtensions
-	{
-		public static IApplicationBuilder UseWebSocketMiddleware(this IApplicationBuilder builder)
-		{
-			return builder.UseMiddleware<WebSocketMiddleware>();
-		}
+		await next(httpContext);
 	}
 }

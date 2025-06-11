@@ -1,3 +1,6 @@
+using System;
+using System.Linq;
+using eCommerce.Services;
 using Microsoft.EntityFrameworkCore;
 using Server.Database;
 using Server.Database.Entities;
@@ -8,6 +11,7 @@ using Server.Models.DTOs.Filter;
 using Server.Models.DTOs.Song;
 using Server.Models.Enums;
 using Server.Models.Mappers;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Server.Services;
 
@@ -17,13 +21,15 @@ public class MusicService
 	private readonly CollectionMapper _collectionMapper;
 	private readonly SongMapper _songMapper;
 	private readonly ArtistMapper _artistMapper;
+	private readonly FilterItemMapper _filterMapper;
 
-	public MusicService(UnitOfWork unitOfWork, CollectionMapper collectionMapper, SongMapper songMapper, ArtistMapper artistMapper)
+	public MusicService(UnitOfWork unitOfWork, CollectionMapper collectionMapper, SongMapper songMapper, ArtistMapper artistMapper, FilterItemMapper filterMapper)
 	{
 		_unitOfWork = unitOfWork;
 		_collectionMapper = collectionMapper;
 		_songMapper = songMapper;
 		_artistMapper = artistMapper;
+		_filterMapper = filterMapper;
 	}
 
 	/* GET */
@@ -47,47 +53,64 @@ public class MusicService
 		return _songMapper.ToDto(song);
 	}
 
-	public async Task SearchMusic2(Filter filter)
+	public IEnumerable<FilterItem> SearchMusic(Filter filter)
 	{
-		// IQueryable<object> songs = _unitOfWork.SongRepository.GetQueryable().Where(song => song.Title.Contains('a'));
-		// IQueryable<object> users = _unitOfWork.UserRepository.GetQueryable().Where(user => user.DisplayName.Contains('a'));
+		//Filter types
+		IEnumerable<ItemType> types = filter.Types.Any()
+			? filter.Types.Select(type => (ItemType)type)
+			: [ItemType.Song, ItemType.Collection, ItemType.Artist];
 
-		// var a = await songs.Concat(users).ToListAsync();
-		try
+		//Music query
+		IQueryable<Music> music = _unitOfWork.MusicRepository.GetQueryable()
+			.Where(music => !filter.Genres.Any() || music.Genres
+				.Any(genre => filter.Genres
+					.Contains((byte)genre.Id)));
+
+		music = (types.Contains(ItemType.Song), types.Contains(ItemType.Collection)) switch
 		{
-			IQueryable<object> songs = _unitOfWork.SongRepository.GetQueryable();
-			IQueryable<object> users = _unitOfWork.UserRepository.GetQueryable();
+			(true, false) => music.OfType<Song>(),
+			(false, true) => music.OfType<Collection>(),
+			(false, false) => music.Where(_ => false),
+			_ => music
+		};
 
-			var a = await songs.Union(users).ToListAsync();
-		}
-		catch (Exception e)
+		//User query
+		IQueryable<User> users = types.Contains(ItemType.Artist)
+			? _unitOfWork.UserRepository.GetQueryable()
+			: Enumerable.Empty<User>().AsQueryable();
+
+		//Result
+		IEnumerable<FilterItem> result = _filterMapper.ToDto(music).Concat(_filterMapper.ToDto(users));
+		result = TextHelper.SearchFilter<FilterItem>(result, filter.Search, item => item.Name);
+
+		if (filter.ItemsPerPage > 0 && filter.ItemsPerPage > 0)
 		{
-
-			throw;
+			int skip = (filter.CurrentPage - 1) * filter.ItemsPerPage;
+			result = result.Skip(skip).Take(filter.ItemsPerPage);
 		}
-		
 
+		return result;
 	}
 
-	public async Task<FilterResult> SearchMusic(Filter filter)
+	public async Task<FilterResult> SearchMusicOld(Filter filter)
 	{
 		FilterResult filterResult = new();
 
-		if (filter.Types.Contains((byte)ElementType.Songs))
+		if (filter.Types.Contains((byte)ItemType.Song))
 		{
 			IEnumerable<Song> filteredSongs = await _unitOfWork.SongRepository.GetFilteredSongs(filter);
 
 			filterResult.Songs = _songMapper.ToDto(filteredSongs);
 		}
 
-		if (filter.Types.Contains((byte)ElementType.Collections))
+		if (filter.Types.Contains((byte)ItemType.Collection))
 		{
 			IEnumerable<Collection> filteredCollection = await _unitOfWork.CollectionRepository.GetFilteredSongs(filter);
 
 			filterResult.Collections = _collectionMapper.ToDto(filteredCollection);
 		}
 
-		if (filter.Types.Contains((byte)ElementType.Artists))
+		if (filter.Types.Contains((byte)ItemType.Artist))
 		{
 			IEnumerable<User> filteredUsers = await _unitOfWork.UserRepository.GetFilteredSongs(filter);
 

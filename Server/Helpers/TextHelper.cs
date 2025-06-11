@@ -6,18 +6,20 @@ using F23.StringSimilarity.Interfaces;
 
 namespace eCommerce.Services;
 
-public class TextHelper
+public static class TextHelper
 {
 	private const double THRESHOLD = 0.80;
 
-	private readonly INormalizedStringSimilarity _stringSimilarityComparer;
+	//private readonly INormalizedStringSimilarity _stringSimilarityComparer;
 
-	public TextHelper()
-	{
-		_stringSimilarityComparer = new JaroWinkler();
-	}
+	//public TextHelper()
+	//{
+	//	_stringSimilarityComparer = new JaroWinkler();
+	//}
 
-	public IEnumerable<T> SearchFilter<T>(IEnumerable<T> elementList, string search, Func<T, string> stringSelector)
+	private static readonly JaroWinkler _stringSimilarityComparer = new();
+
+	public static IEnumerable<T> SearchFilter<T>(IEnumerable<T> elementList, string search, Func<T, string> stringSelector)
 	{
 		Debug.WriteLine(search);
 		List<T> listaFiltrada = [];
@@ -42,7 +44,7 @@ public class TextHelper
 		return elementList;
 	}
 
-	private bool IsMatch(string[] queryKeys, string[] itemKeys)
+	private static bool IsMatch(string[] queryKeys, string[] itemKeys)
 	{
 		bool isMatch = false;
 
@@ -60,24 +62,24 @@ public class TextHelper
 
 		return isMatch;
 	}
-	private bool IsMatch(string itemKey, string queryKey)
+	private static bool IsMatch(string itemKey, string queryKey)
 	{
 		return itemKey == queryKey
 				|| itemKey.Contains(queryKey)
 				|| _stringSimilarityComparer.Similarity(itemKey, queryKey) >= THRESHOLD;
 	}
 
-	private string[] GetTokens(string query)
+	private static string[] GetTokens(string query)
 	{
 		return query.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 	}
 
-	private string ClearText(string text)
+	private static string ClearText(string text)
 	{
 		return RemoveDiacritics(text.ToLower());
 	}
 
-	private string RemoveDiacritics(string text)
+	private static string RemoveDiacritics(string text)
 	{
 		string normalizedString = text.Normalize(NormalizationForm.FormD);
 		StringBuilder stringBuilder = new StringBuilder(normalizedString.Length);
@@ -93,10 +95,5 @@ public class TextHelper
 		}
 
 		return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
-	}
-
-	public static implicit operator TextHelper(JaroWinkler v)
-	{
-		throw new NotImplementedException();
 	}
 }
