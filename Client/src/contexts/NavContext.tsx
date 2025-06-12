@@ -1,29 +1,18 @@
-import { createContext, PropsWithChildren, useContext, useState } from "react";
+import { createContext, PropsWithChildren, useContext, useEffect, useState } from "react";
 import { HomePath, printPathWithId, SearchPath } from "../utils/paths";
-import { Artist, BasicElement, Collection, Filter } from "../utils/types";
+import { BasicElement, Filter, Tab } from "../utils/types";
 import { ElementType, PathType } from "../utils/enums";
 import _ from "lodash";
 import { IconName } from "lucide-react/dynamic";
 import { getFromStorage, getIcon } from "../utils/utils";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 /* ---- TIPADOS ---- */
-interface Tab {
-  name: string,
-  path: string,
-  icon: IconName,
-
-}
-
-type pageData = Artist | Collection;
-
 interface NavContext {
   searchFilter: Filter,
-  tabs: Tab[],
-  pageData?: pageData,
+  tabs: Tab[]
   changeSearchValue: (search: string) => void,
-  addTab: (newTab: Tab) => void,
-  newTab: (pathType: PathType, element: BasicElement) => void
+  addTab: (pathType: PathType, element: BasicElement) => void
 }
 
 /* ----- DEFAULT VALUES ----- */
@@ -45,8 +34,7 @@ const AuthContext = createContext<NavContext>({
   tabs: defaultTabs,
   searchFilter: defaultFilter,
   changeSearchValue: () => {},
-  addTab: () => {},
-  newTab: () => {}
+  addTab: () => {}
 });
 
 export const useNav = (): NavContext => {
@@ -57,39 +45,44 @@ export const useNav = (): NavContext => {
 
 /* ----- CUERPO CONTEXT ----- */
 export function NavProvider({ children }: PropsWithChildren) {
-  const navigate = useNavigate();
   // const location = useLocation();
-  // const {id} = useParams();
-  // const getUrl = () => {
-  //   if(!id) return "";
-  //   return location.pathname === ProfilePath ? GET_USER(id || 0) : GET_COLLECTION(id || 0);
-  // }
-  // const {fetchData: pageData} = useFetch<Artist | Collection>({url: getUrl(), condition: !!id});
+  const navigate = useNavigate();
 
   const [tabs, setTabs] = useState<Tab[]>(defaultTabs);
   const [searchFilter, setSearchFilter] = useState<Filter>(defaultFilter);
-
+  
   // useEffect(() => {
-  //   const tabPaths = tabs.map(tab => tab.path); 
-  //   if(!tabPaths.includes(location.pathname)) addTab();
+  //   updateTabs();
+  // }, [location]);
 
-  // }, [location])
+  // function updateTabs() {
+  //   const haveTab = tabs.some(tab => tab.path === location.pathname);
+  //   if(!haveTab) {
+  //     const thisElement = getFromStorage<BasicElement>(location.pathname);
 
-  function addTab(newTab: Tab) {
-    const tabPaths = tabs.map(tab => tab.path); 
-    if(!tabPaths.includes(newTab.path)) setTabs(prevTabs => [...prevTabs, {...newTab}]);
-  };
+  //     if(thisElement) {
+  //       const newTab = getTabFromPath(location.pathname, thisElement.name);
+        
+  //       if(newTab) setTabs(prevTabs => [...prevTabs, {...newTab}]);
+  //     }
+  //   }
+  // }
 
-  function newTab(pathType: PathType, element: BasicElement) {
+
+  //Functions
+
+  function addTab(pathType: PathType, element: BasicElement) {
     const thisPath = printPathWithId(pathType, element.id);
     const haveTab = tabs.some(tab => tab.path === thisPath);
-    const isInStorage = getFromStorage(thisPath);
+    const storageItem = getFromStorage(thisPath);
 
-    if(!haveTab && !isInStorage) {
+    sessionStorage.setItem(thisPath, JSON.stringify(element));
+
+    if(!haveTab && !storageItem) {
       const newTab: Tab = {
         name: setTabName(pathType, element.name),
         path: thisPath,
-        icon: getTabIcon(pathType)
+        icon: setTabIcon(pathType)
       }
 
       setTabs(prevTabs => [...prevTabs, {...newTab}]);
@@ -98,11 +91,6 @@ export function NavProvider({ children }: PropsWithChildren) {
 
     navigate(thisPath);
   }
-
-  // function addTab() {
-  //   const newTab = getTabFromPath(location.pathname, pageData);
-  //   if(newTab) setTabs(prevTabs => [...prevTabs, {...newTab}]);
-  // };
 
   function changeSearchValue(search: string) {
     setSearchFilter(prevFilter => (prevFilter.search === search ? prevFilter : {...prevFilter, search}))
@@ -114,12 +102,14 @@ export function NavProvider({ children }: PropsWithChildren) {
     tabs,
     searchFilter,
     changeSearchValue,
-    addTab,
-    newTab
+    addTab
   };
 
   return (<AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>);
 };
+
+
+/* EXTERNAL FUNCTIONS */
 
 function setTabName(pathName: PathType, elementName?: string) {
   const idPaths: PathType[] = ["User", "Collection"];
@@ -128,32 +118,7 @@ function setTabName(pathName: PathType, elementName?: string) {
   return pathName;
 }
 
-////////////
-
-function getTabFromPath(path: string, pageData?: pageData): Tab | null {
-  const match = path.match(/^\/([^\/]+)/);
-  if(!match || !pageData) return null;
-
-  const pathName = match[1] as PathType;
-
-  return {
-    name: getRealName(pathName, pageData),
-    path: path,
-    icon: getTabIcon(pathName)
-  }
-}
-
-function getRealName(pathName: PathType, data?: Artist | Collection) {
-  if(!data) return "Unknown";
-  
-  switch (pathName) {
-    case "User": return (data as Artist).name;
-    case "Collection": return (data as Collection).title;
-    default: return pathName;
-  }
-}
-
-function getTabIcon(pathName: PathType): IconName {
+function setTabIcon(pathName: PathType) {
   let iconName: IconName;
 
   if(pathName === "Collection") iconName = "disc-album";
@@ -161,3 +126,16 @@ function getTabIcon(pathName: PathType): IconName {
 
   return iconName;
 }
+
+// function getTabFromPath(path: string, elementName?: string) {
+//   const match = path.match(/^\/([^\/]+)/);
+//   if(!match || !elementName) return;
+
+//   const pathName = match[1] as PathType;
+
+//   return {
+//     name: setTabName(pathName, elementName),
+//     path: path,
+//     icon: setTabIcon(pathName)
+//   }
+// }

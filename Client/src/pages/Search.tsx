@@ -11,7 +11,7 @@ import { useNav } from "../contexts";
 type ThisElementType = Artist | Song | Collection;
 
 export default function Search() {
-  const {newTab} = useNav();
+  const {addTab} = useNav();
   const navigate = useNavigate();
   const {getPlayer, addToQueue} = useAudio();
   const {searchFilter} = useNav();
@@ -71,9 +71,9 @@ export default function Search() {
     function onCardClick(element: BasicElement) {
       switch(element.type) {
         case ElementType.Artist:
-          return newTab("User", element)
+          return addTab("User", element)
         case ElementType.Collection:
-          return newTab("Collection", element)
+          return addTab("Collection", element)
         case ElementType.Song:
           return console.log("cancion");
       }

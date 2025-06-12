@@ -16,29 +16,10 @@ interface commonElement extends BasicElement {
 }
 
 export default function Element() {
-  // const {id} = useParams();
   const location = useLocation();
-  // const isUser = location.pathname === printPathWithId("User", id);
-
-  // const {addTab} = useNav();
   // const {fetchData} = useFetch<Artist | Collection>({url: isUser ? GET_USER(id || 0) : GET_COLLECTION(id || 0), condition: !!id});
-  // const [thisElement, setThisElement] = useState<commonElement>();
 
   const thisElement = getFromStorage<BasicElement>(location.pathname);
-  
-  // useEffect(() => {
-  //   if(!fetchData) return;
-
-  //   const common = getCommonElement(fetchData);
-
-  //   setThisElement(common);
-
-  //   addTab({
-  //     name: common.name,
-  //     path: location.pathname,
-  //     icon: isUser ? "user" : "disc-album"
-  //   })
-  // }, [fetchData])
 
   return (
     <section className="size-full flex flex-col">
@@ -55,17 +36,6 @@ export default function Element() {
       </div>
     </section>
   )
-}
-
-function getCommonElement(fetchData: Artist | Collection): commonElement {
-  return {
-    id: fetchData.id,
-    name: 'name' in fetchData ? fetchData.name : fetchData.title,
-    image: "avatar" in fetchData ? fetchData.avatar : fetchData.cover,
-    type: "name" in fetchData ? ElementType.Artist : ElementType.Collection,
-    author: "author" in fetchData ? fetchData.author : null,
-    songs: "songs" in fetchData ? fetchData.songs : []
-  }
 }
 
 function randomHexColour() {return '#' + Math.random().toString(16).slice(2, 8)};

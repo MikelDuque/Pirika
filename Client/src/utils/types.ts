@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
 import { CollectionType, Crud, ElementType, Genre, WSHeader } from "./enums";
+import { IconName } from "lucide-react/dynamic";
 
 /* ----- FRONT ONLY ----- */
 export interface RouteError {
@@ -19,6 +19,12 @@ export interface Player {
   volume: number,
   isMuted: boolean,
   repeat: boolean
+}
+
+export interface Tab {
+  name: string,
+  path: string,
+  icon: IconName,
 }
 
 
