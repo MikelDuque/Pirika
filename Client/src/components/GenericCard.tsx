@@ -5,9 +5,9 @@ import { cn } from "../utils/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/Avatar";
 import { Card, CardHeader, CardDescription, CardFooter, CardTitle } from "./ui/Card/Card";
 import { Artist } from "../utils/types";
-import { ThisProfilePath } from "../utils/paths";
 import { useNavigate } from "react-router-dom";
 import { HTMLAttributes } from "react";
+import { printPathWithId } from "../utils/paths";
 
 interface GenericCardProps extends HTMLAttributes<HTMLDivElement> {
   img: string,
@@ -31,7 +31,7 @@ export default function GenericCard({img, title, author, type, ...props}: Generi
       <CardFooter className="flex flex-col gap-1 text-left">
         <CardTitle className="w-full text-center truncate">{title}</CardTitle>
         {author &&
-        <CardDescription onClick={() => navigate(ThisProfilePath(author.id))} className="w-full truncate hover:underline">
+        <CardDescription onClick={() => navigate(printPathWithId("User", author.id))} className="w-full truncate hover:underline">
           {author.name}
         </CardDescription>}
       </CardFooter>

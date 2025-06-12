@@ -19,7 +19,7 @@ public class MessageParseHelper
 	{
 		IMessage<T> message = new Message<T>()
 		{
-			MessageType = type,
+			Header = type,
 			Body = body
 		};
 

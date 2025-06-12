@@ -1,11 +1,11 @@
 ﻿using Server.Models.Enums;
 
-namespace Server.Models.DTOs.Filter;
+namespace Server.Models.DTOs;
 
-public class FilterItem
+public class BasicElement
 {
 	public long Id { get; set; }
 	public string Name { get; set; }
 	public string Image {  get; set; }
-	public ItemType Type { get; set; }
+	public ElementType Type { get; set; }
 }

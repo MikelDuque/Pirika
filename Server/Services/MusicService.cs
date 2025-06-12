@@ -1,7 +1,4 @@
-using System;
-using System.Linq;
 using eCommerce.Services;
-using Microsoft.EntityFrameworkCore;
 using Server.Database;
 using Server.Database.Entities;
 using Server.Helpers;
@@ -11,33 +8,25 @@ using Server.Models.DTOs.Filter;
 using Server.Models.DTOs.Song;
 using Server.Models.Enums;
 using Server.Models.Mappers;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Server.Services;
 
 public class MusicService
 {
-  private readonly UnitOfWork _unitOfWork;
+	private readonly UnitOfWork _unitOfWork;
 	private readonly CollectionMapper _collectionMapper;
 	private readonly SongMapper _songMapper;
-	private readonly ArtistMapper _artistMapper;
-	private readonly FilterItemMapper _filterMapper;
+	private readonly BasicElementMapper _filterMapper;
 
-	public MusicService(UnitOfWork unitOfWork, CollectionMapper collectionMapper, SongMapper songMapper, ArtistMapper artistMapper, FilterItemMapper filterMapper)
+	public MusicService(UnitOfWork unitOfWork, CollectionMapper collectionMapper, SongMapper songMapper, BasicElementMapper filterMapper)
 	{
 		_unitOfWork = unitOfWork;
 		_collectionMapper = collectionMapper;
 		_songMapper = songMapper;
-		_artistMapper = artistMapper;
 		_filterMapper = filterMapper;
 	}
 
 	/* GET */
-
-	public async Task<IEnumerable<CollectionDto>> GetAllCollections()
-	{
-		return _collectionMapper.ToDto(await _unitOfWork.CollectionRepository.GetAllAsync());
-	}
 
 	public async Task<CollectionDto> GetCollection(long collectionId)
 	{
@@ -53,7 +42,7 @@ public class MusicService
 		return _songMapper.ToDto(song);
 	}
 
-	public IEnumerable<FilterItem> SearchMusic(Filter filter)
+	public IEnumerable<BasicElement> SearchMusic(Filter filter)
 	{
 		//Filter types
 		IEnumerable<ItemType> types = filter.Types.Any()
@@ -80,8 +69,8 @@ public class MusicService
 			: Enumerable.Empty<User>().AsQueryable();
 
 		//Result
-		IEnumerable<FilterItem> result = _filterMapper.ToDto(music).Concat(_filterMapper.ToDto(users));
-		result = TextHelper.SearchFilter<FilterItem>(result, filter.Search, item => item.Name);
+		IEnumerable<BasicElement> result = _filterMapper.ToDto(music).Concat(_filterMapper.ToDto(users));
+		result = TextHelper.SearchFilter<BasicElement>(result, filter.Search, item => item.Name);
 
 		if (filter.ItemsPerPage > 0 && filter.ItemsPerPage > 0)
 		{
@@ -92,33 +81,33 @@ public class MusicService
 		return result;
 	}
 
-	public async Task<FilterResult> SearchMusicOld(Filter filter)
-	{
-		FilterResult filterResult = new();
+	//public async Task<FilterResult> SearchMusicOld(Filter filter)
+	//{
+	//	FilterResult filterResult = new();
 
-		if (filter.Types.Contains((byte)ItemType.Song))
-		{
-			IEnumerable<Song> filteredSongs = await _unitOfWork.SongRepository.GetFilteredSongs(filter);
+	//	if (filter.Types.Contains((byte)ItemType.Song))
+	//	{
+	//		IEnumerable<Song> filteredSongs = await _unitOfWork.SongRepository.GetFilteredSongs(filter);
 
-			filterResult.Songs = _songMapper.ToDto(filteredSongs);
-		}
+	//		filterResult.Songs = _songMapper.ToDto(filteredSongs);
+	//	}
 
-		if (filter.Types.Contains((byte)ItemType.Collection))
-		{
-			IEnumerable<Collection> filteredCollection = await _unitOfWork.CollectionRepository.GetFilteredSongs(filter);
+	//	if (filter.Types.Contains((byte)ItemType.Collection))
+	//	{
+	//		IEnumerable<Collection> filteredCollection = await _unitOfWork.CollectionRepository.GetFilteredSongs(filter);
 
-			filterResult.Collections = _collectionMapper.ToDto(filteredCollection);
-		}
+	//		filterResult.Collections = _collectionMapper.ToDto(filteredCollection);
+	//	}
 
-		if (filter.Types.Contains((byte)ItemType.Artist))
-		{
-			IEnumerable<User> filteredUsers = await _unitOfWork.UserRepository.GetFilteredSongs(filter);
+	//	if (filter.Types.Contains((byte)ItemType.Artist))
+	//	{
+	//		IEnumerable<User> filteredUsers = await _unitOfWork.UserRepository.GetFilteredSongs(filter);
 
-			filterResult.Artists = _artistMapper.ToDto(filteredUsers);
-		}
+	//		filterResult.Artists = _artistMapper.ToDto(filteredUsers);
+	//	}
 
-		return filterResult;
-	}
+	//	return filterResult;
+	//}
 
 	/* INSERT */
 

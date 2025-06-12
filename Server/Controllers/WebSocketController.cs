@@ -7,7 +7,7 @@ using Server.Websocket;
 namespace Server.Controllers
 {
 	[Route("Websocket")]
-	[ApiController]
+	[ApiExplorerSettings(IgnoreApi = true)]
 	[Authorize]
 	public class WebSocketController : ControllerBase
 	{
@@ -18,13 +18,12 @@ namespace Server.Controllers
 			_websocketNetwork = webSocketNetwork;
 		}
 
-		[HttpGet]
 		public async Task ConnectAsync()
 		{
 			WebSocket webSocket = await HttpContext.WebSockets.AcceptWebSocketAsync();
 			long userId = long.Parse(User.FindFirstValue("id"));
 
-			//await _websocketNetwork.HandleAsync(webSocket, userId);
+			await _websocketNetwork.HandleAsync(webSocket, userId);
 		}
 	}
 }

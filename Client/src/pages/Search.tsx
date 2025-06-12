@@ -1,28 +1,25 @@
 import { useNavigate } from "react-router-dom";
 import GenericCard from "../components/GenericCard";
 import { useAudio } from "../contexts/AudioContext"
-import { useAuth } from "../contexts/AuthContext";
 import { SEARCH_URL } from "../utils/endpoints/endpoints";
 import { useFetch } from "../utils/endpoints/useFetch";
 import { Crud, ElementType } from "../utils/enums";
-import { Artist, Collection, FilterResult, Song, TaskResult } from "../utils/types";
-import { ThisCollectionPath, ThisProfilePath } from "../utils/paths";
+import { Artist, Collection, BasicElement, Song } from "../utils/types";
+import { printPathWithId } from "../utils/paths";
+import { useNav } from "../contexts";
 
 type ThisElementType = Artist | Song | Collection;
 
 export default function Search() {
+  const {newTab} = useNav();
   const navigate = useNavigate();
-  const {authData} = useAuth();
-  const {getPlayer, searchValue, addToQueue} = useAudio();
-  const {fetchData} = useFetch<TaskResult<FilterResult>>({
+  const {getPlayer, addToQueue} = useAudio();
+  const {searchFilter} = useNav();
+  const {fetchData: filterResult} = useFetch<BasicElement[]>({
     url: SEARCH_URL,
     type: Crud.POST,
-    token: authData?.token,
-    params: searchValue,
-    needAuth: true,
-    condition: !!authData?.token
+    params: searchFilter
   });
-  const filterResult = fetchData?.result;
 
   function printResult(elements?: ThisElementType[]) {
     function getTitle(element: ThisElementType) {
@@ -46,11 +43,9 @@ export default function Search() {
     function onCardClick(element: ThisElementType) {
       switch(getType(element)) {
         case ElementType.Artist:
-          console.log("prof path", ThisProfilePath(element.id));
-          
-          return navigate(ThisProfilePath(element.id))
+          return navigate(printPathWithId("User", element.id))
         case ElementType.Collection:
-          return navigate(ThisCollectionPath(element.id))
+          return navigate(printPathWithId("Collection", element.id))
         case ElementType.Song:
           return addToQueue(element as Song), getPlayer().play();;
       }
@@ -72,11 +67,44 @@ export default function Search() {
     )
   }
 
+  function newPrintResult() {
+    function onCardClick(element: BasicElement) {
+      switch(element.type) {
+        case ElementType.Artist:
+          return newTab("User", element)
+        case ElementType.Collection:
+          return newTab("Collection", element)
+        case ElementType.Song:
+          return console.log("cancion");
+      }
+    }
+
+    return (!!filterResult?.length &&
+      filterResult && filterResult.length > 0 && filterResult.map((element, i) => (
+        <li key={i}>
+          <GenericCard
+            title={element.name}
+            img={element.image}
+            type={element.type}
+            className="w-full cursor-pointer"
+            onClick={() => onCardClick(element)}
+          />
+        </li>
+      ))
+    )
+  }
+
   return (
     <ul className="h-full grid grid-cols-7 gap-3 overflow-auto">
-      {printResult(filterResult?.artists)}
-      {printResult(filterResult?.songs)}
-      {printResult(filterResult?.collections)}
+      {/* {filterResult?.map(item => (
+        console.log(GET_FILE(item.image)),
+        
+        <li key={item.id}>
+          <span>{item.name}</span>
+          <img src={GET_FILE(item.image)}/>
+        </li>
+      ))} */}
+      {newPrintResult()}
     </ul>
     // <div>
     //   {printResult(filterResult?.artists)}

@@ -9,9 +9,9 @@ export const buttonVariants = cva([classes.button, "subtitle"], {
     variant: {
       primary: ["bg-primary", "hover:bg-primary/80"],
       destructive: ["bg-red-700", "hover:bg-red-700/80"],
-      outline: ["border", "hover:bg-background/20"],
-      ghost: ["hover:font-semibold"],
-      link: ["underline", "hover:font-semibold"]
+      outline: ["border", "hover:bg-background/20", "dark:hover:bg-dark-background/20"],
+      ghost: ["hover:text-primary-dark", "dark:hover:text-primary-light"],
+      link: ["underline", "hover:text-primary-dark", "dark:hover:text-primary-light"]
     },
     size: {
       icon: ["size-8"],
@@ -33,7 +33,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 export function Button({variant, size, className, asChild = false, ref, ...props}: ButtonProps) {
   const Comp = asChild ? Slot : "button";
-  return <Comp className={cn(buttonVariants({variant, size, className}))} ref={ref} {...props}/>
+  return <Comp className={cn(buttonVariants({variant, size}), className)} ref={ref} {...props}/>
 };
 
 Button.displayName = "Button";

@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import vinyl from "../assets/vinyl.svg";
+import logo from "../assets/logo.svg";
 import {Button} from "../components/ui/Button";
 import { HomePath } from "../utils/paths";
 import { Checkbox, Label } from "../components/ui/Form";
@@ -22,14 +23,22 @@ export default function Intro() {
     <>
       <figure className="size-full fixed -left-1/2 flex justify-center">
         <img src={vinyl} alt="vinyl vector" className="h-full object-contain"/>
+        {/* <img src={logo} className="size-1/3 absolute right-1/2 bottom-1/2 translate-1/2"/> */}
       </figure>
-      <div className="h-full w-5/7 fixed right-0 p-5 flex flex-col items-center justify-center gap-2">
-        <h1 className="super-title">Pirika</h1>
-        <h2 className="font-winky text-xl">Where music meets magic</h2>
-        <Button onClick={enter}>Continue</Button>
-        <div className="flex gap-1">
-          <Checkbox id="skip" ref={skipRef} defaultChecked={skipIntro()}/>
-          <Label htmlFor="skip">Skip this page the next time you log in</Label>
+      <div className="h-full w-5/7 fixed right-0 p-5 grid grid-rows-3 items-center">
+        <div className="self-start flex flex-col gap-2 items-center">
+          <h1 className="app-title">Pirika</h1>
+          <h2 className="subtitle text-primary-darker dark:text-primary-lighter">Where music meets magic</h2>
+        </div>
+        
+        <div className="flex flex-col items-center gap-5">
+          <Button size="icon" variant="ghost" className="size-45" onClick={enter}>
+            <img src={logo} className="hover:animate-pulse active:animate-ping"/>
+          </Button>
+          <form className="flex gap-3">
+            <Checkbox id="skip" ref={skipRef} defaultChecked={skipIntro()}/>
+            <Label htmlFor="skip" className="details">Skip next time</Label>
+          </form>
         </div>
       </div>
     </>

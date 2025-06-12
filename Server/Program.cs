@@ -63,17 +63,17 @@ builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<MusicRepository>();
 builder.Services.AddScoped<SongRepository>();
 builder.Services.AddScoped<CollectionRepository>();
-//builder.Services.AddScoped<CollectionSongRepository>();
 /* MAPPERS */
 builder.Services.AddScoped<GenreMapper>();
-builder.Services.AddScoped<ArtistMapper>();
 builder.Services.AddScoped<CollaborationMapper>();
 builder.Services.AddScoped<CollectionMapper>();
 builder.Services.AddScoped<SongMapper>();
-builder.Services.AddScoped<FilterItemMapper>();
+builder.Services.AddScoped<ArtistMapper>();
+builder.Services.AddScoped<BasicElementMapper>();
 /* SERVICES */
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<MusicService>();
+builder.Services.AddScoped<UserService>();
 
 var app = builder.Build();
 

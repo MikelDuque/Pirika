@@ -36,6 +36,7 @@ public class WebSocketLink: IDisposable
 			string message = await ReadAsync();
 
 			if (!string.IsNullOrWhiteSpace(message)) await InvokeEvents(message);
+			else throw new Exception("El mensaje enviado está vacío");
 		}
 
 		if (Disconnected != null)
@@ -86,13 +87,13 @@ public class WebSocketLink: IDisposable
 				if (MusicRelease != null) await MusicRelease.Invoke(this, message);
 				break;
 			case "":
-				break;
+				throw new Exception("No existen eventos con esa cabecera");
 		}
 	}
 
 	private string GetMessageType(string jsonString)
 	{
 		IMessage<object> message = MessageParseHelper.DesGenericMessage<object>(jsonString);
-		return message.MessageType;
+		return message.Header;
 	}
 }

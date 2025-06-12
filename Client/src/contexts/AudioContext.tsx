@@ -1,21 +1,16 @@
 import { createContext, ReactNode, useContext, useEffect, useRef, useState } from "react";
-import { Collection, Filter, FilterResult, Player, Song } from "../utils/types";
+import { Collection, Player, Song } from "../utils/types";
 import { GET_FILE } from "../utils/endpoints/endpoints";
-import { ElementType } from "../utils/enums";
 import { Howl } from 'howler';
 
 /* ---- TIPADOS ---- */
 type AudioContextType = {
   playerState?: Player,
-  queue: Song[],
-  searchValue?: Filter,
-  searchResult?: FilterResult,
+  queue: Song[]
   getPlayer: () => Howl,
   addToQueue: (element: Song | Collection) => void,
   repeatSong: () => void,
-  changeSong: (songId: number) => void,
-  changeSearchValue: (value: string) => void,
-  changeSearchResult: (newValue: FilterResult) => void
+  changeSong: (songId: number) => void
 }
 
 type AudioProviderProps = {
@@ -26,14 +21,10 @@ type AudioProviderProps = {
 const AudioContext = createContext<AudioContextType>({
   playerState: undefined,
   queue: [],
-  searchValue: undefined,
-  searchResult: undefined,
   getPlayer() {return new Howl({src: [GET_FILE("")]})},
   addToQueue() {},
   repeatSong() {},
-  changeSong() {},
-  changeSearchValue() {},
-  changeSearchResult() {}
+  changeSong() {}
 });
 
 export const useAudio = (): AudioContextType => {
@@ -56,15 +47,6 @@ export function AudioProvider({ children }: AudioProviderProps) {
     isMuted: false,
     repeat: false
   });
-  const [searchValue, setSearchValue] = useState<Filter>({
-    genres: [],
-    search: "",
-    types: [ElementType.Artist, ElementType.Song, ElementType.Collection],
-    itemsPerPage: -1,
-    currentPage: 0
-  });
-  const [searchResult, setSearchResult] = useState<FilterResult>();
-
   const player = useRef<Howl>(new Howl({src: [""]}));
 
   console.log("queue", queue);
@@ -194,22 +176,15 @@ export function AudioProvider({ children }: AudioProviderProps) {
     };
   };
 
-  function changeSearchValue(value?: string) {setSearchValue(prevState => ({...prevState, search: value ?? ""}))};
-  function changeSearchResult(newValue: FilterResult) {if(newValue) setSearchResult({...newValue})};
-
   /* ----- FINAL DEL CONTEXTO ----- */
 
   const contextValue = {
     playerState,
     queue,
-    searchValue,
-    searchResult,
     addToQueue,
     getPlayer,
     repeatSong,
-    changeSong,
-    changeSearchValue,
-    changeSearchResult
+    changeSong
   };
 
   return (<AudioContext.Provider value={contextValue}>{children}</AudioContext.Provider>);

@@ -9,7 +9,7 @@ interface buttonWrapperProps extends ButtonProps {
 
 export default function ButtonWithIcons({icon, invertPosition, children, ...props}: buttonWrapperProps) {
   return (
-    <Button {...props} className={cn("flex gap-2", invertPosition && "flex-row-reverse")}>
+    <Button {...props} className={cn("flex gap-2", invertPosition && "flex-row-reverse", props.className)}>
       {icon && <DynamicIcon name={icon} className="fit-content"/>}
       {children}
     </Button>

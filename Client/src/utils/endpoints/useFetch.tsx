@@ -2,19 +2,22 @@ import fetchEndpoint from "./fetchEndpoint";
 import { FetchProps } from "../types";
 import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import { Crud } from "../enums";
 
-export function useFetch<T = unknown>({url, type, token, params, needAuth, condition}: FetchProps) {
-  const {logOut} = useAuth();
-
+export function useFetch<T = unknown>(props: FetchProps) {
+  const {authData, logOut} = useAuth();
+  
   const [fetchData, setFetchData] = useState<T | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [fetchError, setFetchError] = useState<Record<string, unknown> | unknown>(null);
+
+  const {url, params, condition, type = Crud.GET} = props;
 
   const fetchingData = useCallback(async () => {
     try {
       setIsLoading(true);
 
-      const data = await fetchEndpoint({url, type, token, params, needAuth}) as T;    
+      const data = await fetchEndpoint({url, type, token: authData?.token, params}) as T;    
       setFetchData(data);
       setFetchError(null);
 
@@ -28,10 +31,10 @@ export function useFetch<T = unknown>({url, type, token, params, needAuth, condi
     } finally {
       setIsLoading(false);
     }
-  }, [url, type, token, params, needAuth, logOut]);
+  }, [url, type, authData, params, logOut]);
 
   useEffect(() => {
-    if(typeof condition === "boolean" && condition === false) return; //Si la condicion es booleana (NO null o undefined), y esta es FALSA, retorna.
+    if (condition === false) return;
     fetchingData();
 
   }, [fetchingData, condition]);

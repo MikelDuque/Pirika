@@ -7,13 +7,13 @@ namespace Server.Models.Mappers;
 
 public class CollectionMapper
 {
-  private readonly ArtistMapper _artistMapper;
+	private readonly BasicElementMapper _itemMapper;
 	private readonly SongMapper _songMapper;
 	private readonly GenreMapper _genreMapper;
 
-	public CollectionMapper(ArtistMapper artistMapper, SongMapper songMapper, GenreMapper genreMapper)
+	public CollectionMapper(BasicElementMapper itemMapper, SongMapper songMapper, GenreMapper genreMapper)
   {
-    _artistMapper = artistMapper;
+		_itemMapper = itemMapper;
 		_songMapper = songMapper;
 		_genreMapper = genreMapper;
   }
@@ -47,11 +47,12 @@ public class CollectionMapper
       Cover = collection.Cover,
       ReleaseDate = collection.ReleaseDate,
       PublicationDate = collection.PublicationDate,
-      Author = _artistMapper.ToDto(collection.Author),
+      //Author = _itemMapper.ToDto(collection.Author),
 			Type = collection.Type,
-			Collaborators = collection.Collaborations != null ? _artistMapper.ToDto(collection.Collaborations.Where(c => c.MusicId == collection.Id).Select(c => c.User)) : [],
-			Songs = _songMapper.ToDto(collection.Songs),
-			Genres = _genreMapper.ToEnum(collection.Genres)
+			//Collaborators = collection.Collaborations != null ? _itemMapper.ToDto(collection.Collaborations.Where(c => c.MusicId == collection.Id).Select(c => c.User)) : [],
+			//Songs = _songMapper.ToDto(collection.Songs),
+			Songs = []
+			//Genres = _genreMapper.ToEnum(collection.Genres)
 		};
 	}
 
