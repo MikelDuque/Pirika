@@ -22,7 +22,10 @@ export default function Search() {
   async function onSongClick(id: number) {
     const song = await fetchingData<Song>({url: GET_SONG(id)});
 
-    if(song) addToQueue(song), getPlayer().play();
+    if(song) {
+      addToQueue(song);
+      getPlayer().play();
+    }
   }
 
   function onCardClick(element: BasicElement) {

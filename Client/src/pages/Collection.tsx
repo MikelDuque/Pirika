@@ -27,7 +27,10 @@ export default function Collection() {
   async function handleSongClick(songId: number) {
     const song = await fetchingData<Song>({url: GET_SONG(songId)});
   
-    if(song) addToQueue(song), getPlayer().play();
+    if(song) {
+      addToQueue(song);
+      getPlayer().play();
+    }
   }
   
   return (

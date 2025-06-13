@@ -11,6 +11,7 @@ import { useAuth, useWebsocket } from "../contexts";
 import { NewRelease, WSMessage } from "../utils/types";
 import useFetchEvent from "../utils/endpoints/useFetchEvent";
 import { PUBLISH_URL } from "../utils/endpoints/endpoints";
+import React from "react";
 
 export default function Publish() {
   const {authData} = useAuth();

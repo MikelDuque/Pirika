@@ -5,6 +5,7 @@ import { Card, CardHeader, CardDescription, CardFooter, CardTitle } from "./ui/C
 import { BasicElement } from "../utils/types";
 import { AvatarWrapper } from "./ui/Avatar";
 import { useNav } from "../contexts";
+import React from "react";
 
 interface GenericCardProps extends React.HTMLAttributes<HTMLDivElement> {
   element?: BasicElement

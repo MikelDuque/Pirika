@@ -4,12 +4,12 @@ import { BasicElement } from "../../../utils/types";
 import { cn, getFirstChar } from "../../../utils/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "./Avatar";
 
-interface AvatarWrapper {
+interface AvatarWrapperType {
   element?: BasicElement,
   className: string
 }
 
-export default function AvatarWrapper({element, className}: AvatarWrapper) {
+export default function AvatarWrapper({element, className}: AvatarWrapperType) {
   return (
     <Avatar className={cn(element?.type !== ElementType.Artist && "rounded-md", element?.type === ElementType.Collection && "shadow-[5px_-5px_0px_0px_#969696]", className)}>
       <AvatarImage src={element && GET_FILE(element.image)}/>

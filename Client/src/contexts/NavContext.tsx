@@ -97,7 +97,7 @@ export function NavProvider({ children }: PropsWithChildren) {
 
 /* EXTERNAL FUNCTIONS */
 function getTabFromPath(path: string, elementName?: string) {
-  const match = path.match(/^\/([^\/]+)/);
+  const match = path.match(/^\/([^/¡]+)/);
   if(!match || !elementName) return;
 
   const pathName = match[1] as PathType;

@@ -3,7 +3,7 @@ import { WSMessage } from "../utils/types";
 import { useAuth } from "./AuthContext";
 import { WEBSOCKET_URL } from "../utils/endpoints/endpoints";
 
-interface WebsocketContext {
+interface WebsocketContextType {
 	socket: WebSocket | null;
 	messages: Record<string, unknown>;
 	sendMessage: <T>(message: WSMessage<T>) => void;
@@ -16,7 +16,7 @@ interface ReconnectRef {
 }
 
 /* ----- DECLARACIÓN Context ----- */
-const WebsocketContext = createContext<WebsocketContext>({
+const WebsocketContext = createContext<WebsocketContextType>({
 	socket: null,
 	messages: {},
 	sendMessage: () => {
@@ -24,7 +24,7 @@ const WebsocketContext = createContext<WebsocketContext>({
 	}
 });
 
-export const useWebsocket = (): WebsocketContext => {
+export const useWebsocket = (): WebsocketContextType => {
 	const context = useContext(WebsocketContext);
 	if (!context) throw new Error("El contexto debe usarse dentro del provider");
 	return context;
@@ -127,7 +127,7 @@ export function WebsocketProvider({ children }: PropsWithChildren) {
 	};
 
 	/* ----- Fin Context ----- */
-	const contextValue: WebsocketContext = {
+	const contextValue: WebsocketContextType = {
 		socket: socket.current,
 		messages,
 		sendMessage,
