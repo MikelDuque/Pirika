@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Server.Models.DTOs;
 using Server.Models.DTOs.Filter;
 using Server.Models.DTOs.Music.NewMusic;
 using Server.Services;
@@ -49,7 +50,8 @@ public class MusicController : Controller
 	{
 		try
 		{
-			return Ok(await _musicService.SearchMusic(filter));
+			IEnumerable<BasicElement> thisElements = await _musicService.SearchMusic(filter);
+			return Ok(thisElements);
 		}
 		catch (Exception error)
 		{
