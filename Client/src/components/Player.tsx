@@ -38,7 +38,7 @@ export default function Player({className}: {className?: string}) {
             icon="skip-back"
             size="icon"
             variant="ghost"
-            onClick={() => changeSong(playerState ? playerState?.currentSong -1 : 0)}
+            onClick={() => changeSong(playerState ? playerState.currentSong -1 : 0)}
           />
           <Button
             icon={playerState?.isPlaying ? "pause" : "play"}
@@ -50,7 +50,7 @@ export default function Player({className}: {className?: string}) {
             icon="skip-forward"
             size="icon"
             variant="ghost"
-            onClick={() => changeSong(playerState ? playerState?.currentSong +1 : 0)}
+            onClick={() => changeSong(playerState ? playerState.currentSong +1 : 0)}
           />
         </div>
         <div className="w-full flex gap-2 items-center justify-end place-self-end">

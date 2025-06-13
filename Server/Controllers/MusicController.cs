@@ -27,7 +27,7 @@ public class MusicController : Controller
 		}
 		catch (Exception error)
 		{
-			return BadRequest(new { Message = error.ToString() });
+			return BadRequest(new { Message = error.Message });
 		}
 	}
 
@@ -40,7 +40,7 @@ public class MusicController : Controller
 		}
 		catch (Exception error)
 		{
-			return BadRequest(new { Message = error.ToString() });
+			return BadRequest(new { Message = error.Message });
 		}
 	}
 
@@ -53,7 +53,7 @@ public class MusicController : Controller
 		}
 		catch (Exception error)
 		{
-			return BadRequest(new { Message = error.ToString() });
+			return BadRequest(new { Message = error.Message });
 		}
 	}
 
@@ -68,7 +68,7 @@ public class MusicController : Controller
     }
     catch (Exception error)
     {
-      return BadRequest(new { Message = error.ToString() });
+      return BadRequest(new { Message = error.Message });
     }
   }
 }

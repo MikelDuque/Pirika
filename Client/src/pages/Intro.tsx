@@ -31,7 +31,7 @@ export default function Intro() {
         </div>
         
         <div className="flex flex-col items-center gap-5">
-          <Button size="icon" variant="ghost" className="size-45" onClick={enter}>
+          <Button size="icon" variant="ghost" className="size-50" onClick={enter}>
             <img src={logo} className="animate-pulse active:animate-ping"/>
           </Button>
           <form className="flex gap-3">

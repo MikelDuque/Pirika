@@ -8,10 +8,11 @@ import { GenericCard } from "../components/GenericCard";
 import { useAudio } from "../contexts";
 import { musicMapper } from "../utils/mappers/elementMapper";
 import { toast } from "sonner";
+import { ElementType } from "../utils/enums";
 
 export default function Collection() {
   const {id} = useParams();
-    const {getPlayer, addToQueue} = useAudio();
+    const {addToQueue} = useAudio();
 
   const {fetchData: collection} = useFetch<CollectionType>({url: GET_COLLECTION(id!), condition: !!id});
   const {fetchingData} = useFetchEvent();
@@ -27,19 +28,16 @@ export default function Collection() {
   async function handleSongClick(songId: number) {
     const song = await fetchingData<Song>({url: GET_SONG(songId)});
   
-    if(song) {
-      addToQueue(song);
-      getPlayer().play();
-    }
+    if(song) addToQueue(song);
   }
   
   return (
-    <ElementLayout element={musicMapper.toBasic(collection)} buttonClick={() => handleSaveButton()}>
+    <ElementLayout element={musicMapper.toBasic(collection, ElementType.Collection)} buttonClick={() => handleSaveButton()}>
       <ul className="w-full grid grid-cols-10 gap-3">
         {(collection && collection.songs.length > 0) && collection.songs.map((song, i) => (
             <li key={i} className="min-w-24">
               <GenericCard
-                element={musicMapper.toBasic(song)}
+                element={musicMapper.toBasic(song, ElementType.Song)}
                 onClick={() => handleSongClick(song.id)}
               />
             </li>

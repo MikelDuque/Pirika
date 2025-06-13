@@ -15,14 +15,14 @@ export const artistMapper = {
 };
 
 export const musicMapper = {
-  toBasic(music?: Music): BasicElement | undefined {
+  toBasic(music?: Music, specificType?: ElementType): BasicElement | undefined {
     if (!music) return undefined;
 
     return {
       id: music.id,
       name: music.title,
       image: music.cover,
-      type: ElementType.Collection,
+      type: specificType || ElementType.Song,
       subElements: getSubElementsArray(music)
     };
   }

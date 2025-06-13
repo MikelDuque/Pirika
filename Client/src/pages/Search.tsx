@@ -11,7 +11,7 @@ import { GenericCard } from "../components/GenericCard";
 export default function Search() {
   const {fetchingData} = useFetchEvent();
   const {openTab} = useNav();
-  const {getPlayer, addToQueue} = useAudio();
+  const {addToQueue} = useAudio();
   const {searchFilter} = useNav();
   const {fetchData: filterResult} = useFetch<BasicElement[]>({
     url: SEARCH_URL,
@@ -22,10 +22,7 @@ export default function Search() {
   async function onSongClick(id: number) {
     const song = await fetchingData<Song>({url: GET_SONG(id)});
 
-    if(song) {
-      addToQueue(song);
-      getPlayer().play();
-    }
+    if(song) addToQueue(song);
   }
 
   function onCardClick(element: BasicElement) {
