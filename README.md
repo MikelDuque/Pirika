@@ -14,6 +14,6 @@ Here you can know more about this final project: [Notion Page](https://www.notio
 
 ### CHECKPOINTS
 
-30/04 => [little video review](https://drive.google.com/file/d/16SaESZih73EWXbNsH6w9-J5whzQyNaXj/view?usp=sharing)
+30/04 => [Little video review](https://drive.google.com/file/d/16SaESZih73EWXbNsH6w9-J5whzQyNaXj/view?usp=sharing)
 
-Final (13/06) => [documentation](https://drive.google.com/drive/folders/1xLugUtRQlKJkBUdOxpL6GqNEuae3jm7b?usp=sharing)
+Final (13/06) => [Documentation](https://drive.google.com/drive/folders/1xLugUtRQlKJkBUdOxpL6GqNEuae3jm7b?usp=sharing)
