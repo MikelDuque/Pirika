@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Sidebar, SidebarContent, SidebarHeader, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem } from "./ui/Sidebar";
+import { Sidebar, SidebarContent, SidebarHeader, SidebarMenuButton } from "./ui/Sidebar";
 import { LibraryPath } from "../utils/paths";
 import { Library } from "lucide-react";
 

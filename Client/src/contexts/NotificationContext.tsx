@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, PropsWithChildren, ReactNode, useContext, useEffect, useState } from "react";
+import { createContext, PropsWithChildren, useContext, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useWebsocket } from "./WebsocketContext";
 import { NewRelease } from "../utils/types";

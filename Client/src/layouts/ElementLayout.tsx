@@ -5,12 +5,12 @@ import { BasicElement } from "../utils/types";
 import { AvatarWrapper } from "../components/ui/Avatar";
 import { useAuth } from "../contexts";
 
-type ElementLayout = PropsWithChildren & {
+type ElementLayoutType = PropsWithChildren & {
   element?: BasicElement,
   buttonClick: (id?: number | string) => void
 };
 
-export default function ElementLayout({element, buttonClick, children}: ElementLayout) {
+export default function ElementLayout({element, buttonClick, children}: ElementLayoutType) {
   const {authData} = useAuth();
   const isArtist = element?.type === ElementType.Artist;
   const [firstOne, ...followOnes] = element?.subElements || [];

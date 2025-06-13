@@ -2,7 +2,6 @@ import { PropsWithChildren, createContext, useContext, useEffect, useRef, useSta
 import { WSMessage } from "../utils/types";
 import { useAuth } from "./AuthContext";
 import { WEBSOCKET_URL } from "../utils/endpoints/endpoints";
-import { toast } from "sonner";
 
 interface WebsocketContext {
 	socket: WebSocket | null;

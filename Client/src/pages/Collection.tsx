@@ -18,7 +18,7 @@ export default function Collection() {
 
     console.log("collection", collection);
 
-  function handleSaveButton(targetId?: number | string) {
+  function handleSaveButton() {
     
     toast("The collection was added to your library");
     //Terminar funcionalidad
@@ -31,7 +31,7 @@ export default function Collection() {
   }
   
   return (
-    <ElementLayout element={musicMapper.toBasic(collection)} buttonClick={() => handleSaveButton(collection?.id)}>
+    <ElementLayout element={musicMapper.toBasic(collection)} buttonClick={() => handleSaveButton()}>
       <ul className="w-full grid grid-cols-10 gap-3">
         {(collection && collection.songs.length > 0) && collection.songs.map((song, i) => (
             <li key={i} className="min-w-24">

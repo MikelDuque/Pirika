@@ -7,7 +7,7 @@ import { DynamicIcon } from "lucide-react/dynamic";
 import { ChangeEvent, useState} from "react";
 import { Input } from "./ui/Form";
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from "./ui/Navigation";
-import { cn, getFirstChar, getIcon } from "../utils/utils";
+import { cn, getFirstChar } from "../utils/utils";
 import { useNav } from "../contexts";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/DropdownMenu";
 

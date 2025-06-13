@@ -101,6 +101,7 @@ export interface Song extends Music {
 
 export interface Collection extends Music {
   songs: Song[]
+  type: CollectionType
 }
 
 //Search
