@@ -38,6 +38,8 @@ export function AudioProvider({ children }: AudioProviderProps) {
   // const {authData} = useAuth();
   // const {fetchingData} = useFetch();
   const [queue, setQueue] = useState<Song[]>([]);
+  console.log("queue", queue);
+  
   const [playerState, setPlayerState] = useState<Player>({
     currentSong: 0,
     isPlaying: false,
@@ -50,11 +52,11 @@ export function AudioProvider({ children }: AudioProviderProps) {
   const player = useRef<Howl>(new Howl({src: [""]}));
 
   useEffect(() => {
-    if(!queue.length) refreshFromStorage();
+    if(queue.length <= 0) refreshFromStorage();
   }, []);
 
   useEffect(() => {
-    if (!queue.length) return;
+    if (queue.length <= 0) return;
 
     player.current = new Howl({
       src: [GET_FILE(queue[playerState.currentSong].path)],
@@ -110,7 +112,7 @@ export function AudioProvider({ children }: AudioProviderProps) {
   function getPlayer() {return player.current};
 
   function changeSong(songId: number) {
-    const currentSong = songId > queue.length ? queue.length -1 : Math.max(0, songId);
+    const currentSong = songId >= queue.length ? queue.length -1 : Math.max(0, songId);
 
     // player.current.rate
     
@@ -156,7 +158,7 @@ export function AudioProvider({ children }: AudioProviderProps) {
   //   };
   // };
 
-  async function addToQueue(element: Song | Collection) {
+  function addToQueue(element: Song | Collection) {
     if(element) {
       if('songs' in element) setQueue(prevState => (
         [...prevState, ...element.songs]
