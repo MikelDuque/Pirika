@@ -1,10 +1,4 @@
-﻿using System.Xml;
-using Microsoft.OpenApi.Extensions;
-using Server.Models.DTOs;
-using Server.Models.DTOs.Song;
-using Server.Models.Enums;
-
-namespace Server.Helpers;
+﻿namespace Server.Helpers;
 
 public class FileHelper
 {
@@ -33,7 +27,7 @@ public class FileHelper
 		return await SaveFile(song, songId.ToString(), songPath);
 	}
 
-	private static async Task<string> SaveFile(IFormFile file, string name, string path )
+	private static async Task<string> SaveFile(IFormFile file, string name, string path)
 	{
 		string fileExtension = Path.GetExtension(file.FileName).ToLowerInvariant();
 		string fileName = name.ToLowerInvariant() + fileExtension;

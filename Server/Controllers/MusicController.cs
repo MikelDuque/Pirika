@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Server.Models.DTOs;
 using Server.Models.DTOs.Filter;
+using Server.Models.DTOs.Music.NewMusic;
 using Server.Services;
 
 namespace Server.Controllers;
@@ -18,25 +18,12 @@ public class MusicController : Controller
 		_musicService = musicService;
 	}
 
-	[HttpGet("Get_Collections")]
-	public ActionResult GetAllCollections()
-	{
-		try
-		{
-			return Ok(_musicService.GetAllCollections());
-		}
-		catch (Exception error)
-		{
-			return BadRequest(new { Message = error.ToString() });
-		}
-	}
-
 	[HttpGet("Get_Collection/{id}")]
-	public ActionResult GetCollection(long id)
+	public async Task<ActionResult> GetCollection(long id)
 	{
 		try
 		{
-			return Ok(_musicService.GetCollection(id));
+			return Ok(await _musicService.GetCollection(id));
 		}
 		catch (Exception error)
 		{
@@ -45,11 +32,11 @@ public class MusicController : Controller
 	}
 
 	[HttpGet("Get_Song/{id}")]
-	public ActionResult GetSong(long id)
+	public async Task<ActionResult> GetSong(long id)
 	{
 		try
 		{
-			return Ok(_musicService.GetSong(id));
+			return Ok(await _musicService.GetSong(id));
 		}
 		catch (Exception error)
 		{
@@ -58,11 +45,11 @@ public class MusicController : Controller
 	}
 
 	[HttpPost("Search")]
-	public ActionResult SearchMusic([FromBody] Filter filter)
+	public async Task<ActionResult> SearchMusic([FromBody] Filter filter)
 	{
 		try
 		{
-			return Ok(_musicService.SearchMusic(filter));
+			return Ok(await _musicService.SearchMusic(filter));
 		}
 		catch (Exception error)
 		{
@@ -71,13 +58,13 @@ public class MusicController : Controller
 	}
 
 	[HttpPost("Publish")]
-  public ActionResult Publish([FromForm] NewCollection newAlbum)
+  public async Task<ActionResult> Publish([FromForm] NewCollection newAlbum)
   {
     if (newAlbum == null) return BadRequest(new { Message = "Album data is missing" });
 
     try
     {
-      return Ok(_musicService.Publish(newAlbum));
+      return Ok(await _musicService.Publish(newAlbum));
     }
     catch (Exception error)
     {

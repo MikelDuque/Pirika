@@ -19,3 +19,20 @@ export enum ElementType
 	Collection,
 	Artist
 }
+
+export enum Genre
+{
+  None,
+  Pop,
+  Rock,
+  Electronic,
+  Urban,
+  Latin,
+  JazzAndBlues,
+  Folk
+}
+
+/* RESTRICTIVE TYPES */
+export type WSHeader = "MusicRelease" | "FollowRequest"
+
+export type PathType = "Auth" | "Home" | "Search" | "Library" | "User" | "Collection" | "Publish";

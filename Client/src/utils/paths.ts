@@ -1,17 +1,22 @@
-function printPath(path: string) {
+import { PathType } from "./enums";
+
+function printPath(path: PathType) {
   return `${Index}${path}/`
 }
 
+export function printPathWithId(path: PathType, id?: number | string) {
+  return `${printPath(path)}${id}`;
+}
+
+//PATHS
 export const Index = "/";
-// export const ErrorPath = RootPath + "/Error";
-// export const IntroPath = RootPath + "Intro/";
+
 export const AuthPath = printPath("Auth");
 export const HomePath = printPath("Home");
 export const SearchPath = printPath("Search");
 export const LibraryPath = printPath("Library");
 
 export const ProfilePath = printPath("User");
-export function ThisProfilePath(id: string | number) {return `${ProfilePath}${id}`};
+export const CollectionPath = printPath("Collection");
 
-export const CollectionPath = printPath("Collection")
-export function ThisCollectionPath(id: string | number) {return `${CollectionPath}${id}`}
+export const PublishPath = printPath("Publish");

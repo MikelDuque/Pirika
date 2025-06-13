@@ -10,15 +10,13 @@
       py-2
       rounded-md
       border
-      bg-transparent
-
       
       file:border-0
       file:bg-transparent
       file:text-sm
       file:font-medium
 
-      placeholder:text-white/50
+
 
       focus-visible:outline-none
       focus-visible:ring-1
@@ -28,6 +26,10 @@
       disabled:opacity-50
 
       md:text-sm
+  }
+  .danger {
+    @apply
+      border-red-500
   }
 
   .checkbox {

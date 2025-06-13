@@ -23,7 +23,7 @@ public class AuthService
 		_tokenParameters = jwtOptions.Get(JwtBearerDefaults.AuthenticationScheme).TokenValidationParameters;
 	}
 
-	public async Task<string> Register(RegisterRequest userData)
+	public async Task<LoginResult> Register(RegisterRequest userData)
 	{
 		if (await _unitOfWork.UserRepository.GetByMailOrUsername(userData.Mail) != null) throw new Exception("El usuario ya se encuentra registrado");
 
@@ -40,7 +40,7 @@ public class AuthService
 		return Login(registeredUser);
 	}
 
-	public async Task<string> ProceedWithLogin(LoginRequest model)
+	public async Task<LoginResult> ProceedWithLogin(LoginRequest model)
 	{
 		User loggedUser = await _unitOfWork.UserRepository.GetByMailOrUsername(model.Identifier) ?? throw new UnauthorizedAccessException("El usuario introducido no existe");
 
@@ -50,7 +50,7 @@ public class AuthService
 		return Login(loggedUser);
 	}
 
-	private string Login(User user)
+	private LoginResult Login(User user)
 	{
 		SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
 		{
@@ -58,6 +58,7 @@ public class AuthService
 			{
 				{ "id", user.Id },
 				{ ClaimTypes.Name, user.Username},
+				{ "displayName", user.DisplayName },
 				{ ClaimTypes.Email, user.Mail },
 				{ ClaimTypes.Role, user.Role.ToString()},
 				{ "avatar", user.Avatar }
@@ -72,6 +73,6 @@ public class AuthService
 		SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
 		string stringToken = tokenHandler.WriteToken(token);
 
-		return stringToken;
+		return new LoginResult { AccessToken = stringToken };
 	}
 }

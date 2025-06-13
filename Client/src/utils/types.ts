@@ -1,6 +1,7 @@
-import { ReactNode } from "react";
-import { CollectionType, Crud, ElementType } from "./enums";
+import { CollectionType, Crud, ElementType, Genre, WSHeader } from "./enums";
+import { IconName } from "lucide-react/dynamic";
 
+/* ----- FRONT ONLY ----- */
 export interface RouteError {
   status?: number;
   statusText?: string;
@@ -8,87 +9,6 @@ export interface RouteError {
   error?: {
     message?: string;
   };
-}
-
-export interface TaskResult<T> {
-  asyncState: any;
-  creationOptions: number;
-  exception: any;
-  id: number;
-  isCanceled: boolean;
-  isCompleted: boolean;
-  isCompletedSuccessfully: boolean;
-  isFaulted: boolean;
-  result: T;
-  status: number;
-}
-
-export interface ChildrenProp {
-  children: ReactNode
-}
-
-export interface FetchProps {
-  url: string;
-  type: Crud;
-  token?: string;
-  params?: BodyInit | object;
-  needAuth?: boolean;
-  condition?: boolean;
-};
-
-export interface DecodedToken {
-  id: number,
-  unique_name: string,
-  email: string,
-  role: string,
-  avatar: string,
-  exp: number,
-};
-
-export interface AuthData {
-  token: string,
-  decodedToken: DecodedToken
-}
-
-export interface Artist {
-  id: number,
-  name: string,
-  avatar: string
-}
-
-export interface Song {
-  id: number,
-	title: string,
-	cover: string,
-  path: string,
-	releaseDate: string,
-	publicationDate: string,
-  author: Artist
-}
-
-export interface Collection {
-  id: number,
-  title: string,
-  cover: string,
-  releaseDate: string,
-  publicationDate: string,
-  type: CollectionType,
-  author: Artist,
-  songs: Song[]
-}
-
-export interface Filter {
-  genres: unknown[], //Esto será un ENUM
-  search: string,
-	types: ElementType[],
-	itemsPerPage: number,
-	currentPage: number
-}
-
-export interface FilterResult {
-  songs: Song[],
-	collections: Collection[],
-	artists: Artist[]
 }
 
 export interface Player {
@@ -99,4 +19,115 @@ export interface Player {
   volume: number,
   isMuted: boolean,
   repeat: boolean
+}
+
+export interface Tab {
+  name: string,
+  path: string,
+  icon: IconName,
+}
+
+
+/* ----- BACK & FRONT ----- */
+
+// export interface TaskResult<T> {
+//   asyncState: any;
+//   creationOptions: number;
+//   exception: any;
+//   id: number;
+//   isCanceled: boolean;
+//   isCompleted: boolean;
+//   isCompletedSuccessfully: boolean;
+//   isFaulted: boolean;
+//   result: T;
+//   status: number;
+// }
+
+export interface FetchProps {
+  url: string;
+  type?: Crud;
+  params?: BodyInit | object;
+  condition?: boolean;
+};
+
+//Authentication Data
+export interface AuthData {
+  token: string,
+  decodedToken: DecodedToken
+}
+
+  export interface DecodedToken {
+    id: number,
+    unique_name: string,
+    displayName: string,
+    email: string,
+    role: string,
+    avatar: string,
+    exp: number,
+  };
+
+//Elements
+export interface BasicElement {
+  id: number,
+  name: string,
+  image: string,
+  type: ElementType,
+  subElements?: BasicElement[]
+}
+
+export interface Artist {
+  id: number,
+  name: string,
+  avatar: string,
+  followers: number,
+  following: number,
+  music: BasicElement[]
+}
+
+export interface Music {
+  id: number,
+	title: string,
+	cover: string,
+  path: string,
+	releaseDate: string,
+	publicationDate: string,
+  author: BasicElement,
+  collaborators: BasicElement[]
+}
+
+export interface Song extends Music {
+  path: string
+}
+
+export interface Collection extends Music {
+  songs: Song[]
+  type: CollectionType
+}
+
+//Search
+export interface Filter {
+  search?: string,
+  genres?: Genre[],
+	types?: ElementType[],
+	itemsPerPage?: number,
+	currentPage?: number
+}
+
+//Others
+export interface Request {
+  senderId: number | string,
+	targetId: number | string
+}
+
+
+//Websockets
+export interface WSMessage<T = unknown> {
+  header: WSHeader,
+  body: T
+}
+
+export interface NewRelease {
+  title: string,
+  author: string,
+  path: string
 }

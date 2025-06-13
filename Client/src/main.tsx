@@ -1,19 +1,21 @@
-import { StrictMode } from 'react'
+// import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
-import { AuthProvider } from './contexts/AuthContext.tsx'
-import { AudioProvider } from './contexts/AudioContext.tsx'
-import { SidebarProvider } from './components/ui/Sidebar.tsx'
+import { AuthProvider, WebsocketProvider, AudioProvider, NotificationProvider } from './contexts'
+import { Toaster } from 'sonner'
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+  // <StrictMode>
     <AuthProvider>
-      <AudioProvider>
-        <SidebarProvider>
-          <App />
-        </SidebarProvider>
-      </AudioProvider>
+      <WebsocketProvider>
+        <NotificationProvider>
+          <AudioProvider>
+            <App />
+            <Toaster/>
+          </AudioProvider>
+        </NotificationProvider>
+      </WebsocketProvider>
     </AuthProvider>
-  </StrictMode>
+  // </StrictMode>
 )

@@ -1,31 +1,31 @@
 using Server.Database.Entities;
-using Server.Helpers;
-using Server.Models.DTOs.Song;
+using Server.Models.DTOs.Music;
+using Server.Models.DTOs.Music.NewMusic;
 
 namespace Server.Models.Mappers;
 
 public class SongMapper
 {
-  private readonly ArtistMapper _artistMapper;
+	private readonly BasicElementMapper _itemMapper;
 	private readonly GenreMapper _genreMapper;
 
-  public SongMapper(ArtistMapper artistMapper, GenreMapper genreMapper)
-  {
-    _artistMapper = artistMapper;
+	public SongMapper(BasicElementMapper itemMapper, GenreMapper genreMapper)
+	{
+		_itemMapper = itemMapper;
 		_genreMapper = genreMapper;
-  }
+	}
 
-  //To Entity
+	//To Entity
 	public Song ToEntity(NewSong song)
 	{
 		return new Song
 		{
 			Title = song.Title,
-      Path = "",
-      Cover = "",
-      ReleaseDate = song.ReleaseDate,
-      AuthorId = song.AuthorId,
-      PublicationDate = DateTime.Now
+			Path = "",
+			Cover = "",
+			ReleaseDate = song.ReleaseDate,
+			AuthorId = song.AuthorId,
+			PublicationDate = DateTime.Now
 		};
 	}
 
@@ -45,8 +45,8 @@ public class SongMapper
 			Path = song.Path,
 			ReleaseDate = song.ReleaseDate,
 			PublicationDate = song.PublicationDate,
-			Author = _artistMapper.ToDto(song.Author),
-			Collaborators = song.Collaborations != null ? _artistMapper.ToDto(song.Collaborations.Where(c => c.MusicId == song.Id).Select(c => c.User)) : [],
+			Author = _itemMapper.ToDto(song.Author),
+			Collaborators = song.Collaborations != null ? _itemMapper.ToDto(song.Collaborations.Where(c => c.MusicId == song.Id).Select(c => c.User)) : [],
 			Genres = _genreMapper.ToEnum(song.Genres)
 		};
 	}

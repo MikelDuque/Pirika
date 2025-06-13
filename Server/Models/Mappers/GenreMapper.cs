@@ -1,7 +1,6 @@
 ﻿using Microsoft.OpenApi.Extensions;
 using Server.Database.Entities;
 using Server.Database.Entities.Relationships;
-using Server.Models.DTOs.Song;
 using Server.Models.Enums;
 
 namespace Server.Models.Mappers;
@@ -22,20 +21,20 @@ public class GenreMapper
 		return genres.Select(ToEntity);
 	}
 
-	//GenreEnum To SongGenre Entity
-	public SongGenre ToEntity(byte genre, long songId)
-	{
-		return new SongGenre
-		{
-			GenreId = genre,
-			SongId = songId
-		};
-	}
+	//GenreEnum To MusicGenre Entity
+	//public GenreMusic ToEntity(byte genre, long musicId)
+	//{
+	//	return new GenreMusic
+	//	{
+	//		GenreId = genre,
+	//		MusicId = musicId
+	//	};
+	//}
 
-	public IEnumerable<SongGenre> ToEntity(IEnumerable<byte> genres, long songId)
-	{
-		return genres.Select(genre => ToEntity(genre, songId));
-	}
+	//public IEnumerable<GenreMusic> ToEntity(IEnumerable<byte> genres, long musicId)
+	//{
+	//	return genres.Select(genre => ToEntity(genre, musicId));
+	//}
 
 	//Genre To Enum
 	public GenreEnum ToEnum(Genre genre)
@@ -47,26 +46,4 @@ public class GenreMapper
 	{
 		return genres.Select(ToEnum);
 	}
-
-	////SongGenre To Enum
-	//public GenreEnum ToEnum(SongGenre genre)
-	//{
-	//	return (GenreEnum)genre.GenreId;
-	//}
-
-	//public IEnumerable<GenreEnum> ToEnum(IEnumerable<SongGenre> genres)
-	//{
-	//	return genres.Select(ToEnum);
-	//}
-
-	////CollectionGenre To Enum
-	//public GenreEnum ToEnum(CollectionGenre genre)
-	//{
-	//	return (GenreEnum)genre.GenreId;
-	//}
-
-	//public IEnumerable<GenreEnum> ToEnum(IEnumerable<CollectionGenre> genres)
-	//{
-	//	return genres.Select(ToEnum);
-	//}
 }

@@ -1,63 +1,43 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate} from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { GET_FILE } from "../utils/endpoints/endpoints";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/Avatar";
-import { HomePath, SearchPath, ThisProfilePath } from "../utils/paths";
+import { printPathWithId, PublishPath, SearchPath } from "../utils/paths";
 import { DynamicIcon } from "lucide-react/dynamic";
-import { ChangeEvent, ComponentProps} from "react";
-import camelCase from "lodash/camelCase";
+import { ChangeEvent, useState} from "react";
 import { Input } from "./ui/Form";
-import { useAudio } from "../contexts/AudioContext";
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from "./ui/Navigation";
-import { cn } from "../utils/utils";
+import { cn, getFirstChar } from "../utils/utils";
+import { useNav } from "../contexts";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/DropdownMenu";
 
 export default function Header({className}: {className?: string}) {
-  const {authData} = useAuth();
+  const {authData, logOut} = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const {searchValue, changeSearchValue} = useAudio();
-  
-  function getInitial() {
-    const name = authData?.decodedToken.unique_name || "?";
-    return name[0];
-  }
+  const {tabs, changeSearchValue} = useNav();
 
-  function getIcon(iconName: string) {
-    type IconName = ComponentProps<typeof DynamicIcon>["name"];
-
-    return camelCase(iconName) as IconName;
-  }
-
-  const tabs = [
-    {
-      path: HomePath,
-      name: "Home"
-    },
-    {
-      path: SearchPath,
-      name: "Search"
-    }
-  ];
+  const [searchValue, setSearchValue] = useState<string>("");
 
   function actualSearchTab(tabPath: string) {
     return [tabPath, location.pathname].every(item => item === SearchPath)
   };
 
-  function setSearchValue(e: ChangeEvent<HTMLInputElement>) {
-    e.preventDefault();
+  function onSearchChange(e: ChangeEvent<HTMLInputElement>) {
+    setSearchValue(e.target.value)
     changeSearchValue(e.target.value)
   }
 
   return (
     <header className={cn(className, "w-full flex gap-2 bg-background dark:bg-dark-background")}>
-      <NavigationMenu>
-        <NavigationMenuList>
-          {tabs.map(tab => (
-            <NavigationMenuItem>
-              <NavigationMenuLink className={cn(tab.path === location.pathname && navigationMenuTriggerStyle(), "flex gap-2 cursor-pointer")} onClick={() => navigate(tab.path)}>
-                <DynamicIcon name={getIcon(tab.name)}/>
+      <NavigationMenu className="flex-1">
+        <NavigationMenuList className="overflow-x-auto">
+          {tabs.map((tab, i) => (
+            <NavigationMenuItem key={i} className="cursor-pointer">
+              <NavigationMenuLink className={cn(tab.path === location.pathname && navigationMenuTriggerStyle(), "flex gap-2 truncate")} onClick={() => navigate(tab.path)}>
+                <DynamicIcon name={tab.icon}/>
                 {actualSearchTab(tab.path) ?
-                  <Input value={searchValue?.search} placeholder={tab.name} onChange={setSearchValue} variant="ghost" autoFocus/>
+                  <Input value={searchValue} placeholder={tab.name} onChange={onSearchChange} variant="ghost" autoFocus/>
                   :
                   tab.name
                 }
@@ -66,24 +46,28 @@ export default function Header({className}: {className?: string}) {
           ))}
         </NavigationMenuList>
       </NavigationMenu>
-      {/* <Tabs value={location.pathname} className="grow">
-        <TabsList className="p-0">
-          {tabs.map(tab => (
-            <TabsTrigger value={tab.path} onClick={() => navigate(tab.path)} className="flex gap-2">
-              <DynamicIcon name={getIcon(tab.name)}/>
-              {actualSearchTab(tab.path) ?
-                <Input defaultValue="" placeholder={tab.name} className="h-2" onChange={setSearchValue}/>
-                :
-                tab.name
-              }
-            </TabsTrigger>
-          ))}
-        </TabsList>
-      </Tabs> */}
-      <Avatar onClick={() => navigate(ThisProfilePath(authData?.decodedToken.id || 0))}>
-        <AvatarImage src={GET_FILE(authData?.decodedToken.avatar || "")}/>
-        <AvatarFallback>{getInitial()}</AvatarFallback>
-      </Avatar>
+      
+      <DropdownMenu>
+        <DropdownMenuTrigger >
+          <Avatar className="cursor-pointer">
+            <AvatarImage src={GET_FILE(authData?.decodedToken.avatar || "")}/>
+            <AvatarFallback>{getFirstChar(authData?.decodedToken.unique_name)}</AvatarFallback>
+          </Avatar>
+        </DropdownMenuTrigger>
+
+        <DropdownMenuContent>
+          <DropdownMenuItem onClick={() => navigate(printPathWithId("User", authData?.decodedToken.id))}>
+            Profile
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => {navigate(PublishPath)}}>
+            Publish music
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={logOut}>
+            Log out
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      
     </header>
   )
 }

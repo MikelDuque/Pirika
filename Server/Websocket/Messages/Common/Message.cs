@@ -2,6 +2,6 @@
 
 public class Message<T> : IMessage<T> where T : class
 {
-	public string MessageType { get; set; }
+	public string Header { get; set; }
 	public T Body { get; set; }
 }

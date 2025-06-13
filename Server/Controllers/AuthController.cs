@@ -25,8 +25,7 @@ namespace Server.Controllers
 
 			try
 			{
-				string stringToken = await _authService.ProceedWithLogin(model);
-				return Ok(new LoginResult { AccessToken = stringToken });
+				return Ok(await _authService.ProceedWithLogin(model));
 			}
 			catch (UnauthorizedAccessException errorAuth)
 			{
@@ -41,8 +40,7 @@ namespace Server.Controllers
 
 			try
 			{
-				string stringToken = await _authService.Register(userRequest);
-				return Ok(new LoginResult { AccessToken = stringToken });
+				return Ok(await _authService.Register(userRequest));
 			}
 			catch (Exception error)
 			{

@@ -2,6 +2,6 @@
 
 public interface IMessage<TBody> where TBody : class
 {
-	string MessageType { get; }
+	string Header { get; }
 	TBody Body { get; set; }
 }

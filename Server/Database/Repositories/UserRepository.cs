@@ -1,8 +1,7 @@
-﻿using eCommerce.Services;
+﻿using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Server.Database.Entities;
 using Server.Database.Repositories.Common;
-using Server.Models.DTOs.Filter;
 
 namespace Server.Database.Repositories;
 
@@ -13,25 +12,38 @@ public class UserRepository : Repository<User>
 	public async Task<User> GetByMailOrUsername(string identifier)
 	{
 		return await GetQueryable()
-		.Where(user => identifier.Contains('@') ? user.Mail == identifier.ToLowerInvariant() : user.Username == identifier)
-		.SingleOrDefaultAsync();
+			.Where(user => identifier.Contains('@') ? user.Mail == identifier.ToLowerInvariant() : user.Username == identifier)
+			.SingleOrDefaultAsync();
 	}
 
-	public async Task<IEnumerable<User>> GetFilteredSongs(Filter filter)
+	public async Task<IEnumerable<User>> GetByDisplayName(string name)
 	{
-		IEnumerable<User> userList = await GetAllAsync();
-
-		return TextHelper.SearchFilter<User>(userList, filter.Search, user => user.DisplayName);
-	}
-
-	public async Task<IEnumerable<User>> SongsPublished(IEnumerable<Song> songs, long userId)
-	{
-		List<long> songIds = songs.Select(s => s.Id).ToList();
-		List<string> songTitles = songs.Select(s => s.Title).ToList();
-
 		return await GetQueryable()
-			.Where(user => user.Id == userId && user.OwnMusic.Any(song =>
-						songIds.Contains(song.Id) || songTitles.Contains(song.Title)))
+			.Where(user => user.DisplayName == name)
 			.ToListAsync();
 	}
+
+	public async Task<User> GetWithIncludesByIdAsync(long id)
+	{
+		return await GetQueryable().Where(user => user.Id == id)
+			.Include(user => user.OwnMusic)
+				.ThenInclude(collection => collection.Genres)
+			.Include(user => user.OwnMusic)
+				.ThenInclude(collection => collection.Collaborations)
+				.ThenInclude(collab => collab.User)
+			.Include(user => user.Followers)
+			.Include(user => user.Following)
+			.FirstOrDefaultAsync();
+	}
+
+	public async Task<IEnumerable<User>> GetFollowersById(long id)
+	{
+		User thisUser = await GetWithIncludesByIdAsync(id);
+		return thisUser.Followers;
+	}
+	//public async Task<IEnumerable<User>> GetFollowingById(long id)
+	//{
+	//	User thisUser = await GetByIdAsync(id);
+	//	return thisUser.Following;
+	//}
 }

@@ -1,4 +1,7 @@
 ﻿using System.Net.WebSockets;
+using Server.Helpers;
+using Server.Models.DTOs.MessageBody;
+using Server.Websocket.Messages;
 using Server.Websocket.Systems;
 
 namespace Server.Websocket;
@@ -23,7 +26,7 @@ public class WebSocketNetwork
 		await connection.HandleEventAsync();
 	}
 
-	//PRIVATE FUNCTIONS
+	//WS FUNCTIONS
 	private async Task<WebSocketLink> AddWebsocketAsync(WebSocket webSocket, long userId)
 	{
 		await _semaphore.WaitAsync();
@@ -34,7 +37,6 @@ public class WebSocketNetwork
 			newConnection.Disconnected += OnDisconnectedAsync;
 			newConnection.MusicRelease += OnMusicReleaseAsync;
 
-
 			_connections.Add(newConnection);
 			return newConnection;
 		}
@@ -44,7 +46,6 @@ public class WebSocketNetwork
 		}
 	}
 
-	//WS FUNCTIONS
 	private async Task OnDisconnectedAsync(WebSocketLink disconnectedUser)
 	{
 		await _semaphore.WaitAsync();
@@ -63,13 +64,14 @@ public class WebSocketNetwork
 		}
 	}
 
+	//WS SYSTEMS
 	private async Task OnMusicReleaseAsync(WebSocketLink connectedUser, string message)
 	{
 		await _semaphore.WaitAsync();
 
 		try
 		{
-			//ALGO
+			await _musicSystem.OnRelease(connectedUser, message);
 		}
 		finally
 		{

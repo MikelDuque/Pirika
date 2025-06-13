@@ -1,7 +1,4 @@
-using Server.Models.DTOs.Song;
-using Server.Models.Enums;
-
-namespace Server.Models.DTOs;
+﻿namespace Server.Models.DTOs.Music.NewMusic;
 
 public class NewCollection
 {

@@ -1,23 +1,50 @@
 using Server.Database.Entities;
-using Server.Models.DTOs.User;
+using Server.Models.DTOs;
 
 namespace Server.Models.Mappers;
 
 public class ArtistMapper
 {
-  //To Dto
-  public Artist ToDto(User artist)
+	BasicElementMapper _elementMapper;
+
+  public ArtistMapper(BasicElementMapper elementMapper)
+  {
+		_elementMapper = elementMapper;
+  }
+
+  //To Artist
+  public Artist ToArtist(User artist)
   {
     return new Artist
     {
       Id = artist.Id,
       Name = artist.DisplayName,
-      Avatar = artist.Avatar
+      Avatar = artist.Avatar,
+      Followers = artist.Followers.Count(),
+      Following = artist.Following.Count(),
+      Music = _elementMapper.ToDto(artist.OwnMusic.OfType<Collection>())
     };
   }
 
-  public IEnumerable<Artist> ToDto(IEnumerable<User> artists)
+  public IEnumerable<Artist> ToArtist(IEnumerable<User> artists)
   {
-    return artists.Select(ToDto);
+    return artists.Select(ToArtist);
   }
+
+
+  //To Author
+  //public Author ToAuthor(User author)
+  //{
+  //	return new Artist
+  //	{
+  //		Id = author.Id,
+  //		Name = author.DisplayName,
+  //		Avatar = author.Avatar
+  //	};
+  //}
+
+  //public IEnumerable<Author> ToAuthor(IEnumerable<User> authors)
+  //{
+  //	return authors.Select(ToAuthor);
+  //}
 }

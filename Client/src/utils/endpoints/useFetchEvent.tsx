@@ -1,38 +1,23 @@
 import fetchEndpoint from "./fetchEndpoint";
 import { FetchProps } from "../types";
-import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import { Crud } from "../enums";
 
-export default function useFetch() {
-  const {logOut} = useAuth();
+export default function useFetchEvent() {
+  const {authData, logOut} = useAuth();
 
-  const [fetchData, setFetchData] = useState<unknown | undefined>(undefined);
-  const [isLoading, setIsLoading] = useState(false);
-  const [fetchError, setFetchError] = useState<Record<string, unknown> | unknown>(null);
+  async function fetchingData<T = unknown>(props: FetchProps) {
+    const {url, params, type = Crud.GET} = props;
 
-  async function fetchingData<T = unknown>({url, type, token, params, needAuth}: FetchProps) {
     try {
-      setIsLoading(true);
-
-      const data = await fetchEndpoint({url, type, token, params, needAuth}) as T;    
-      setFetchData(data);
-      setFetchError(null);
-
+      const data = await fetchEndpoint({url, type, token: authData?.token, params}) as T;    
       return data;
 
     } catch (error) {
       if(error === "Unauthorized") logOut();
-      setFetchError(error);
-
-    } finally {
-      setIsLoading(false);
     }
   };
 
-  return ({
-    fetchData,
-    isLoading,
-    fetchError,
-    fetchingData
-  });
+  return {fetchingData}
+
 };

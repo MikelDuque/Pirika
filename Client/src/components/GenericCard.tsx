@@ -1,39 +1,37 @@
 import { PlayCircle } from "lucide-react";
-import { GET_FILE } from "../utils/endpoints/endpoints";
 import { ElementType } from "../utils/enums";
 import { cn } from "../utils/utils";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/Avatar";
 import { Card, CardHeader, CardDescription, CardFooter, CardTitle } from "./ui/Card/Card";
-import { Artist } from "../utils/types";
-import { ThisProfilePath } from "../utils/paths";
-import { useNavigate } from "react-router-dom";
-import { HTMLAttributes } from "react";
+import { BasicElement } from "../utils/types";
+import { AvatarWrapper } from "./ui/Avatar";
+import { useNav } from "../contexts";
+import React from "react";
 
-interface GenericCardProps extends HTMLAttributes<HTMLDivElement> {
-  img: string,
-  title: string,
-  author?: Artist,
-  type: ElementType,
+interface GenericCardProps extends React.HTMLAttributes<HTMLDivElement> {
+  element?: BasicElement
 }
 
-export default function GenericCard({img, title, author, type, ...props}: GenericCardProps) {
-  const navigate = useNavigate();
+export function GenericCard({element, ...props}: GenericCardProps) {
+  const {openTab} = useNav();
+
+  function handleSubClick(e: React.MouseEvent<HTMLDivElement>) {
+    e.stopPropagation();
+
+    const author = element?.subElements?.[0];
+    if(author) openTab("User", author)
+  }
 
   return (
-    <Card {...props} className="size-full">
+    <Card {...props} className="size-full cursor-pointer border-transparent">
       <CardHeader className="relative flex items-center justify-center group">
-        <Avatar className={cn("size-full", type !== ElementType.Artist && "rounded-md", type === ElementType.Collection && "shadow-[5px_-5px_0px_0px_#969696]")}>
-          <AvatarImage src={GET_FILE(img)}/>
-          <AvatarFallback>{title[0]}</AvatarFallback>
-        </Avatar>
-        <PlayCircle size={35} color="#ffffff" className={cn("absolute right-2 bottom-3 hidden", type === ElementType.Song && "group-hover:block")}/>
+        <AvatarWrapper element={element} className="size-full"/>
+        <PlayCircle size={35} color="#ffffff" className={cn("absolute right-2 bottom-3 hidden", element?.type === ElementType.Song && "group-hover:block")}/>
       </CardHeader>
-      <CardFooter className="flex flex-col gap-1 text-left">
-        <CardTitle className="w-full text-center truncate">{title}</CardTitle>
-        {author &&
-        <CardDescription onClick={() => navigate(ThisProfilePath(author.id))} className="w-full truncate hover:underline">
-          {author.name}
-        </CardDescription>}
+      <CardFooter className="flex flex-col gap-1 text-center">
+        <CardTitle className="w-full subtitle truncate">{element?.name}</CardTitle>
+        <CardDescription onClick={handleSubClick} className="w-full body text-gray truncate h-4 hover:underline">
+          {element?.subElements?.[0].name}
+        </CardDescription>
       </CardFooter>
     </Card>
   )

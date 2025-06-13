@@ -36,6 +36,7 @@ public class WebSocketLink: IDisposable
 			string message = await ReadAsync();
 
 			if (!string.IsNullOrWhiteSpace(message)) await InvokeEvents(message);
+			else throw new Exception("El mensaje enviado está vacío");
 		}
 
 		if (Disconnected != null)
@@ -49,6 +50,15 @@ public class WebSocketLink: IDisposable
 	{
 		ConnectionState = ConnectionState.Closed;
 		_webSocket.Dispose();
+	}
+
+	public async Task SendAsync(string message)
+	{
+		if (IsOpen)
+		{
+			byte[] bytes = Encoding.UTF8.GetBytes(message);
+			await _webSocket.SendAsync(bytes, WebSocketMessageType.Text, true, CancellationToken.None);
+		}
 	}
 
 	//FUNCIONES PRIVADAS
@@ -87,12 +97,14 @@ public class WebSocketLink: IDisposable
 				break;
 			case "":
 				break;
+			default:
+				throw new Exception("No existen eventos con esa cabecera");
 		}
 	}
 
 	private string GetMessageType(string jsonString)
 	{
-		IMessage<object> message = MessageParseHelper.DesGenericMessage<object>(jsonString);
-		return message.MessageType;
+		IMessage<object> message = MessageHelper.DesGenericMessage<object>(jsonString);
+		return message.Header;
 	}
 }
