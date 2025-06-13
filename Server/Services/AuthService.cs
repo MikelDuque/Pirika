@@ -58,6 +58,7 @@ public class AuthService
 			{
 				{ "id", user.Id },
 				{ ClaimTypes.Name, user.Username},
+				{ "displayName", user.DisplayName },
 				{ ClaimTypes.Email, user.Mail },
 				{ ClaimTypes.Role, user.Role.ToString()},
 				{ "avatar", user.Avatar }

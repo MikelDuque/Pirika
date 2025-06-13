@@ -29,6 +29,7 @@ async function defineFetch({url, type, token, params} : FetchingProps) {
   if(type !== Crud.GET && params instanceof FormData) return (
     await fetch(url, {
       method: type.toString(),
+      headers: printHeaders(token),
       body: params
     })
   );

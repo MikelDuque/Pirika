@@ -221,8 +221,8 @@ public class Seeder
 		[
 			new Follow
 			{
-				FollowerId = 1,
-				FollowingId = 2,
+				UserAId = 1,
+				UserBId = 2,
 				FriendshipStart = null
 			}
 		];

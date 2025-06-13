@@ -1,7 +1,8 @@
 ﻿using Server.Database;
 using Server.Database.Entities;
+using Server.Database.Entities.Relationships;
+using Server.Models.DTOs;
 using Server.Models.DTOs.Follows;
-using Server.Models.DTOs.User;
 using Server.Models.Mappers;
 
 namespace Server.Services;
@@ -10,13 +11,13 @@ public class UserService
 {
 	private readonly UnitOfWork _unitOfWork;
 	private readonly ArtistMapper _artistMapper;
-	private readonly BasicElementMapper _elementMapper;
+	private readonly FollowMapper _followMapper;
 
-	public UserService(UnitOfWork unitOfWork, ArtistMapper artistMapper, BasicElementMapper elementMapper)
+	public UserService(UnitOfWork unitOfWork, ArtistMapper artistMapper, FollowMapper followMapper)
 	{
 		_unitOfWork = unitOfWork;
 		_artistMapper = artistMapper;
-		_elementMapper = elementMapper;
+		_followMapper = followMapper;
 	}
 
 	/* GET */
@@ -27,15 +28,21 @@ public class UserService
 		return _artistMapper.ToArtist(user);
 	}
 
-	public async Task<FollowData> GetFollowData(long userId)
+	/* POST */
+	public async Task<bool> FollowUser(Request followRequest)
 	{
-		IEnumerable<User> followers = await _unitOfWork.UserRepository.GetFollowersById(userId);
-		IEnumerable<User> following = await _unitOfWork.UserRepository.GetFollowersById(userId);
+		Follow isFollowingMe = await _unitOfWork.FollowRepository.GetInverseRelationshipAsync(followRequest.SenderId, followRequest.TargetId);
 
-		return new FollowData
-		{
-			Followers = _elementMapper.ToDto(followers),
-			Following = _elementMapper.ToDto(following)
-		};
+		Follow thisFollowEntity = isFollowingMe == null ? _followMapper.ToRegultarRelationship(followRequest) : _followMapper.ToFriendship(followRequest);
+
+		await _unitOfWork.FollowRepository.InsertAsync(thisFollowEntity);
+		return await _unitOfWork.SaveAsync();
+	}
+
+	public async Task<IEnumerable<Artist>> GetArtistsByName(string name)
+	{
+		IEnumerable<User> users = await _unitOfWork.UserRepository.GetByDisplayName(name);
+
+		return _artistMapper.ToArtist(users);
 	}
 }

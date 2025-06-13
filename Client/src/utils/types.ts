@@ -59,6 +59,7 @@ export interface AuthData {
   export interface DecodedToken {
     id: number,
     unique_name: string,
+    displayName: string,
     email: string,
     role: string,
     avatar: string,
@@ -66,33 +67,39 @@ export interface AuthData {
   };
 
 //Elements
+export interface BasicElement {
+  id: number,
+  name: string,
+  image: string,
+  type: ElementType,
+  subElements?: BasicElement[]
+}
+
 export interface Artist {
   id: number,
   name: string,
   avatar: string,
   followers: number,
   following: number,
-  music: Collection[]
+  music: BasicElement[]
 }
 
-export interface Song {
+export interface Music {
   id: number,
 	title: string,
 	cover: string,
   path: string,
 	releaseDate: string,
 	publicationDate: string,
-  author: Artist
+  author: BasicElement,
+  collaborators: BasicElement[]
 }
 
-export interface Collection {
-  id: number,
-  title: string,
-  cover: string,
-  releaseDate: string,
-  publicationDate: string,
-  type: CollectionType,
-  author: Artist,
+export interface Song extends Music {
+  path: string
+}
+
+export interface Collection extends Music {
   songs: Song[]
 }
 
@@ -105,21 +112,21 @@ export interface Filter {
 	currentPage?: number
 }
 
-export interface BasicElement {
-  id: number,
-  name: string,
-  image: string,
-  type: ElementType
+//Others
+export interface Request {
+  senderId: number | string,
+	targetId: number | string
 }
 
-// export interface FilterResult {
-//   songs: Song[],
-// 	collections: Collection[],
-// 	artists: Artist[]
-// }
 
 //Websockets
 export interface WSMessage<T = unknown> {
   header: WSHeader,
   body: T
+}
+
+export interface NewRelease {
+  title: string,
+  author: string,
+  path: string
 }

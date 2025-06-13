@@ -16,16 +16,8 @@ public class SongRepository : Repository<Song>
       .Where(song => song.Id == id)
       .Include(song => song.Author)
       .Include(song => song.Collaborations)
+      .Include(song => song.Genres)
       .FirstOrDefaultAsync();
-  }
-
-
-	public new async Task<IEnumerable<Song>> GetAllAsync()
-  {
-    return await GetQueryable()
-      .Include(song => song.Author)
-      .Include(song => song.Collaborations)
-      .ToListAsync();
   }
 
   public async Task<IEnumerable<Song>> GetFilteredSongs(Filter filter)
@@ -33,10 +25,5 @@ public class SongRepository : Repository<Song>
     IEnumerable<Song> songList = await GetAllAsync();
 
 		return TextHelper.SearchFilter<Song>(songList, filter.Search, song => song.Title);
-	}
-
-  public async Task<IEnumerable<Song>> InsertAsync(IEnumerable<Song> songs)
-  {
-		return await Task.WhenAll(songs.Select(InsertAsync));
 	}
 }

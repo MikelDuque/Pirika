@@ -1,6 +1,6 @@
 using Server.Database.Entities;
-using Server.Models.DTOs;
-using Server.Models.DTOs.Collection;
+using Server.Models.DTOs.Music;
+using Server.Models.DTOs.Music.NewMusic;
 using Server.Models.Enums;
 
 namespace Server.Models.Mappers;
@@ -47,12 +47,11 @@ public class CollectionMapper
       Cover = collection.Cover,
       ReleaseDate = collection.ReleaseDate,
       PublicationDate = collection.PublicationDate,
-      //Author = _itemMapper.ToDto(collection.Author),
+      Author = _itemMapper.ToDto(collection.Author),
 			Type = collection.Type,
-			//Collaborators = collection.Collaborations != null ? _itemMapper.ToDto(collection.Collaborations.Where(c => c.MusicId == collection.Id).Select(c => c.User)) : [],
-			//Songs = _songMapper.ToDto(collection.Songs),
-			Songs = []
-			//Genres = _genreMapper.ToEnum(collection.Genres)
+			Collaborators = collection.Collaborations != null ? _itemMapper.ToDto(collection.Collaborations.Where(c => c.MusicId == collection.Id).Select(c => c.User)) : [],
+			Songs = _songMapper.ToDto(collection.Songs),
+			Genres = _genreMapper.ToEnum(collection.Genres)
 		};
 	}
 

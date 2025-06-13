@@ -5,14 +5,14 @@ import { ElementType, PathType } from "../utils/enums";
 import _ from "lodash";
 import { IconName } from "lucide-react/dynamic";
 import { getFromStorage, getIcon } from "../utils/utils";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 /* ---- TIPADOS ---- */
 interface NavContext {
   searchFilter: Filter,
   tabs: Tab[]
   changeSearchValue: (search: string) => void,
-  addTab: (pathType: PathType, element: BasicElement) => void
+  openTab: (pathType: PathType, element: BasicElement) => void
 }
 
 /* ----- DEFAULT VALUES ----- */
@@ -34,7 +34,7 @@ const AuthContext = createContext<NavContext>({
   tabs: defaultTabs,
   searchFilter: defaultFilter,
   changeSearchValue: () => {},
-  addTab: () => {}
+  openTab: () => {}
 });
 
 export const useNav = (): NavContext => {
@@ -45,50 +45,36 @@ export const useNav = (): NavContext => {
 
 /* ----- CUERPO CONTEXT ----- */
 export function NavProvider({ children }: PropsWithChildren) {
-  // const location = useLocation();
   const navigate = useNavigate();
 
   const [tabs, setTabs] = useState<Tab[]>(defaultTabs);
   const [searchFilter, setSearchFilter] = useState<Filter>(defaultFilter);
-  
-  // useEffect(() => {
-  //   updateTabs();
-  // }, [location]);
 
-  // function updateTabs() {
-  //   const haveTab = tabs.some(tab => tab.path === location.pathname);
-  //   if(!haveTab) {
-  //     const thisElement = getFromStorage<BasicElement>(location.pathname);
+  useEffect(() => {
+    if(tabs.length <= 2) {
+      const storageTabs = getFromStorage<Tab[]>("tabs");
 
-  //     if(thisElement) {
-  //       const newTab = getTabFromPath(location.pathname, thisElement.name);
-        
-  //       if(newTab) setTabs(prevTabs => [...prevTabs, {...newTab}]);
-  //     }
-  //   }
-  // }
+      if(storageTabs && storageTabs?.length > 0) setTabs([...storageTabs]);
+    }
+  }, []);
+
+  useEffect(() => {
+    if(tabs.length > 2) sessionStorage.setItem("tabs", JSON.stringify(tabs));
+  }, [tabs]);
 
 
   //Functions
-
-  function addTab(pathType: PathType, element: BasicElement) {
+  function updateTabs(newPath: string, elementName: string) {
+    const newTab = getTabFromPath(newPath, elementName);
+    if(newTab) {setTabs(prevTabs => [...prevTabs, {...newTab}])};
+  }
+ 
+  function openTab(pathType: PathType, element: BasicElement) {
     const thisPath = printPathWithId(pathType, element.id);
     const haveTab = tabs.some(tab => tab.path === thisPath);
-    const storageItem = getFromStorage(thisPath);
 
-    sessionStorage.setItem(thisPath, JSON.stringify(element));
-
-    if(!haveTab && !storageItem) {
-      const newTab: Tab = {
-        name: setTabName(pathType, element.name),
-        path: thisPath,
-        icon: setTabIcon(pathType)
-      }
-
-      setTabs(prevTabs => [...prevTabs, {...newTab}]);
-      sessionStorage.setItem(thisPath, JSON.stringify(element));
-    }
-
+    if(!haveTab) updateTabs(thisPath, element.name);
+    
     navigate(thisPath);
   }
 
@@ -102,7 +88,7 @@ export function NavProvider({ children }: PropsWithChildren) {
     tabs,
     searchFilter,
     changeSearchValue,
-    addTab
+    openTab
   };
 
   return (<AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>);
@@ -110,6 +96,18 @@ export function NavProvider({ children }: PropsWithChildren) {
 
 
 /* EXTERNAL FUNCTIONS */
+function getTabFromPath(path: string, elementName?: string) {
+  const match = path.match(/^\/([^\/]+)/);
+  if(!match || !elementName) return;
+
+  const pathName = match[1] as PathType;
+
+  return {
+    name: setTabName(pathName, elementName),
+    path: path,
+    icon: setTabIcon(pathName)
+  }
+}
 
 function setTabName(pathName: PathType, elementName?: string) {
   const idPaths: PathType[] = ["User", "Collection"];
@@ -126,16 +124,3 @@ function setTabIcon(pathName: PathType) {
 
   return iconName;
 }
-
-// function getTabFromPath(path: string, elementName?: string) {
-//   const match = path.match(/^\/([^\/]+)/);
-//   if(!match || !elementName) return;
-
-//   const pathName = match[1] as PathType;
-
-//   return {
-//     name: setTabName(pathName, elementName),
-//     path: path,
-//     icon: setTabIcon(pathName)
-//   }
-// }

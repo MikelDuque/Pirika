@@ -18,3 +18,5 @@ export const LibraryPath = printPath("Library");
 
 export const ProfilePath = printPath("User");
 export const CollectionPath = printPath("Collection");
+
+export const PublishPath = printPath("Publish");

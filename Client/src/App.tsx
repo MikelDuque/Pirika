@@ -1,7 +1,7 @@
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
 import { RootLayout, StandardLayout, HeadlessLayout } from './layouts'
-import { Intro, Home, Auth, NotFound, Search, User, Element } from "./pages";
-import { AuthPath, CollectionPath, HomePath, Index, ProfilePath, SearchPath } from './utils/paths';
+import { Intro, Home, Auth, NotFound, Search, User, Collection, Publish } from "./pages";
+import { AuthPath, CollectionPath, HomePath, Index, ProfilePath, PublishPath, SearchPath } from './utils/paths';
 import { LoggedPrivateRoute, SkipRoutes } from './layouts/RestrictedRoutes';
 
 export default function App() {
@@ -18,8 +18,12 @@ export default function App() {
         <Route element={<StandardLayout/>}>
           <Route path={HomePath} element={<Home/>}/>
           <Route path={SearchPath} element={<Search/>}/>
-          <Route path={`${ProfilePath}:id`} element={<Element/>}/>
-          <Route path={`${CollectionPath}:id`} element={<Element/>}/>
+          <Route path={`${ProfilePath}:id`} element={<User/>}/>
+          <Route path={`${CollectionPath}:id`} element={<Collection/>}/>
+        </Route>
+
+        <Route element={<HeadlessLayout/>}>
+          <Route path={PublishPath} element={<Publish/>}/>
         </Route>
       </Route>
     </Route>

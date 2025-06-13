@@ -8,4 +8,5 @@ public class BasicElement
 	public string Name { get; set; }
 	public string Image {  get; set; }
 	public ElementType Type { get; set; }
+	public IEnumerable<BasicElement> SubElements { get; set; }
 }

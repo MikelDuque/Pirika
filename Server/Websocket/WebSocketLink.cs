@@ -52,6 +52,15 @@ public class WebSocketLink: IDisposable
 		_webSocket.Dispose();
 	}
 
+	public async Task SendAsync(string message)
+	{
+		if (IsOpen)
+		{
+			byte[] bytes = Encoding.UTF8.GetBytes(message);
+			await _webSocket.SendAsync(bytes, WebSocketMessageType.Text, true, CancellationToken.None);
+		}
+	}
+
 	//FUNCIONES PRIVADAS
 	private async Task<string> ReadAsync()
 	{
@@ -87,13 +96,15 @@ public class WebSocketLink: IDisposable
 				if (MusicRelease != null) await MusicRelease.Invoke(this, message);
 				break;
 			case "":
+				break;
+			default:
 				throw new Exception("No existen eventos con esa cabecera");
 		}
 	}
 
 	private string GetMessageType(string jsonString)
 	{
-		IMessage<object> message = MessageParseHelper.DesGenericMessage<object>(jsonString);
+		IMessage<object> message = MessageHelper.DesGenericMessage<object>(jsonString);
 		return message.Header;
 	}
 }

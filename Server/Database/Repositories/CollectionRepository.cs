@@ -10,14 +10,20 @@ public class CollectionRepository : Repository<Collection>
 {
   public CollectionRepository(DataContext dataContext) : base(dataContext) { }
 
-	public new async Task<IEnumerable<Collection>> GetAllAsync()
+	public async Task<Collection> GetIncludesByIdAsync(long id)
 	{
 		return await GetQueryable()
+			.Where(collection => collection.Id == id)
 			.Include(collection => collection.Author)
 			.Include(collection => collection.Collaborations)
+			.Include(collection => collection.Genres)
 			.Include(collection => collection.Songs)
-				.ThenInclude(song => song.Author).Include(song => song.Collaborations)
-			.ToListAsync();
+				.ThenInclude(song => song.Author)
+			.Include(collection => collection.Songs)
+				.ThenInclude(song => song.Collaborations)
+			.Include(collection => collection.Songs)
+				.ThenInclude(song => song.Genres)
+			.FirstOrDefaultAsync();
 	}
 
 	public async Task<IEnumerable<Collection>> GetFilteredSongs(Filter filter)
@@ -25,16 +31,5 @@ public class CollectionRepository : Repository<Collection>
 		IEnumerable<Collection> collectionList = await GetAllAsync();
 
 		return TextHelper.SearchFilter<Collection>(collectionList, filter.Search, collection => collection.Title);
-	}
-
-	public async Task<Collection> GetIncludesByIdAsync(long id)
-	{
-		return await GetQueryable()
-			.Where(collection => collection.Id == id)
-			.Include(collection => collection.Author)
-			.Include(collection => collection.Collaborations)
-			.Include(collection => collection.Songs)
-				.ThenInclude(song => song.Author).Include(song => song.Collaborations)
-			.FirstOrDefaultAsync();
 	}
 }

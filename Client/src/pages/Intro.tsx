@@ -23,7 +23,6 @@ export default function Intro() {
     <>
       <figure className="size-full fixed -left-1/2 flex justify-center">
         <img src={vinyl} alt="vinyl vector" className="h-full object-contain"/>
-        {/* <img src={logo} className="size-1/3 absolute right-1/2 bottom-1/2 translate-1/2"/> */}
       </figure>
       <div className="h-full w-5/7 fixed right-0 p-5 grid grid-rows-3 items-center">
         <div className="self-start flex flex-col gap-2 items-center">
@@ -33,7 +32,7 @@ export default function Intro() {
         
         <div className="flex flex-col items-center gap-5">
           <Button size="icon" variant="ghost" className="size-45" onClick={enter}>
-            <img src={logo} className="hover:animate-pulse active:animate-ping"/>
+            <img src={logo} className="animate-pulse active:animate-ping"/>
           </Button>
           <form className="flex gap-3">
             <Checkbox id="skip" ref={skipRef} defaultChecked={skipIntro()}/>

@@ -1,6 +1,4 @@
-﻿using Server.Models.DTOs.Collection;
-using Server.Models.DTOs.Song;
-using Server.Models.DTOs.User;
+﻿using Server.Models.DTOs.Music;
 
 namespace Server.Models.DTOs.Filter;
 

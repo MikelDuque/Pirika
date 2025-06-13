@@ -3,9 +3,9 @@ using Server.Database;
 using Server.Database.Entities;
 using Server.Helpers;
 using Server.Models.DTOs;
-using Server.Models.DTOs.Collection;
 using Server.Models.DTOs.Filter;
-using Server.Models.DTOs.Song;
+using Server.Models.DTOs.Music;
+using Server.Models.DTOs.Music.NewMusic;
 using Server.Models.Enums;
 using Server.Models.Mappers;
 
@@ -27,7 +27,6 @@ public class MusicService
 	}
 
 	/* GET */
-
 	public async Task<CollectionDto> GetCollection(long collectionId)
 	{
 		Collection collection = await _unitOfWork.CollectionRepository.GetIncludesByIdAsync(collectionId);
@@ -42,31 +41,20 @@ public class MusicService
 		return _songMapper.ToDto(song);
 	}
 
-	public IEnumerable<BasicElement> SearchMusic(Filter filter)
+	public async Task<IEnumerable<BasicElement>> SearchMusic(Filter filter)
 	{
 		//Filter types
-		IEnumerable<ItemType> types = filter.Types.Any()
-			? filter.Types.Select(type => (ItemType)type)
-			: [ItemType.Song, ItemType.Collection, ItemType.Artist];
+		IEnumerable<ElementType> types = filter.Types.Any()
+			? filter.Types.Select(type => (ElementType)type)
+			: [ElementType.Song, ElementType.Collection, ElementType.Artist];
 
 		//Music query
-		IQueryable<Music> music = _unitOfWork.MusicRepository.GetQueryable()
-			.Where(music => !filter.Genres.Any() || music.Genres
-				.Any(genre => filter.Genres
-					.Contains((byte)genre.Id)));
-
-		music = (types.Contains(ItemType.Song), types.Contains(ItemType.Collection)) switch
-		{
-			(true, false) => music.OfType<Song>(),
-			(false, true) => music.OfType<Collection>(),
-			(false, false) => music.Where(_ => false),
-			_ => music
-		};
+		IEnumerable<Music> music = _unitOfWork.MusicRepository.ApplyFilter(filter, types);
 
 		//User query
-		IQueryable<User> users = types.Contains(ItemType.Artist)
-			? _unitOfWork.UserRepository.GetQueryable()
-			: Enumerable.Empty<User>().AsQueryable();
+		IEnumerable<User> users = types.Contains(ElementType.Artist)
+			? await _unitOfWork.UserRepository.GetAllAsync()
+			: Enumerable.Empty<User>();
 
 		//Result
 		IEnumerable<BasicElement> result = _filterMapper.ToDto(music).Concat(_filterMapper.ToDto(users));
@@ -81,36 +69,8 @@ public class MusicService
 		return result;
 	}
 
-	//public async Task<FilterResult> SearchMusicOld(Filter filter)
-	//{
-	//	FilterResult filterResult = new();
-
-	//	if (filter.Types.Contains((byte)ItemType.Song))
-	//	{
-	//		IEnumerable<Song> filteredSongs = await _unitOfWork.SongRepository.GetFilteredSongs(filter);
-
-	//		filterResult.Songs = _songMapper.ToDto(filteredSongs);
-	//	}
-
-	//	if (filter.Types.Contains((byte)ItemType.Collection))
-	//	{
-	//		IEnumerable<Collection> filteredCollection = await _unitOfWork.CollectionRepository.GetFilteredSongs(filter);
-
-	//		filterResult.Collections = _collectionMapper.ToDto(filteredCollection);
-	//	}
-
-	//	if (filter.Types.Contains((byte)ItemType.Artist))
-	//	{
-	//		IEnumerable<User> filteredUsers = await _unitOfWork.UserRepository.GetFilteredSongs(filter);
-
-	//		filterResult.Artists = _artistMapper.ToDto(filteredUsers);
-	//	}
-
-	//	return filterResult;
-	//}
 
 	/* INSERT */
-
 	public async Task<CollectionDto> Publish(NewCollection newCollection)
 	{
 		//Controlar tipo de audio e imagen que se recibe

@@ -35,4 +35,4 @@ export enum Genre
 /* RESTRICTIVE TYPES */
 export type WSHeader = "MusicRelease" | "FollowRequest"
 
-export type PathType = "Auth" | "Home" | "Search" | "Library" | "User" | "Collection";
+export type PathType = "Auth" | "Home" | "Search" | "Library" | "User" | "Collection" | "Publish";

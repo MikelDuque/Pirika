@@ -15,17 +15,6 @@ export default function LibrarySidebar({className}: {className?: string}) {
           </SidebarMenuButton>
         </SidebarHeader>
         <SidebarContent>
-          <SidebarMenuItem>
-            <SidebarMenuButton/>
-            <SidebarMenuSub>
-              <SidebarMenuSubItem>
-              <SidebarMenuSubButton/>
-              </SidebarMenuSubItem>
-              <SidebarMenuSubItem>
-              <SidebarMenuSubButton/>
-              </SidebarMenuSubItem>
-            </SidebarMenuSub>
-          </SidebarMenuItem>
         </SidebarContent>
       </Sidebar>
     </aside>

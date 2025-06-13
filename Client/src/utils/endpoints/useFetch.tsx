@@ -26,7 +26,7 @@ export function useFetch<T = unknown>(props: FetchProps) {
     } catch (error) {
       if(error === "Unauthorized") logOut();
       setFetchError(error);
-      setFetchData(undefined)
+      setFetchData(undefined);
 
     } finally {
       setIsLoading(false);

@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace Server.Helpers;
 
-public class MessageParseHelper
+public class MessageHelper
 {
 	public static JsonSerializerOptions Options => new()
 	{

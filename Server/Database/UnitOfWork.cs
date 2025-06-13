@@ -26,9 +26,9 @@ public class UnitOfWork
 	private CollectionRepository _collectionRepository = null!;
 	public CollectionRepository CollectionRepository => _collectionRepository ??= new CollectionRepository(_dataContext);
 
-	/* USERFOLLOWS */
-	//private FollowsRepository _userFollowsRepository = null!;
-	//public FollowsRepository CollectionSongRepository => _userFollowsRepository ??= new UserFollowsRepository(_dataContext);
+	/* FOLLOW */
+	private FollowRepository _followRepository = null!;
+	public FollowRepository FollowRepository => _followRepository ??= new FollowRepository(_dataContext);
 
 	/* UNIT OF WORK */
 	public UnitOfWork(DataContext dataContext)

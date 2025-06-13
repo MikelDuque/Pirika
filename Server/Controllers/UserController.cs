@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Server.Models.DTOs.Follows;
 using Server.Services;
 
 namespace Server.Controllers;
@@ -29,12 +30,25 @@ public class UserController : Controller
 		}
 	}
 
-	[HttpGet("Get_FollowData/{id}")]
-	public async Task<ActionResult> GetFollowData(long id)
+	[HttpPost("Follow_Artist")]
+	public async Task<ActionResult> FollowArtist(Request followRequest)
 	{
 		try
 		{
-			return Ok(await _userService.GetFollowData(id));
+			return Ok(await _userService.FollowUser(followRequest));
+		}
+		catch (Exception error)
+		{
+			return BadRequest(new { Message = error.ToString() });
+		}
+	}
+
+	[HttpPost("Get_Artists_By_Name")]
+	public async Task<ActionResult> GetArtistByName(string artistName)
+	{
+		try
+		{
+			return Ok(await _userService.GetArtistsByName(artistName));
 		}
 		catch (Exception error)
 		{

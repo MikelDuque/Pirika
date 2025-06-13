@@ -49,21 +49,12 @@ export function AudioProvider({ children }: AudioProviderProps) {
   });
   const player = useRef<Howl>(new Howl({src: [""]}));
 
-  console.log("queue", queue);
-  
-
   useEffect(() => {
     if(!queue.length) refreshFromStorage();
   }, []);
 
   useEffect(() => {
     if (!queue.length) return;
-
-    console.log("current song index", playerState.currentSong);
-    
-    console.log("current", queue[playerState.currentSong]);
-    console.log("path", queue[playerState.currentSong].path);
-    
 
     player.current = new Howl({
       src: [GET_FILE(queue[playerState.currentSong].path)],

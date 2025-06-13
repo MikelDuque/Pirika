@@ -4,17 +4,17 @@ using Microsoft.EntityFrameworkCore;
 namespace Server.Database.Entities.Relationships;
 
 //[Table("UserUser")]
-[PrimaryKey(nameof(FollowerId), nameof(FollowingId))]
+[PrimaryKey(nameof(UserAId), nameof(UserBId))]
 public class Follow
 {
 	public DateTime? FriendshipStart { get; set; }
 
 	/* RELACIÓN N:M */
-	[ForeignKey(nameof(Follower))]
-	public required long FollowerId { get; set; }
-	public User Follower { get; set; }
+	[ForeignKey(nameof(UserA))]
+	public required long UserAId { get; set; }
+	public User UserA { get; set; }
 
-	[ForeignKey(nameof(Following))]
-	public required long FollowingId { get; set; }
-	public User Following { get; set; }
+	[ForeignKey(nameof(UserB))]
+	public required long UserBId { get; set; }
+	public User UserB { get; set; }
 }

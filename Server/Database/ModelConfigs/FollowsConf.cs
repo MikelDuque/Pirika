@@ -11,8 +11,8 @@ public class FollowsConf : IEntityTypeConfiguration<User>
 		builder.HasMany(u => u.Followers)
 				.WithMany(u => u.Following)
 				.UsingEntity<Follow>(
-						j => j.HasOne(uf => uf.Follower).WithMany(),
-						j => j.HasOne(uf => uf.Following).WithMany()
+						j => j.HasOne(uf => uf.UserA).WithMany(),
+						j => j.HasOne(uf => uf.UserB).WithMany()
 				);
 	}
 }

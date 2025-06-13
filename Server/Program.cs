@@ -63,6 +63,7 @@ builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<MusicRepository>();
 builder.Services.AddScoped<SongRepository>();
 builder.Services.AddScoped<CollectionRepository>();
+builder.Services.AddScoped<FollowRepository>();
 /* MAPPERS */
 builder.Services.AddScoped<GenreMapper>();
 builder.Services.AddScoped<CollaborationMapper>();
@@ -70,6 +71,7 @@ builder.Services.AddScoped<CollectionMapper>();
 builder.Services.AddScoped<SongMapper>();
 builder.Services.AddScoped<ArtistMapper>();
 builder.Services.AddScoped<BasicElementMapper>();
+builder.Services.AddScoped<FollowMapper>();
 /* SERVICES */
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<MusicService>();

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Server.Models.DTOs;
 using Server.Models.DTOs.Filter;
+using Server.Models.DTOs.Music.NewMusic;
 using Server.Services;
 
 namespace Server.Controllers;
@@ -45,11 +45,11 @@ public class MusicController : Controller
 	}
 
 	[HttpPost("Search")]
-	public ActionResult SearchMusic([FromBody] Filter filter)
+	public async Task<ActionResult> SearchMusic([FromBody] Filter filter)
 	{
 		try
 		{
-			return Ok(_musicService.SearchMusic(filter));
+			return Ok(await _musicService.SearchMusic(filter));
 		}
 		catch (Exception error)
 		{

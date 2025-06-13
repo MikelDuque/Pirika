@@ -1,15 +1,15 @@
 using Server.Database.Entities;
-using Server.Models.DTOs.User;
+using Server.Models.DTOs;
 
 namespace Server.Models.Mappers;
 
 public class ArtistMapper
 {
-	BasicElementMapper _itemMapper;
+	BasicElementMapper _elementMapper;
 
-  public ArtistMapper(BasicElementMapper itemMapper)
+  public ArtistMapper(BasicElementMapper elementMapper)
   {
-		_itemMapper = itemMapper;
+		_elementMapper = elementMapper;
   }
 
   //To Artist
@@ -22,7 +22,7 @@ public class ArtistMapper
       Avatar = artist.Avatar,
       Followers = artist.Followers.Count(),
       Following = artist.Following.Count(),
-      Music = _itemMapper.ToDto(artist.OwnMusic.OfType<Collection>())
+      Music = _elementMapper.ToDto(artist.OwnMusic.OfType<Collection>())
     };
   }
 

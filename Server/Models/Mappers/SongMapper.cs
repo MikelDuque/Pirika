@@ -1,5 +1,6 @@
 using Server.Database.Entities;
-using Server.Models.DTOs.Song;
+using Server.Models.DTOs.Music;
+using Server.Models.DTOs.Music.NewMusic;
 
 namespace Server.Models.Mappers;
 

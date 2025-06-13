@@ -15,14 +15,16 @@ const API_AUTH_URL = `${API_BASE_URL}/api/Auth`;
 
 /* --- MUSIC CONTROLLER --- */
 const API_MUSIC_URL = `${API_BASE_URL}/api/Music`;
+  export const SEARCH_URL = `${API_MUSIC_URL}/Search`;
+  export const PUBLISH_URL = `${API_MUSIC_URL}/Publish`;
   export function GET_SONG(id: number | string) {return `${API_MUSIC_URL}/Get_Song/${id}`};
   export function GET_COLLECTION(id: number | string) {return `${API_MUSIC_URL}/Get_Collection/${id}`};
-  export const SEARCH_URL = `${API_MUSIC_URL}/Search`
 
 /* --- USER CONTROLLER --- */
 const API_USER_URL = `${API_BASE_URL}/api/User`;
   export function GET_USER(id: number | string) {return `${API_USER_URL}/Get_User/${id}`};
-  export function GET_FOLLOWDATA(id: number | string) {return `${API_USER_URL}/Get_FollowData/${id}`};
+  export const GET_ARTISTS_BY_NAME = `${API_USER_URL}/Get_Artists_By_Name`;
+  export const POST_FOLLOW_ARTIST = `${API_USER_URL}/Follow_Artist`;
 
 /* --- WEBSOCKET CONTROLLER --- */
 export function WEBSOCKET_URL(token: string) {return `${WS_BASE_URL}/Websocket?accessToken=${token}`};

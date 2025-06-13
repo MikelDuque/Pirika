@@ -13,7 +13,8 @@ public class BasicElementMapper
 			Id = music.Id,
 			Name = music.Title,
 			Image = music.Cover,
-			Type = music is Song ? ElementType.Song : ElementType.Collection
+			Type = music is Song ? ElementType.Song : ElementType.Collection,
+			SubElements = new[] {this.ToDto(music.Author)}.Concat(this.ToDto(music.Collaborations.Select(coll => coll.User)))
 		};
 	}
 	public BasicElement ToDto(User user)
