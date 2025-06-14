@@ -24,11 +24,11 @@ public class CollectionMapper
 		return new Collection
 		{
 			Title = collection.Title,
-      ReleaseDate = collection.ReleaseDate,
+      ReleaseDate = DateOnly.FromDateTime(collection.ReleaseDate),
       PublicationDate = DateTime.Now,
 			AuthorId = collection.AuthorId,
 			Type = (CollectionType)collection.Type,
-			Songs = _songMapper.ToEntity(collection.Songs)
+			Songs = _songMapper.ToEntity(collection.Songs).ToList()
 		};
 	}
 

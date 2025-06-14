@@ -31,7 +31,7 @@ public class Seeder
 				Mail = "mikel@gmail.es",
 				Password = HashHelper.Hash("12345"),
 				DisplayName = "Mikel",
-				Avatar = "ProfilePictures/defaultAvatar2.jpg",
+				Avatar = "ProfilePictures/DefaultAvatar2.jpg",
 				Role = Role.Admin,
 				IsBanned = false
 			},

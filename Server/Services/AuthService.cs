@@ -29,13 +29,14 @@ public class AuthService
 
 		User newUser = new User
 		{
+			DisplayName = userData.DisplayName ?? userData.Username,
 			Username = userData.Username,
 			Mail = userData.Mail.ToLowerInvariant(),
 			Password = HashHelper.Hash(userData.Password),
 			Avatar = await FileHelper.SaveAvatar(userData.Avatar, userData.Username),
 		};
 
-		User registeredUser = await _unitOfWork.UserRepository.InsertAsync(newUser) ?? throw new Exception("Error al registrar el usuario");
+	User registeredUser = await _unitOfWork.UserRepository.InsertAsync(newUser) ?? throw new Exception("Error al registrar el usuario");
 		await _unitOfWork.SaveAsync();
 		return Login(registeredUser);
 	}

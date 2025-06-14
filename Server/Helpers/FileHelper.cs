@@ -7,7 +7,7 @@ public class FileHelper
 		if (image == null)
 		{
 			int rNumber = Random.Shared.Next(1, 3);
-			return $"ProfilePictures/DefaultAvatar{rNumber}.png";
+			return $"ProfilePictures/DefaultAvatar{rNumber}.jpg";
 		}
 
 		return await SaveFile(image, username, "ProfilePictures");
