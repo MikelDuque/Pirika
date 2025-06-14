@@ -1,10 +1,10 @@
 import fetchEndpoint from "./fetchEndpoint";
-import { FetchProps } from "../types";
+import { FetchHook } from "../types";
 import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { Crud } from "../enums";
 
-export function useFetch<T = unknown>(props: FetchProps) {
+export function useFetch<T = unknown>(props: FetchHook) {
   const {authData, logOut} = useAuth();
   
   const [fetchData, setFetchData] = useState<T | undefined>(undefined);

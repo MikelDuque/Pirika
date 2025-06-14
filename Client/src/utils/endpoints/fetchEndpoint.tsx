@@ -1,17 +1,11 @@
 import { Crud } from "../enums";
+import { FetchFunction } from "../types";
 
-interface FetchingProps {
-  url: string;
-  type: Crud;
-  token?: string;
-  params?: BodyInit | object;
-}
-
-export default async function fetchEndpoint({url, type, token, params} : FetchingProps) {
-  console.log(`PETICION: URL: ${url}, tipo: ${type}, token: ${token}`);
-  console.log("params stringtify", params);  
+export default async function fetchEndpoint(props : FetchFunction) {
+  console.log(`PETICION: URL: ${props.url}, tipo: ${props.type || Crud.GET}, token: ${props.token}`);
+  console.log("params stringtify", props.params);  
   
-  const response = await defineFetch({url, type, token, params}).then((response) => {if(response.status !== 401){return response} throw "Unauthorized"});
+  const response = await defineFetch(props).then((response) => {if(response.status !== 401){return response} throw "Unauthorized"});
 
   const jsonResponse = await response.json();
 
@@ -24,32 +18,25 @@ export default async function fetchEndpoint({url, type, token, params} : Fetchin
 
 /* ------------------------- */
 
-async function defineFetch({url, type, token, params} : FetchingProps) {
-
-  if(type !== Crud.GET && params instanceof FormData) return (
-    await fetch(url, {
-      method: type.toString(),
-      headers: printHeaders(token),
-      body: params
-    })
-  );
+async function defineFetch({url, type, token, params} : FetchFunction) {
+  const isForm = params instanceof FormData;
+  console.log("isForm?", isForm);
   
-  if(type !== Crud.GET && params) return (
-    await fetch(url, {
-      method: type.toString(),
-      headers: printHeaders(token),
-      body: JSON.stringify(params)
-    })
-  );
 
-  return await fetch(url, {headers: printHeaders(token)});
+  const aVer: RequestInit = {
+    method: type,
+    headers: getHeaders(isForm, token),
+    body: !isForm && params ? JSON.stringify(params) : params
+  };
+
+  return await fetch(url, aVer);
 }
 
-function printHeaders(token?: string) : {[key : string] : string} {
-  if(!token) return {'Content-Type': 'application/json'};
+function getHeaders(isForm: boolean, token?: string): HeadersInit | undefined {
+  const headers: Record<string, string> = {};
 
-  return {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`
-  }; 
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+  if (!isForm) headers['Content-Type'] = 'application/json';
+
+  return Object.keys(headers).length > 0 ? headers : undefined;
 }

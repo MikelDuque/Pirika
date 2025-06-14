@@ -43,12 +43,20 @@ export interface Tab {
 //   status: number;
 // }
 
-export interface FetchProps {
+interface FetchProps {
   url: string;
   type?: Crud;
   params?: BodyInit | object;
   condition?: boolean;
 };
+
+export interface FetchHook extends FetchProps {
+  condition?: boolean;
+}
+
+export interface FetchFunction extends FetchProps {
+  token?: string
+}
 
 //Authentication Data
 export interface AuthData {

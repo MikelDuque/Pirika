@@ -45,12 +45,12 @@ export default function Publish() {
     formData.append("ReleaseDate", data.releaseDate?.toISOString() || new Date().toISOString());
     formData.append("Type", data.type?.toString() || CollectionType.Album.toString());
     formData.append("Cover", data.cover);
-    if(authData) formData.append("AuthorId", authData?.token.toString());
+    if(authData) formData.append("AuthorId", authData?.decodedToken.id.toString());
 
     data.songs.forEach((song, i) => {
       formData.append(`Songs[${i}].Title`, song.title);
       if(song.song) formData.append(`Songs[${i}].Song`, song.song);
-      if(authData) formData.append(`Songs[${i}].AuthorId`, authData?.token.toString());
+      if(authData) formData.append(`Songs[${i}].AuthorId`, authData?.decodedToken.id.toString());
       formData.append(`Songs[${i}].PublicationDate`, data.releaseDate?.toISOString() || new Date().toISOString()); // misma fecha
       formData.append(`Songs[${i}].Cover`, data.cover); // misma portada
 
@@ -192,7 +192,7 @@ export default function Publish() {
           </fieldset>
 
           <fieldset className="p-5 flex flex-col gap-5 bg-card dark:bg-dark-card rounded-md">
-            <h2 className="title">Añade las canciones que desees:</h2>
+            <h2 className="title">Add here the collection songs:</h2>
 
             {fields.map((field, i) => (
               <div key={field.id} className="flex flex-col gap-2">

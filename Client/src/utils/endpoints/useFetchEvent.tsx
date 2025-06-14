@@ -1,12 +1,12 @@
 import fetchEndpoint from "./fetchEndpoint";
-import { FetchProps } from "../types";
+import { FetchHook } from "../types";
 import { useAuth } from "../../contexts/AuthContext";
 import { Crud } from "../enums";
 
 export default function useFetchEvent() {
   const {authData, logOut} = useAuth();
 
-  async function fetchingData<T = unknown>(props: FetchProps) {
+  async function fetchingData<T = unknown>(props: FetchHook) {
     const {url, params, type = Crud.GET} = props;
 
     try {
