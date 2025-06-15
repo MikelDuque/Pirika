@@ -67,7 +67,7 @@ export default function Player({className}: {className?: string}) {
             className="w-1/2"
             max={1}
             step={0.01}
-            value={[playerState?.volume || 0.5]}
+            value={[playerState?.volume ?? 0.5]}
             onValueChange={([newVolume]) => getPlayer().volume(newVolume)}
           />
         </div>
@@ -75,7 +75,7 @@ export default function Player({className}: {className?: string}) {
       <div className="w-1/3 flex gap-2">
         <span>{formatTime(currentTime)}</span>
         <Slider
-          max={playerState?.duration || 0}
+          max={playerState?.duration ?? 0}
           step={1}
           value={[currentTime]}
           onValueChange={([newTime]) => getPlayer().seek(newTime)}

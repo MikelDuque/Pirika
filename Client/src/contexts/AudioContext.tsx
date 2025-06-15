@@ -83,7 +83,7 @@ export function AudioProvider({ children }: AudioProviderProps) {
         setPlayerState(prevState => ({
           ...prevState,
           ...(player.current.volume() > 0 && {volume: player.current.volume()}),
-          isMuted: false
+          isMuted: player.current.volume() <= 0
         }))
       },
       onend() {
