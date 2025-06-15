@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\Songs\" />
     <Folder Include="wwwroot\ProfilePictures\" />
   </ItemGroup>
 

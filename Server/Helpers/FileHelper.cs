@@ -15,24 +15,29 @@ public class FileHelper
 
 	public static async Task<string> SaveCover(IFormFile cover, long collectionId, long authorId)
 	{
-		string coverPath = $"Covers/{authorId}";
+		string coverPath = $"Music/{authorId}/{collectionId}";
+		string path = Path.Combine("Music", authorId.ToString(), collectionId.ToString());
 
-		return await SaveFile(cover, collectionId.ToString(), coverPath);
+		return await SaveFile(cover, "cover", path);
 	}
 
 	public static async Task<string> SaveSong(IFormFile song, long songId, long collectionId, long authorId)
 	{
 		string songPath = $"Music/{authorId}/{collectionId}";
+		string path = Path.Combine("Music", authorId.ToString(), collectionId.ToString());
 
-		return await SaveFile(song, songId.ToString(), songPath);
+		return await SaveFile(song, songId.ToString(), path);
 	}
 
 	private static async Task<string> SaveFile(IFormFile file, string name, string path)
 	{
 		string fileExtension = Path.GetExtension(file.FileName).ToLowerInvariant();
-		string fileName = name.ToLowerInvariant() + fileExtension;
+		string fileName = name + fileExtension;
 
-		string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", path, fileName);
+		string directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", path);
+		DirectoryInfo newDirectory = Directory.CreateDirectory(directoryPath);
+
+		string filePath = Path.Combine(newDirectory.FullName, fileName);
 
 		using (var stream = new FileStream(filePath, FileMode.Create))
 		{

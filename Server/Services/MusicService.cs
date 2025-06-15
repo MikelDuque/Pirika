@@ -71,29 +71,34 @@ public class MusicService
 
 
 	/* INSERT */
-	public async Task<CollectionDto> Publish(NewCollection newCollection)
+	public async Task<bool> Publish(NewCollection newCollection)
 	{
-		//Controlar tipo de audio e imagen que se recibe
+		if (newCollection.Cover == null | newCollection.Songs.Any(song => song.Song == null)) throw new Exception(message: "No se ha adjuntado todos los archivos requeridos");
 
 		Collection thisCollection = _collectionMapper.ToEntity(newCollection);
 		Collection publishedCollection = await _unitOfWork.CollectionRepository.InsertAsync(thisCollection);
 		await _unitOfWork.SaveAsync();
 
 		publishedCollection.Cover = await FileHelper.SaveCover(newCollection.Cover, publishedCollection.Id, newCollection.AuthorId);
-		List<Song> publishedSongs = publishedCollection.Songs.ToList();
 
-		for (int i = 0; i < newCollection.Songs.Count(); i++)
+		List<Song> publishedSongs = publishedCollection.Songs.ToList();
+		List<NewSong> newSongs = newCollection.Songs.ToList();
+
+		//HashSet<long> collaborators = new();
+		//HashSet<byte> genres = new();
+
+		for (int i = 0; i < publishedSongs.Count(); i++)
 		{
-			IFormFile songFile = newCollection.Songs.FirstOrDefault(song => song.Id == i).Song;
+			IFormFile songFile = newSongs[i].Song;
 
 			publishedSongs[i].Cover = publishedCollection.Cover;
 			publishedSongs[i].Path = await FileHelper.SaveSong(songFile, publishedSongs[i].Id, publishedCollection.Id, publishedCollection.AuthorId);
+
+			_unitOfWork.SongRepository.Update(publishedSongs[i]);
 		}
 
-		Collection updatedCollection = await _unitOfWork.CollectionRepository.UpdateAsync(publishedCollection);
-		await _unitOfWork.SaveAsync();
-
-		return _collectionMapper.ToDto(updatedCollection);
+		//Collection updatedCollection = await _unitOfWork.CollectionRepository.UpdateAsync(publishedCollection);
+		return await _unitOfWork.SaveAsync();
 
 		/*
 		1º Insert collection + songs

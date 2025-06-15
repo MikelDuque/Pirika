@@ -12,8 +12,10 @@ import { NewRelease, WSMessage } from "../utils/types";
 import useFetchEvent from "../utils/endpoints/useFetchEvent";
 import { PUBLISH_URL } from "../utils/endpoints/endpoints";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Publish() {
+  const navigate = useNavigate();
   const {authData} = useAuth();
   const {sendMessage} = useWebsocket();
   const {fetchingData} = useFetchEvent();
@@ -36,11 +38,6 @@ export default function Publish() {
   async function onSubmit(data: z.infer<typeof collectionSchema>) {
     const formData = new FormData();
 
-    console.log("title", data.title);
-    console.log("cover", data.cover);
-    console.log("song", data.songs);
-    
-
     formData.append("Title", data.title);
     formData.append("ReleaseDate", data.releaseDate?.toISOString() || new Date().toISOString());
     formData.append("Type", data.type?.toString() || CollectionType.Album.toString());
@@ -62,13 +59,7 @@ export default function Publish() {
       );
     });
 
-    // collectionSchema.parse(formData);
-
     const publishedCollection = await fetchingData({url: PUBLISH_URL, type: Crud.POST, params: formData});
-
-    console.log("publishedCollection", publishedCollection);
-    
-    /* Send the formData and receive the db collection item back to add it to the websocket message*/
 
     const releaseMessage: WSMessage<NewRelease> = {
       header: "MusicRelease",
@@ -79,7 +70,10 @@ export default function Publish() {
       }
     }
 
-    sendMessage(releaseMessage);
+    if(publishedCollection) {
+      sendMessage(releaseMessage);
+      navigate(-1);
+    };
   };
 
   function handleAddSong(e: React.MouseEvent<HTMLButtonElement>) {
@@ -178,12 +172,20 @@ export default function Publish() {
                 <FormItem className="row-span-full col-start-2">
                   <FormLabel>Release date</FormLabel>
                   <FormControl>
-                    <Calendar
-                      mode="single"
-                      selected={field.value}
-                      onSelect={field.onChange}
-                      initialFocus
-                    />
+                    <div className="flex flex-col gap-2">
+                      <Input
+                        type="date"
+                        value={field.value ? field.value.toISOString().slice(0, 10) : ""}
+                        onChange={e => field.onChange(e.target.valueAsDate)}
+                        placeholder="Search the desired date"
+                      />
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        initialFocus
+                      />
+                    </div>
                   </FormControl>
                   <FormMessage>{form.formState.errors.releaseDate?.message}</FormMessage>
                 </FormItem>
