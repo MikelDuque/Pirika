@@ -49,6 +49,7 @@ export function AudioProvider({ children }: AudioProviderProps) {
     isMuted: false,
     repeat: false
   });
+  const currentSongPath = queue[playerState.currentSong]?.path;
   const player = useRef<Howl>(new Howl({src: [""]}));
 
   useEffect(() => {
@@ -59,9 +60,9 @@ export function AudioProvider({ children }: AudioProviderProps) {
     if (queue.length <= 0) return;
 
     player.current = new Howl({
-      src: [GET_FILE(queue[playerState.currentSong].path)],
+      src: [GET_FILE(currentSongPath)],
       html5: true,
-      autoplay: playerState.isPlaying,
+      autoplay: true,
       loop: playerState.repeat,
       volume: playerState.volume,
       onplay() {setPlayerState(prevState => ({
@@ -72,10 +73,12 @@ export function AudioProvider({ children }: AudioProviderProps) {
         ...prevState,
         isPlaying: false
       }))},
-      onload() {setPlayerState(prevState => ({
-        ...prevState,
-        duration: player.current.duration()
-      }))},
+      onload() {
+        setPlayerState(prevState => ({
+          ...prevState,
+          duration: player.current.duration(),
+        }))
+      },
       onvolume() {
         setPlayerState(prevState => ({
           ...prevState,
@@ -92,7 +95,7 @@ export function AudioProvider({ children }: AudioProviderProps) {
     });
 
     return () => {if (player.current) player.current.unload()};
-  }, [queue]);
+  }, [playerState.currentSong, currentSongPath]);
 
   // useEffect(() => {
   //   let interval: NodeJS.Timeout;
@@ -111,14 +114,13 @@ export function AudioProvider({ children }: AudioProviderProps) {
 
   function getPlayer() {return player.current};
 
-  function changeSong(songId: number) {
-    const currentSong = songId >= queue.length ? queue.length -1 : Math.max(0, songId);
-
-    // player.current.rate
+  function changeSong(currentSong: number) {
+    if (currentSong < 0 || currentSong >= queue.length) return;
     
     setPlayerState(prevState => ({
       ...prevState,
-      currentSong
+      currentSong,
+      isPlaying: true
     }))
   }
 
@@ -128,7 +130,7 @@ export function AudioProvider({ children }: AudioProviderProps) {
       repeat: !prevState.repeat
     }))
 
-    player.current.loop(playerState.repeat)
+    player.current.loop(!playerState.repeat)
   }
 
   function refreshFromStorage() {

@@ -207,7 +207,7 @@ public class Seeder
 			new Collection
 			{
 				Title = "Grandes Éxitos",
-				Cover = "Covers/1/A_1.jpg",
+				Cover = "Music/2/1/Cover.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 2,
 				PublicationDate = DateTime.Now,
