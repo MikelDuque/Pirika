@@ -16,7 +16,9 @@ export default defineConfig([
         ...globals.browser,
         ...globals.node,
         "NodeJS": true,
-        "BodyInit": true
+        "BodyInit": true,
+        "RequestInit": true,
+        "HeadersInit": true
       }
     },
     rules: {
