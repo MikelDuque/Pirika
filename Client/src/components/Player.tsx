@@ -9,12 +9,12 @@ export default function Player({className}: {className?: string}) {
   const [currentTime, setCurrentTime] = useState(0);
 
   useEffect(() => {
-      let interval: NodeJS.Timeout;
-  
-      if (playerState?.isPlaying && getPlayer()) interval = setInterval(() => {setCurrentTime(getPlayer().seek())}, 1000);
-  
-      return () => clearInterval(interval);
-    }, [playerState?.isPlaying]);
+    let interval: NodeJS.Timeout;
+
+    if (playerState?.isPlaying && getPlayer()) interval = setInterval(() => {setCurrentTime(getPlayer().seek())}, 1000);
+
+    return () => clearInterval(interval);
+  }, [playerState?.isPlaying]);
   
 
   function formatTime(seconds: number): string {
@@ -23,6 +23,9 @@ export default function Player({className}: {className?: string}) {
       second: '2-digit'
     });
   }
+
+  console.log("current", playerState?.currentSong);
+  
   
   return (
     <footer className={cn(className, "w-full h-25 bg-gray-200/20 flex flex-col gap-2 items-center justify-center backdrop-blur-sm shadow")}>
@@ -64,7 +67,7 @@ export default function Player({className}: {className?: string}) {
             className="w-1/2"
             max={1}
             step={0.01}
-            value={[playerState?.volume || 0.5]}
+            value={[playerState?.volume ?? 0.5]}
             onValueChange={([newVolume]) => getPlayer().volume(newVolume)}
           />
         </div>
@@ -72,7 +75,7 @@ export default function Player({className}: {className?: string}) {
       <div className="w-1/3 flex gap-2">
         <span>{formatTime(currentTime)}</span>
         <Slider
-          max={playerState?.duration || 0}
+          max={playerState?.duration ?? 0}
           step={1}
           value={[currentTime]}
           onValueChange={([newTime]) => getPlayer().seek(newTime)}

@@ -15,6 +15,12 @@ using Server.Models.Mappers;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+	options.Limits.MaxRequestBodySize = 100_000_000; // 100 MB
+});
+
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCors(options =>

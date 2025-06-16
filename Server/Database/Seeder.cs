@@ -31,7 +31,7 @@ public class Seeder
 				Mail = "mikel@gmail.es",
 				Password = HashHelper.Hash("12345"),
 				DisplayName = "Mikel",
-				Avatar = "ProfilePictures/defaultAvatar2.jpg",
+				Avatar = "ProfilePictures/DefaultAvatar2.jpg",
 				Role = Role.Admin,
 				IsBanned = false
 			},
@@ -85,8 +85,8 @@ public class Seeder
 			new Song
 			{
 				Title = "Cuídate",
-				Path = "Music/1/1.mp3",
-				Cover = "Covers/1/A_1.jpg",
+				Path = "Music/2/1/1.mp3",
+				Cover = "Music/2/1/Cover.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 2,
 				PublicationDate = DateTime.Now
@@ -94,8 +94,8 @@ public class Seeder
 			new Song
 			{
 				Title = "20 de Enero",
-				Path = "Music/1/2.mp3",
-				Cover = "Covers/1/A_1.jpg",
+				Path = "Music/2/1/2.mp3",
+				Cover = "Music/2/1/Cover.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 2,
 				PublicationDate = DateTime.Now
@@ -103,8 +103,8 @@ public class Seeder
 			new Song
 			{
 				Title = "El 28",
-				Path = "Music/1/3.mp3",
-				Cover = "Covers/1/A_1.jpg",
+				Path = "Music/2/1/3.mp3",
+				Cover = "Music/2/1/Cover.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 2,
 				PublicationDate = DateTime.Now
@@ -112,8 +112,8 @@ public class Seeder
 			new Song
 			{
 				Title = "París",
-				Path = "Music/1/4.mp3",
-				Cover = "Covers/1/A_1.jpg",
+				Path = "Music/2/1/4.mp3",
+				Cover = "Music/2/1/Cover.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 2,
 				PublicationDate = DateTime.Now
@@ -121,8 +121,8 @@ public class Seeder
 			new Song
 			{
 				Title = "La Playa",
-				Path = "Music/1/5.mp3",
-				Cover = "Covers/1/A_1.jpg",
+				Path = "Music/2/1/5.mp3",
+				Cover = "Music/2/1/Cover.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 2,
 				PublicationDate = DateTime.Now
@@ -130,8 +130,8 @@ public class Seeder
 			new Song
 			{
 				Title = "Muñeca de Trapo",
-				Path = "Music/1/6.mp3",
-				Cover = "Covers/1/A_1.jpg",
+				Path = "Music/2/1/6.mp3",
+				Cover = "Music/2/1/Cover.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 2,
 				PublicationDate = DateTime.Now
@@ -139,8 +139,8 @@ public class Seeder
 			new Song
 			{
 				Title = "Rosas",
-				Path = "Music/1/7.mp3",
-				Cover = "Covers/1/A_1.jpg",
+				Path = "Music/2/1/7.mp3",
+				Cover = "Music/2/1/Cover.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 2,
 				PublicationDate = DateTime.Now
@@ -148,8 +148,8 @@ public class Seeder
 			new Song
 			{
 				Title = "Dulce Locura",
-				Path = "Music/1/8.mp3",
-				Cover = "Covers/1/A_1.jpg",
+				Path = "Music/2/1/8.mp3",
+				Cover = "Music/2/1/Cover.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 2,
 				PublicationDate = DateTime.Now
@@ -157,8 +157,8 @@ public class Seeder
 			new Song
 			{
 				Title = "Cuéntame al Oído",
-				Path = "Music/1/9.mp3",
-				Cover = "Covers/1/A_1.jpg",
+				Path = "Music/2/1/9.mp3",
+				Cover = "Music/2/1/Cover.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 2,
 				PublicationDate = DateTime.Now
@@ -166,8 +166,8 @@ public class Seeder
 			new Song
 			{
 				Title = "Vestido Azul",
-				Path = "Music/1/10.mp3",
-				Cover = "Covers/1/A_1.jpg",
+				Path = "Music/2/1/10.mp3",
+				Cover = "Music/2/1/Cover.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 2,
 				PublicationDate = DateTime.Now
@@ -175,8 +175,8 @@ public class Seeder
 			new Song
 			{
 				Title = "Pop",
-				Path = "Music/1/11.mp3",
-				Cover = "Covers/1/A_1.jpg",
+				Path = "Music/2/1/11.mp3",
+				Cover = "Music/2/1/Cover.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 2,
 				PublicationDate = DateTime.Now
@@ -184,8 +184,8 @@ public class Seeder
 			new Song
 			{
 				Title = "Geografía",
-				Path = "Music/1/12.mp3",
-				Cover = "Covers/1/A_1.jpg",
+				Path = "Music/2/1/12.mp3",
+				Cover = "Music/2/1/Cover.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 2,
 				PublicationDate = DateTime.Now
@@ -193,8 +193,8 @@ public class Seeder
 			new Song
 			{
 				Title = "Mariposa",
-				Path = "Music/1/13.mp3",
-				Cover = "Covers/1/A_1.jpg",
+				Path = "Music/2/1/13.mp3",
+				Cover = "Music/2/1/Cover.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 2,
 				PublicationDate = DateTime.Now
@@ -207,7 +207,7 @@ public class Seeder
 			new Collection
 			{
 				Title = "Grandes Éxitos",
-				Cover = "Covers/1/A_1.jpg",
+				Cover = "Music/2/1/Cover.jpg",
 				ReleaseDate = new DateOnly(2008, 06, 18),
 				AuthorId = 2,
 				PublicationDate = DateTime.Now,
