@@ -32,7 +32,7 @@ export const useWebsocket = (): WebsocketContextType => {
 
 /* ----- CUERPO del Context ----- */
 export function WebsocketProvider({ children }: PropsWithChildren) {
-	const { authData, logOut } = useAuth();
+	const { authData } = useAuth();
 
 	const [messages, setMessages] = useState<Record<string, unknown>>({});
 	const socket = useRef<WebSocket | null>(null);
