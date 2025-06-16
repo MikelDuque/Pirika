@@ -91,7 +91,7 @@ export function WebsocketProvider({ children }: PropsWithChildren) {
 				}, 5000)
 
 			} else {
-				logOut();
+				//logOut();
 			}
 		};
 
